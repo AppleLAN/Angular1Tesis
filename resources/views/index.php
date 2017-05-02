@@ -22,7 +22,7 @@
     <script src="scripts/node_modules/angular-aria/angular-aria.min.js"></script>
     <script src="scripts/node_modules/angular-material/angular-material.min.js"></script>
     <script src="scripts/node_modules/lf-ng-md-file-input/dist/lf-ng-md-file-input.min.js"></script>
-
+    <script src="semantic/semantic.min.js"></script>
     
     <!-- main style files -->
     <link rel="stylesheet" href="scripts/node_modules/angular-material/angular-material.min.css">
@@ -32,29 +32,30 @@
     <link rel="stylesheet" href="scripts/style/css/animate.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="scripts/node_modules/ui-select/dist/select.min.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="scripts/node_modules/lf-ng-md-file-input/dist/lf-ng-md-file-input.min.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="semantic/semantic.css" media="screen" title="no title" charset="utf-8"></script>
+
     <!-- main Angular app file -->
     <script src="scripts/app.js"></script>
 
     <!-- controllers -->
-    <script src="scripts/email/controllers/emailController.js"></script>
-    <script src="scripts/email/controllers/registerController.js"></script>
-    <script src="scripts/email/controllers/personalEmailController.js"></script>
-    <script src="scripts/email/controllers/loginController.js"></script>
-    <script src="scripts/email/controllers/sendMessage.js"></script>
+    <script src="scripts/app/controllers/registerController.js"></script>
+    <script src="scripts/app/controllers/homeController.js"></script>
+    <script src="scripts/app/controllers/loginController.js"></script>
+    <script src="scripts/app/controllers/sendMessage.js"></script>
 
 
     <!-- directives -->
-    <script src="scripts/email/directives/navbar.js"></script>
-    <script src="scripts/email/directives/sidebar.js"></script>
-    <script src="scripts/email/directives/mainContent.js"></script>
+    <script src="scripts/app/directives/navbar.js"></script>
+    <script src="scripts/app/directives/sidebar.js"></script>
+    <script src="scripts/app/directives/mainContent.js"></script>
 
     <!-- services -->
-    <script src="scripts/email/services/emailService.js"></script>
-    <script src="scripts/email/services/interceptor.es6.js"></script>
-    <script src="scripts/email/services/api.services.es6.js"></script>
+    <script src="scripts/app/services/authService.js"></script>
+    <script src="scripts/app/services/interceptor.es6.js"></script>
+    <script src="scripts/app/services/api.services.es6.js"></script>
 
     <!-- factories -->
-    <script src="scripts/email/factories/sharedData.js"></script>
+    <script src="scripts/app/factories/sharedData.js"></script>
 
     <!-- Angular route file -->
   </head>

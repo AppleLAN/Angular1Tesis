@@ -21,14 +21,5 @@ Route::group(['prefix' => 'api'], function () {
     Route::get('/getID','UserController@getLoginID');
     Route::get('/getUsers','UserController@getUsers');
     Route::get('/home', 'HomeController@index');
-    Route::post('/crearmensaje','MessageController@create');
-    Route::post('/getemail','MessageController@viewMails');
-    Route::post('/getFolderContent','MessageController@getFolderContent');
-    Route::get('/folder','FolderController@index');
-    Route::get('/getFolders','FolderController@getFolders');
-    Route::post('/createfolder','FolderController@createfolder');
     Route::post('/signup','RegisterController@signup');
-    Route::post('/countries','RegisterController@countries');
-    Route::post('/provinces','RegisterController@provinces');
-    Route::post('/cities','RegisterController@cities');
 });

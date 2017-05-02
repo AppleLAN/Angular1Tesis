@@ -1,0 +1,54 @@
+<div id="personal-info">
+  <div style="height:100%" class="ui middle aligned center aligned grid"> 
+    <div class="ui column">
+      <div class="container form-box">
+        <form name="Form">
+          <div class="header-content">
+            <h1 class="brand">Semantic AF Contaduria</h1>
+            <h4>Welcome to Email Client, please sign in below.</h4>
+          </div>
+          <div class="content text-left">
+            <div class="form-group" ng-class="{ 'has-error': Form.email.$touched && Form.email.$invalid }">
+                <input type="email" placeholder="Enter email" class="form-control" name="email" ng-model="login.userInfo.email" required >
+                <div class="help-block text-left" ng-messages="Form.email.$error" ng-if="Form.email.$touched">
+                    <div ng-messages-include="scripts/app/views/login-messages.html"></div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="{ 'has-error': Form.password.$touched && Form.password.$invalid }">
+                <input type="password" placeholder="Enter password" name="password" class="form-control" ng-model="login.userInfo.password" required >
+                <div class="help-block text-left" ng-messages="Form.password.$error" ng-if="Form.password.$touched">
+                    <div ng-messages-include="scripts/app/views/login-messages.html"></div>
+                </div>
+            </div>
+
+            <div class="form-group text-left" ng-class="{ 'has-error': Form.rememberMe.$touched && Form.rememberMe.$invalid }">
+                <label class="form-check-label">Remember me ?
+                  <input class="form-check-input" name="rememberMe" type="checkbox" placeholder="Personal email" ng-model="login.userInfo.rememberMe">
+                </label>
+                <div class="help-block text-left" ng-messages="Form.rememberMe.$error" ng-if="Form.rememberMe.$touched">
+                    <div ng-messages-include="scripts/app/views/login-messages.html"></div>
+                </div>
+            </div>
+
+            <div class="form-group text-center">
+              <div class="row">
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                  <button ng-disabled="Form.$invalid" type="submit" ng-click="login.logIn()">Sign In</button>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                  <button type="submit" ng-click="login.goTo()">Register</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group text-left" ng-if="login.validationError">
+              <p class="help-block">Wrong username or password entered. please try again.</p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('app', ['ui.router', 'satellizer','ngMessages','ui.bootstrap', 'ui.select','ngMaterial','lfNgMdFileInput'])
+        .module('app', ['ui.router', 'satellizer','ngMessages','ui.bootstrap','ngMaterial','lfNgMdFileInput'])
         .config(function($stateProvider, $urlRouterProvider, $authProvider, $httpProvider) {
 
             // Satellizer configuration that specifies which API
@@ -18,33 +18,21 @@
             $stateProvider
                 .state('login', {
                     url: '/login',
-                    templateUrl: 'scripts/email/views/login.html',
+                    templateUrl: 'scripts/app/views/login.html',
                     controller: 'loginController',
                     authenticate: false
                 })
-                .state('main', {
+                .state('home', {
                     url: '/',
-                    templateUrl: 'scripts/email/views/email-main.html',
-                    controller: 'personalEmailController',
-                    authenticate: true
-                })
-                .state('email',{
-                     url: '/email',
-                    templateUrl: "scripts/email/views/personal-email.html",
-                    controller: "personalEmailController",
+                    templateUrl: 'scripts/app/views/app-main.html',
+                    controller: 'homeController',
                     authenticate: true
                 })
                 .state('register',{
                     url: '/register',
-                    templateUrl: "scripts/email/views/register.html",
+                    templateUrl: "scripts/app/views/register.html",
                     controller: "registerController",
                     authenticate: false
-                })
-                .state('sendMessage',{
-                    url: '/sendMessage',
-                    templateUrl: "scripts/email/views/send-message.html",
-                    controller: "sendMessageController",
-                    authenticate: true
                 })
         })
         .run(['$rootScope','$state', run]);
@@ -54,7 +42,7 @@
                     $state.transitionTo("login");
                     event.preventDefault();
                 } else if (toState.name === "login" && !!localStorage.getItem('token')){
-                    $state.transitionTo("main");
+                    $state.transitionTo("home");
                     event.preventDefault();
                 }
             });

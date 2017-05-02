@@ -102,7 +102,6 @@ class UserController extends Controller
             $user->usrEmail = $request->usrEmail;
             $user->usrBirthday = $request->usrBirthday;
             $user->usrPassword = $request->usrPassword;
-            $user->city_id = $request->city_id;
         }
         else{
             return response()->json(["Status" => "No Content"],204);
