@@ -4,7 +4,11 @@ angular
 .module('app')
 .controller('registerController', function ($scope, $location, authService, $state) {
   var register = {};
-
+  register.userInfo = {};
+  register.userInfo.sales = 0;
+  register.userInfo.stock = 0;
+  register.userInfo.clients = 0;
+  register.userInfo.providers = 0;
   register.isActive = function (viewLocation) {
     return viewLocation === $location.path();
   };
@@ -18,7 +22,7 @@ angular
 
   register.register = function () {
     authService.register(register.userInfo).then(function(users) {
-      $state.go('main', {});
+      $state.go('home', {});
     }),(function(error) {
       $state.go('login', {});
     });

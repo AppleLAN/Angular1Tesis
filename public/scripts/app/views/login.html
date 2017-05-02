@@ -5,7 +5,7 @@
         <form name="Form">
           <div class="header-content">
             <h1 class="brand">Semantic AF Contaduria</h1>
-            <h4>Welcome to Email Client, please sign in below.</h4>
+            <h4>Bienvenido,&nbsp; por favor ingresa tus datos para continuar.</h4>
           </div>
           <div class="content text-left">
             <div class="form-group" ng-class="{ 'has-error': Form.email.$touched && Form.email.$invalid }">
@@ -18,15 +18,6 @@
             <div class="form-group" ng-class="{ 'has-error': Form.password.$touched && Form.password.$invalid }">
                 <input type="password" placeholder="Enter password" name="password" class="form-control" ng-model="login.userInfo.password" required >
                 <div class="help-block text-left" ng-messages="Form.password.$error" ng-if="Form.password.$touched">
-                    <div ng-messages-include="scripts/app/views/login-messages.html"></div>
-                </div>
-            </div>
-
-            <div class="form-group text-left" ng-class="{ 'has-error': Form.rememberMe.$touched && Form.rememberMe.$invalid }">
-                <label class="form-check-label">Remember me ?
-                  <input class="form-check-input" name="rememberMe" type="checkbox" placeholder="Personal email" ng-model="login.userInfo.rememberMe">
-                </label>
-                <div class="help-block text-left" ng-messages="Form.rememberMe.$error" ng-if="Form.rememberMe.$touched">
                     <div ng-messages-include="scripts/app/views/login-messages.html"></div>
                 </div>
             </div>

@@ -8,7 +8,7 @@ angular
     return viewLocation === $location.path();
   };
   personal.return = function() {
-    $state.go('main', {});
+    $state.go('home', {});
   };
   $scope.personal = personal;
 });

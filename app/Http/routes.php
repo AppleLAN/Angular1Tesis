@@ -22,4 +22,5 @@ Route::group(['prefix' => 'api'], function () {
     Route::get('/getUsers','UserController@getUsers');
     Route::get('/home', 'HomeController@index');
     Route::post('/signup','RegisterController@signup');
+    Route::get('/getUserApps','UserController@getUserApps');
 });

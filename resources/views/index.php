@@ -51,6 +51,7 @@
 
     <!-- services -->
     <script src="scripts/app/services/authService.js"></script>
+    <script src="scripts/app/services/userService.js"></script>
     <script src="scripts/app/services/interceptor.es6.js"></script>
     <script src="scripts/app/services/api.services.es6.js"></script>
 

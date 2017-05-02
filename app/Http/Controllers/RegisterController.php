@@ -42,7 +42,7 @@ class RegisterController extends Controller
      */
      public function signup(Request $request)
     {
-        $credentials = $request->only('birthday','lastname','name','username','email','password','adress');
+        $credentials = $request->only('birthday','lastname','name','username','email','password','adress','sales','stock','clients','providers');
         $credentials['password'] = Hash::make( $credentials['password'] );
 
         try {

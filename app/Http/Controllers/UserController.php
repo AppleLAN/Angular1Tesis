@@ -14,6 +14,8 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Auth\SupportsBasicAuth;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuthExceptions\JWTException;
 use Illuminate\Contracts\Cookie\QueueingFactory as CookieJar;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -35,7 +37,7 @@ class UserController extends Controller
       if ($users){
         $usersArray = [];
         foreach ($users as $user) {
-          array_push($usersArray, $user->email);
+         $usersArra[] = $user->email;
         }
         return response()->json(["Status"=>"Ok","data"=>$usersArray],200);
       }else{
@@ -47,9 +49,21 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getUserApps()
     {
-        //
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user){
+            $apps = (object) [
+                'sales' => $user->sales,
+                'stock' => $user->stock,
+                'clients' => $user->clients,
+                'providers' => $user->providers,
+            ];
+            return response()->json(['apps' => $apps], 200);
+        }
+        else return response()->json(['error' => 'no_user_found'], 500);
+
     }
 
     /**

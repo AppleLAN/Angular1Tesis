@@ -8,7 +8,7 @@
       <h2>Todos tus problemas con simples soluciones.</h2>
     </div>
   </div>
-  <div class="ui vertical stripe segment">
+  <div class="ui vertical basic segment">
     <div class="ui middle aligned stackable grid container">
       <div class="row">
         <div class="eight wide column">
@@ -23,51 +23,41 @@
       </div>
     </div>
   </div>
-  <div class="ui inverted vertical cards center aligned segment">
-    <div class="ui four column middle aligned grid container">
-      <div class="center aligned row">
-        <h1 class="ui inverted header">Semantic FA Administration Software</h1>
-      </div>
-      <div class="column">
-        <div class="ui fluid card">
-          <div>
-            <img class="ui centered product image" src="scripts/style/css/images/sales.png">
-          </div>
-          <div class="content">
-            <a class="header">Ventas</a>
-          </div>
+  <div class="ui center aligned very padded inverted segment apps">
+    <h1 class="ui header">Semantic FA Administration Software</h1>
+    <div class="ui link cards text container">
+      <div class="ui centered card" ng-if="content.apps.sales">
+        <div>
+          <img class="ui centered product image" src="scripts/style/css/images/sales.png">
+        </div>
+        <div class="content">
+          <a class="header">Ventas</a>
         </div>
       </div>
-      <div class="column">
-        <div class="ui fluid card">
-          <div>
-            <img class="ui centered product image" src="scripts/style/css/images/stock.png">
-          </div>
-          <div class="content">
-            <a class="header">Stock</a>
-          </div>
+      <div class="ui centered card" ng-if="content.apps.stock">
+        <div>
+          <img class="ui centered product image" src="scripts/style/css/images/stock.png">
+        </div>
+        <div class="content">
+          <a class="header">Stock</a>
         </div>
       </div>
-      <div class="column">
-        <div class="ui fluid card">
-          <div>
-            <img class="ui centered product image" src="scripts/style/css/images/client.png">
-          </div>
-          <div class="content">
-            <a class="header">Clientes</a>
-          </div>
+      <div class="ui centered card" ng-if="content.apps.clients">
+        <div>
+          <img class="ui centered product image" src="scripts/style/css/images/client.png">
+        </div>
+        <div class="content">
+          <a class="header">Clientes</a>
         </div>
       </div>
-      <div class="column">
-        <div class="ui fluid card">
-          <div>
-            <img class="ui centered product image" src="scripts/style/css/images/provider.png">
-          </div>
-          <div class="content">
-            <a class="header">Proveedores</a>
-          </div>
+      <div class="ui centered card" ng-if="content.apps.providers">
+        <div>
+          <img class="ui centered product image" src="scripts/style/css/images/provider.png">
         </div>
-      </div>
+        <div class="content">
+          <a class="header">Proveedores</a>
+        </div>
+      </div>      
     </div>
   </div>
   <div class="ui inverted vertical footer segment">
