@@ -21,6 +21,6 @@ Route::group(['prefix' => 'api'], function () {
     Route::get('/getID','UserController@getLoginID');
     Route::get('/getUsers','UserController@getUsers');
     Route::get('/home', 'HomeController@index');
-    Route::post('/signup','RegisterController@signup');
+    Route::post('/signup','RegisterController@signup')->middleware('cors');
     Route::get('/getUserApps','UserController@getUserApps');
 });

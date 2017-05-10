@@ -16,6 +16,7 @@ use App\Folder;
 use App\Country;
 use App\Province;
 use App\City;
+
 class RegisterController extends Controller
 {
     /**
@@ -46,11 +47,11 @@ class RegisterController extends Controller
         $credentials['password'] = Hash::make( $credentials['password'] );
 
         try {
-
             $user = User::create($credentials);
-
-        } catch (Exception $e) {
-            return Response::json(['error' => 'User already exists.'], HttpResponse::HTTP_CONFLICT);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return Response::json(['error' => 'User already exists.']);
+        } catch (\Exception $e) {
+            return Response::json(['error' => 'La concha de tu madre allboys'], HttpResponse::HTTP_CONFLICT);
         }
 
         $token = JWTAuth::fromUser($user);
