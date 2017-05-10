@@ -32,18 +32,6 @@ class UserController extends Controller
     {
         //
     }
-    public function getUsers() {
-    $users=User::all();
-      if ($users){
-        $usersArray = [];
-        foreach ($users as $user) {
-         $usersArra[] = $user->email;
-        }
-        return response()->json(["Status"=>"Ok","data"=>$usersArray],200);
-      }else{
-        return response()->json(["Status"=>"No Content"],204);
-      }
-    }
     /**
      * Show the form for creating a new resource.
      *
@@ -54,12 +42,11 @@ class UserController extends Controller
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
         if ($user){
-            $apps = (object) [
-                'sales' => $user->sales,
-                'stock' => $user->stock,
-                'clients' => $user->clients,
-                'providers' => $user->providers,
-            ];
+            $apps = new \Illuminate\Database\Eloquent\Collection;
+            $apps->add((object) ['app'=>'sales', 'active' => $user->sales]);
+            $apps->add((object) ['app'=>'stock', 'active' => $user->stock]);
+            $apps->add((object) ['app'=>'clients', 'active' => $user->clients]);
+            $apps->add((object) ['app'=>'providers', 'active' => $user->providers]);
             return response()->json(['apps' => $apps], 200);
         }
         else return response()->json(['error' => 'no_user_found'], 500);
@@ -97,35 +84,6 @@ class UserController extends Controller
     public function edit($id)
     {
         //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $user = User::find($id);
-        if ($user){
-            $user->usrUsername = $request->usrUsername;
-            $user->usrName = $request->usrName;
-            $user->usrLastName = $request->usrLastName;
-            $user->usrEmail = $request->usrEmail;
-            $user->usrBirthday = $request->usrBirthday;
-            $user->usrPassword = $request->usrPassword;
-        }
-        else{
-            return response()->json(["Status" => "No Content"],204);
-        }
-        if ($user->save()){
-            return response()->json(["Status" => "Cambios en carpeta guardados"],200);
-        }else{
-            return response()->json(["Status" => "Error al guardar los cambios en el usuario"],500);
-        }
-
     }
 
     /**
