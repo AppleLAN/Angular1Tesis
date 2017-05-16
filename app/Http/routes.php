@@ -23,4 +23,8 @@ Route::group(['prefix' => 'api'], function () {
     Route::get('/home', 'HomeController@index');
     Route::post('/signup','RegisterController@signup')->middleware('cors');
     Route::get('/getUserApps','UserController@getUserApps')->middleware('cors');
+    Route::get('/getClients','ClientsController@getClients')->middleware('cors');
+    Route::post('/saveClient','ClientsController@saveClient')->middleware('cors');
+    Route::post('/updateClient','ClientsController@updateClient')->middleware('cors');
+    Route::post('/deleteClient','ClientsController@deleteClient')->middleware('cors');
 });

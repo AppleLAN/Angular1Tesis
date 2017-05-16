@@ -17,7 +17,7 @@ class User extends Authenticatable
     protected $fillable = [
 
         //Descomentar primera linea para caso definitivo
-        'name','lastname', 'email', 'password', 'username','birthday', 'city_id','sales','providers','stock','clients'
+        'name','lastname', 'email', 'password', 'username','birthday', 'address','sales','providers','stock','clients'
         //'name','lastname','email', 'password', 'username',
     ];
 
