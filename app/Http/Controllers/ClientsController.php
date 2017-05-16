@@ -29,7 +29,7 @@ class ClientsController extends Controller
             $client = new Clients();
             $client->name = $data['name'];
             $client->user_id = $user->id;
-            $client->fantasy_name = $data['fantasyName'];
+            $client->fantasyName = $data['fantasyName'];
             $client->email = $data['email'];
             $client->place = $data['place'];
             $client->address = $data['address'];
@@ -50,12 +50,10 @@ class ClientsController extends Controller
         if ($user) {
 
             $data = $request->all();
-
             try {
-                $client = Clients::where('id',$data['client_id'])->where('user_id',$user->id)->get();
-
+                $client = Clients::where('id',$data['id'])->where('user_id',$user->id)->first();
                 $client->name = $data['name'];
-                $client->fantasy_name = $data['fantasyName'];
+                $client->fantasyName = $data['fantasyName'];
                 $client->email = $data['email'];
                 $client->place = $data['place'];
                 $client->address = $data['address'];
@@ -78,7 +76,7 @@ class ClientsController extends Controller
 
         if ($user) {
             $data = $request->all();
-            Clients::where('id',$data['toDeleteId'])->delete();
+            Clients::where('id',$data['id'])->delete();
 
             return response()->json(['success' => 'Deleted successfully'], 200);            
         }
