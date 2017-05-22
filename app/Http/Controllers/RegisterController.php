@@ -43,13 +43,13 @@ class RegisterController extends Controller
      */
      public function signup(Request $request)
     {
-        $credentials = $request->only('birthday','lastname','name','username','email','password','adress','sales','stock','clients','providers');
+        $credentials = $request->only('birthday','lastname','name','username','email','password','address','sales','stock','clients','providers');
         $credentials['password'] = Hash::make( $credentials['password'] );
 
         try {
             $user = User::create($credentials);
         } catch (\Illuminate\Database\QueryException $e) {
-            return Response::json(['error' => 'User already exists.']);
+            return Response::json(['error' => $e->getMessage()]);
         } catch (\Exception $e) {
             return Response::json(['error' => 'La concha de tu madre allboys'], HttpResponse::HTTP_CONFLICT);
         }
