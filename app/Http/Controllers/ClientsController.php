@@ -8,6 +8,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 use App\Clients;
 use App\User;
+use Hash;
 
 class ClientsController extends Controller
 {
@@ -24,7 +25,12 @@ class ClientsController extends Controller
         $user = JWTAuth::toUser($token);
        
         if ($user) {
-            $clients = Clients::select('fantasyName','place','codigoPostal','codigoProvincia','telephone','cuit','web','new','iib','pib','epib','excento','responsableMonotributo','responsableInscripto','ivaInscripto','precioLista','condicionDeVenta','limiteDeCredito','numeroDeInscripcionesIB','cuentasGenerales','percepcionDeGanancia')
+            $clients = Clients::select('id','userId','isData','createdAt','updatedAt',
+                'deletedAt','name','fantasyName','email','place','codigoPostal',
+                'codigoProvincia','address','telephone','cuit','web','iib','pib',
+                'epib','responsableInscripto','excento','responsableMonotributo',
+                'ivaInscripto', 'precioLista', 'condicionDeVenta', 'limiteDeCredito',
+                'numeroDeInscripcionesIB', 'cuentasGenerales', 'percepcionDeGanancia')
                         ->where('userId',$user->id)
                         ->where('isData',true)
                         ->first();
@@ -32,11 +38,11 @@ class ClientsController extends Controller
             $users = User::select('username','name','lastname','email','birthday','address','sales','providers','stock','clients')
                          ->where('id',$user->id)
                          ->first();
+            $response['company'] = $clients;
+            $response['profile'] = $users;
+            
+            return $response;
         }
-        $response['clients'] = $clients;
-        $response['users'] = $users;
-        
-        return $response;
     }
 
     public function updateUserProfile(Request $request){
@@ -45,24 +51,21 @@ class ClientsController extends Controller
 
         if ($user) {
             $data = $request->all();
-            // Check for credentials to update
-            if ( (Hash::check($data['password'],$user->password)) ) {
-                
-                // Search for user personal Data
-                $userI = Users::where('id','=',$user->id)->first();
-                $userI->username = $data['username'];
-                $userI->lastname = $data['lastname'];
-                $userI->email = $data['email'];
-                $userI->password = isset($data['newPassword']) ? $data['newPassword']:$data['password'];
-                $userI->birthday = $data['birthday'];
-                $userI->address = $data['address'];
-                $userI->sales = $data['sales'];
-                $userI->stock = $data['stock'];
-                $userI->clients = $data['clients'];
-                $userI->providers = $data['providers'];
-                
-                $userI->save();
-            }
+            // Search for user personal Data
+            $userI = User::where('id','=',$user->id)->first();
+            $userI->username = $data['username'];
+            $userI->lastname = $data['lastname'];
+            $userI->email = $data['email'];
+            if(isset($data['newPassword']) || isset($data['password']))
+                $userI->password = isset($data['newPassword']) ?  Hash::make( $data['newPassword'] ): Hash::make( $data['password'] );
+            $userI->birthday = $data['birthday'];
+            $userI->address = $data['address'];
+            $userI->sales = $data['sales'];
+            $userI->stock = $data['stock'];
+            $userI->clients = $data['clients'];
+            $userI->providers = $data['providers'];
+            
+            $userI->save();
         }
     }
 
@@ -72,38 +75,35 @@ class ClientsController extends Controller
 
         if ($user) {
             $data = $request->all();
-            // Check for credentials to update
-            if ( (Hash::check($data['password'],$user->password)) ) {    
-                // Search for user's company Data
-                $userC = Clients::where('userId','=',$user->id)->where('isData','=',1)->first();
-                $userC->name = $data['name'];
-                $userC->userId = $user->id;
-                $userC->isData = 1;
-                $userC->fantasyName = $data['fantasyName'];
-                $userC->email = $data['email'];
-                $userC->place = $data['place'];
-                $userC->address = $data['address'];
-                $userC->telephone = $data['telephone'];
-                $userC->cuit = $data['cuit'];
-                $userC->web = $data['web'];
-                $userC->new = $data['new'];
-                $userC->codigoPostal = $data['codigoPostal'];
-                $userC->iib = $data['iib'];
-                $userC->pib = $data['pib'];
-                $userC->epib = $data['epib'];
-                $userC->responsableInscripto = $data['codigoProvincia'];
-                $userC->excento = $data['excento'];
-                $userC->responsableMonotributo = $data['responsableMonotributo'];
-                $userC->ivaInscripto = $data['ivaInscripto'];
-                $userC->precioLista = $data['precioLista'];
-                $userC->condicionDeVenta = $data['condicionDeVenta'];
-                $userC->limiteDeCredito = $data['limiteDeCredito'];
-                $userC->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
-                $userC->cuentasGenerales = $data['cuentasGenerales'];
-                $userC->percepcionDeGanancia = $data['percepcionDeGanancia'];
+            // Search for user's company Data
+            $userC = Clients::where('userId','=',$user->id)->where('isData','=',1)->first();
+            $userC->name = $data['name'];
+            $userC->userId = $user->id;
+            $userC->isData = 1;
+            $userC->fantasyName = $data['fantasyName'];
+            $userC->email = $data['email'];
+            $userC->place = $data['place'];
+            $userC->address = $data['address'];
+            $userC->telephone = $data['telephone'];
+            $userC->cuit = $data['cuit'];
+            $userC->web = $data['web'];
+            $userC->codigoPostal = $data['codigoPostal'];
+            $userC->iib = $data['iib'];
+            $userC->pib = $data['pib'];
+            $userC->epib = $data['epib'];
+            $userC->responsableInscripto = $data['codigoProvincia'];
+            $userC->excento = $data['excento'];
+            $userC->responsableMonotributo = $data['responsableMonotributo'];
+            $userC->ivaInscripto = $data['ivaInscripto'];
+            $userC->precioLista = $data['precioLista'];
+            $userC->condicionDeVenta = $data['condicionDeVenta'];
+            $userC->limiteDeCredito = $data['limiteDeCredito'];
+            $userC->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
+            $userC->cuentasGenerales = $data['cuentasGenerales'];
+            $userC->percepcionDeGanancia = $data['percepcionDeGanancia'];
 
-                $userC->save();
-            }
+            $userC->save();
+            
         }
     }
 

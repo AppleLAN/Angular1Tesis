@@ -12,6 +12,7 @@ use Tymon\JWTAuthExceptions\JWTException;
 use Hash;
 use Response;
 use App\User;
+use App\Clients;
 use App\Folder;
 use App\Country;
 use App\Province;
@@ -51,6 +52,34 @@ class RegisterController extends Controller
 
         try {
             $user = User::create($credentials);
+            $client = new Clients();
+            $client->name = '';
+            $client->userId = $user->id;
+
+            // If client record is from user's company set isData as False
+            $client->isData = 1;
+            $client->fantasyName = '';
+            $client->email = '';
+            $client->place = '';
+            $client->address = '';
+            $client->telephone = null;
+            $client->cuit = '';
+            $client->web = '';
+            $client->codigoPostal = '';
+            $client->iib = '';
+            $client->pib = '';
+            $client->epib = '';
+            $client->responsableInscripto = false;
+            $client->excento = false;
+            $client->responsableMonotributo = false;
+            $client->ivaInscripto = false;
+            $client->precioLista = null;
+            $client->condicionDeVenta = '';
+            $client->limiteDeCredito = null;
+            $client->numeroDeInscripcionesIB = null;
+            $client->cuentasGenerales = '';
+            $client->percepcionDeGanancia = null;            
+            $client->save();
         } catch (\Illuminate\Database\QueryException $e) {
             return Response::json(['error' => $e->getMessage()]);
         } catch (\Exception $e) {

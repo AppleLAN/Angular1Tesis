@@ -26,7 +26,6 @@ class CreateClientTable extends Migration
             $table->integer('telephone');
             $table->string('cuit');
             $table->string('web');
-            $table->boolean('new');
             $table->string('iib');
             $table->string('pib');
             $table->string('epib');
