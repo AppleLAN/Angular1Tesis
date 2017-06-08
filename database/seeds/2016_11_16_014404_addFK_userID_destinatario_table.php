@@ -14,7 +14,7 @@ class AddFKUserIDDestinatarioTable extends Migration
     public function up()
     {
         Schema::table('destinatario', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('userId')->references('id')->on('users');
             $table->foreign('typesRefered_id')->references('id')->on('typesRefered');
         });
     }

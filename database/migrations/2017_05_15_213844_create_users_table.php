@@ -25,6 +25,9 @@ class CreateUsersTable extends Migration
             $table->boolean('providers');
             $table->boolean('stock');
             $table->boolean('clients');
+            $table->date('createdAt')->nullable();
+            $table->date('updatedAt')->nullable();
+            $table->date('deletedAt')->nullable();
         });
     }
 

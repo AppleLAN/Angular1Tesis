@@ -45,6 +45,9 @@ class RegisterController extends Controller
     {
         $credentials = $request->only('birthday','lastname','name','username','email','password','address','sales','stock','clients','providers');
         $credentials['password'] = Hash::make( $credentials['password'] );
+        
+        // If client record is from user's company set isData as True
+        $credentials['isData'] = 1;
 
         try {
             $user = User::create($credentials);

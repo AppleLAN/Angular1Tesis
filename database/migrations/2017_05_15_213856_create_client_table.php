@@ -14,15 +14,35 @@ class CreateClientTable extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
+            $table->integer('userId');
+            $table->boolean('isData');
             $table->string('name');
             $table->string('fantasyName');
             $table->string('email');
             $table->string('place');
+            $table->string('codigoPostal');
+            $table->string('codigoProvincia');
             $table->string('address');
-            $table->string('telephone');
+            $table->integer('telephone');
             $table->string('cuit');
             $table->string('web');
+            $table->boolean('new');
+            $table->string('iib');
+            $table->string('pib');
+            $table->string('epib');
+            $table->boolean('excento');
+            $table->boolean('responsableMonotributo');
+            $table->boolean('responsableInscripto');
+            $table->boolean('ivaInscripto');
+            $table->float('precioLista');
+            $table->string('condicionDeVenta');
+            $table->float('limiteDeCredito');
+            $table->integer('numeroDeInscripcionesIB');
+            $table->string('cuentasGenerales');
+            $table->integer('percepcionDeGanancia');
+            $table->date('createdAt')->nullable();
+            $table->date('updatedAt')->nullable();
+            $table->date('deletedAt')->nullable();
         });
     }
 

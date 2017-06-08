@@ -7,6 +7,7 @@ use App\Http\Requests;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 use App\Clients;
+use App\User;
 
 class ClientsController extends Controller
 {
@@ -14,7 +15,95 @@ class ClientsController extends Controller
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
         if ($user){
-           return Clients::where('user_id',$user->id)->get(); 
+           return Clients::where('userId',$user->id)->where('isData',0)->get(); 
+        }
+    }
+
+    public function getProfileData() {
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+       
+        if ($user) {
+            $clients = Clients::select('fantasyName','place','codigoPostal','codigoProvincia','telephone','cuit','web','new','iib','pib','epib','excento','responsableMonotributo','responsableInscripto','ivaInscripto','precioLista','condicionDeVenta','limiteDeCredito','numeroDeInscripcionesIB','cuentasGenerales','percepcionDeGanancia')
+                        ->where('userId',$user->id)
+                        ->where('isData',true)
+                        ->first();
+            
+            $users = User::select('username','name','lastname','email','birthday','address','sales','providers','stock','clients')
+                         ->where('id',$user->id)
+                         ->first();
+        }
+        $response['clients'] = $clients;
+        $response['users'] = $users;
+        
+        return $response;
+    }
+
+    public function updateUserProfile(Request $request){
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+
+        if ($user) {
+            $data = $request->all();
+            // Check for credentials to update
+            if ( (Hash::check($data['password'],$user->password)) ) {
+                
+                // Search for user personal Data
+                $userI = Users::where('id','=',$user->id)->first();
+                $userI->username = $data['username'];
+                $userI->lastname = $data['lastname'];
+                $userI->email = $data['email'];
+                $userI->password = isset($data['newPassword']) ? $data['newPassword']:$data['password'];
+                $userI->birthday = $data['birthday'];
+                $userI->address = $data['address'];
+                $userI->sales = $data['sales'];
+                $userI->stock = $data['stock'];
+                $userI->clients = $data['clients'];
+                $userI->providers = $data['providers'];
+                
+                $userI->save();
+            }
+        }
+    }
+
+    public function updateUserCompany(Request $request){
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+
+        if ($user) {
+            $data = $request->all();
+            // Check for credentials to update
+            if ( (Hash::check($data['password'],$user->password)) ) {    
+                // Search for user's company Data
+                $userC = Clients::where('userId','=',$user->id)->where('isData','=',1)->first();
+                $userC->name = $data['name'];
+                $userC->userId = $user->id;
+                $userC->isData = 1;
+                $userC->fantasyName = $data['fantasyName'];
+                $userC->email = $data['email'];
+                $userC->place = $data['place'];
+                $userC->address = $data['address'];
+                $userC->telephone = $data['telephone'];
+                $userC->cuit = $data['cuit'];
+                $userC->web = $data['web'];
+                $userC->new = $data['new'];
+                $userC->codigoPostal = $data['codigoPostal'];
+                $userC->iib = $data['iib'];
+                $userC->pib = $data['pib'];
+                $userC->epib = $data['epib'];
+                $userC->responsableInscripto = $data['codigoProvincia'];
+                $userC->excento = $data['excento'];
+                $userC->responsableMonotributo = $data['responsableMonotributo'];
+                $userC->ivaInscripto = $data['ivaInscripto'];
+                $userC->precioLista = $data['precioLista'];
+                $userC->condicionDeVenta = $data['condicionDeVenta'];
+                $userC->limiteDeCredito = $data['limiteDeCredito'];
+                $userC->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
+                $userC->cuentasGenerales = $data['cuentasGenerales'];
+                $userC->percepcionDeGanancia = $data['percepcionDeGanancia'];
+
+                $userC->save();
+            }
         }
     }
 
@@ -23,21 +112,41 @@ class ClientsController extends Controller
         $user = JWTAuth::toUser($token);
 
         if ($user) {
+            try {
+                $data = $request->all();
+                $client = new Clients();
+                $client->name = $data['name'];
+                $client->userId = $user->id;
 
-            $data = $request->all();
+                // If client record is from user's company set isData as False
+                $client->isData = 0;
+                $client->fantasyName = $data['fantasyName'];
+                $client->email = $data['email'];
+                $client->place = $data['place'];
+                $client->address = $data['address'];
+                $client->telephone = $data['telephone'];
+                $client->cuit = $data['cuit'];
+                $client->web = $data['web'];
+                $client->new = $data['new'];
+                $client->codigoPostal = $data['codigoPostal'];
+                $client->iib = $data['iib'];
+                $client->pib = $data['pib'];
+                $client->epib = $data['epib'];
+                $client->responsableInscripto = $data['codigoProvincia'];
+                $client->excento = $data['excento'];
+                $client->responsableMonotributo = $data['responsableMonotributo'];
+                $client->ivaInscripto = $data['ivaInscripto'];
+                $client->precioLista = $data['precioLista'];
+                $client->condicionDeVenta = $data['condicionDeVenta'];
+                $client->limiteDeCredito = $data['limiteDeCredito'];
+                $client->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
+                $client->cuentasGenerales = $data['cuentasGenerales'];
+                $client->percepcionDeGanancia = $data['percepcionDeGanancia'];            
 
-            $client = new Clients();
-            $client->name = $data['name'];
-            $client->user_id = $user->id;
-            $client->fantasyName = $data['fantasyName'];
-            $client->email = $data['email'];
-            $client->place = $data['place'];
-            $client->address = $data['address'];
-            $client->telephone = $data['telephone'];
-            $client->cuit = $data['cuit'];
-            $client->web = $data['web'];
-
-            $client->save();
+                $client->save();
+            }  catch (\Exception $e) {
+                return response()->json(['error' => $e->getMessage()], 401);
+            }
 
             return response()->json(['success' => 'Saved successfully'], 200);
         }
@@ -51,21 +160,42 @@ class ClientsController extends Controller
 
             $data = $request->all();
             try {
-                $client = Clients::where('id',$data['id'])->where('user_id',$user->id)->first();
-                $client->name = $data['name'];
-                $client->fantasyName = $data['fantasyName'];
-                $client->email = $data['email'];
-                $client->place = $data['place'];
-                $client->address = $data['address'];
-                $client->telephone = $data['telephone'];
-                $client->cuit = $data['cuit'];
-                $client->web = $data['web'];
+                $client = Clients::where('id',$data['id'])->where('userId',$user->id)->first();
+                    $client->name = $data['name'];
+                    $client->userId = $user->id;
+
+                    // If client record is from user's company set isData as False                
+                    $client->isData = 0;
+                    $client->fantasyName = $data['fantasyName'];
+                    $client->email = $data['email'];
+                    $client->place = $data['place'];
+                    $client->codigoPostal = $data['codigoPostal'];
+                    $client->codigoProvincia = $data['codigoProvincia'];
+                    $client->address = $data['address'];
+                    $client->telephone = $data['telephone'];
+                    $client->cuit = $data['cuit'];
+                    $client->web = $data['web'];
+                    $client->new = $data['new'];
+                    $client->codigoPostal = $data['codigoPostal'];
+                    $client->iib = $data['iib'];
+                    $client->pib = $data['pib'];
+                    $client->epib = $data['epib'];
+                    $client->responsableInscripto = $data['codigoProvincia'];
+                    $client->excento = $data['excento'];
+                    $client->responsableMonotributo = $data['responsableMonotributo'];
+                    $client->ivaInscripto = $data['ivaInscripto'];
+                    $client->precioLista = $data['precioLista'];
+                    $client->condicionDeVenta = $data['condicionDeVenta'];
+                    $client->limiteDeCredito = $data['limiteDeCredito'];
+                    $client->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
+                    $client->cuentasGenerales = $data['cuentasGenerales'];
+                    $client->percepcionDeGanancia = $data['percepcionDeGanancia'];            
 
                 $client->save();
 
                 return response()->json(['success' => 'Updated successfully'], 200);
             } catch (\Exception $e) {
-                return response()->json(['error' => 'Client not found'], 401);
+                return response()->json(['error' => $e->getMessage()], 401);
             }
         }
     }
@@ -76,7 +206,7 @@ class ClientsController extends Controller
 
         if ($user) {
             $data = $request->all();
-            Clients::where('id',$data['id'])->delete();
+            Clients::where('id',$data['id'])->where('isData',0)->delete();
 
             return response()->json(['success' => 'Deleted successfully'], 200);            
         }
