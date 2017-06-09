@@ -127,7 +127,6 @@ class ClientsController extends Controller
                 $client->telephone = $data['telephone'];
                 $client->cuit = $data['cuit'];
                 $client->web = $data['web'];
-                $client->new = $data['new'];
                 $client->codigoPostal = $data['codigoPostal'];
                 $client->iib = $data['iib'];
                 $client->pib = $data['pib'];
@@ -175,7 +174,6 @@ class ClientsController extends Controller
                     $client->telephone = $data['telephone'];
                     $client->cuit = $data['cuit'];
                     $client->web = $data['web'];
-                    $client->new = $data['new'];
                     $client->codigoPostal = $data['codigoPostal'];
                     $client->iib = $data['iib'];
                     $client->pib = $data['pib'];
