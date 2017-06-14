@@ -25,8 +25,8 @@ class ClientsController extends Controller
         $user = JWTAuth::toUser($token);
        
         if ($user) {
-            $clients = Clients::select('id','userId','isData','createdAt','updatedAt',
-                'deletedAt','name','fantasyName','email','place','codigoPostal',
+            $clients = Clients::select('id','userId','isData','created_at','updated_at',
+                'deleted_at','name','fantasyName','email','place','codigoPostal',
                 'codigoProvincia','address','telephone','cuit','web','iib','pib',
                 'epib','responsableInscripto','excento','responsableMonotributo',
                 'ivaInscripto', 'precioLista', 'condicionDeVenta', 'limiteDeCredito',

@@ -39,9 +39,9 @@ class CreateClientTable extends Migration
             $table->integer('numeroDeInscripcionesIB');
             $table->string('cuentasGenerales');
             $table->integer('percepcionDeGanancia');
-            $table->date('createdAt')->nullable();
-            $table->date('updatedAt')->nullable();
-            $table->date('deletedAt')->nullable();
+            $table->date('created_at')->nullable();
+            $table->date('updated_attt')->nullable();
+            $table->date('deleted_at')->nullable();
         });
     }
 
