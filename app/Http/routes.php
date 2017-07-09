@@ -31,4 +31,7 @@ Route::group(['prefix' => 'api'], function () {
     Route::post('/deleteClient','ClientsController@deleteClient')->middleware('cors');
     Route::post('/updateUserProfile','ClientsController@updateUserProfile')->middleware('cors');
     Route::post('/updateUserCompany','ClientsController@updateUserCompany')->middleware('cors');
+    Route::post('/updateCompany','CompaniesController@updateCompanyInfo')->middleware('cors');
+    Route::post('/deleteCompany','CompaniesController@deleteCompany')->middleware('cors');
+    Route::get('/getCompanyInfo','CompaniesController@getCompanyInfo')->middleware('cors');
 });

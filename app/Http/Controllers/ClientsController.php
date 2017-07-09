@@ -8,6 +8,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 use App\Clients;
 use App\User;
+use App\Enums\UserRole;
 use Hash;
 
 class ClientsController extends Controller
@@ -16,7 +17,7 @@ class ClientsController extends Controller
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
         if ($user){
-           return Clients::where('userId',$user->id)->where('isData',0)->get(); 
+           return Clients::where('userId',$user->id)->get(); 
         }
     }
 
@@ -25,22 +26,15 @@ class ClientsController extends Controller
         $user = JWTAuth::toUser($token);
        
         if ($user) {
-            $clients = Clients::select('id','userId','isData','created_at','updated_at',
-                'deleted_at','name','fantasyName','email','place','codigoPostal',
-                'codigoProvincia','address','telephone','cuit','web','iib','pib',
-                'epib','responsableInscripto','excento','responsableMonotributo',
-                'ivaInscripto', 'precioLista', 'condicionDeVenta', 'limiteDeCredito',
-                'numeroDeInscripcionesIB', 'cuentasGenerales', 'percepcionDeGanancia')
-                        ->where('userId',$user->id)
-                        ->where('isData',true)
-                        ->first();
             
-            $users = User::select('username','name','lastname','email','birthday','address','sales','providers','stock','clients')
-                         ->where('id',$user->id)
-                         ->first();
-            $response['company'] = $clients;
+            if ($user->role == UserRole::ADMIN) {
+                $clients = Clients::where('user_id',$user->id)->first();
+                $response['company'] = $clients;
+            }
+            
+            $users = User::where('id',$user->id)->first();
             $response['profile'] = $users;
-            
+
             return $response;
         }
     }
@@ -60,12 +54,16 @@ class ClientsController extends Controller
                 $userI->password = isset($data['newPassword']) ?  Hash::make( $data['newPassword'] ): Hash::make( $data['password'] );
             $userI->birthday = $data['birthday'];
             $userI->address = $data['address'];
-            $userI->sales = $data['sales'];
-            $userI->stock = $data['stock'];
-            $userI->clients = $data['clients'];
-            $userI->providers = $data['providers'];
             
+            if ($user->role == UserRole::ADMIN) {
+                $userI->sales = $data['sales'];
+                $userI->stock = $data['stock'];
+                $userI->clients = $data['clients'];
+                $userI->providers = $data['providers'];
+            }
+
             $userI->save();
+            return response()->json(['success' => 'Saved successfully'], 200);            
         }
     }
 
@@ -73,13 +71,12 @@ class ClientsController extends Controller
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
 
-        if ($user) {
+        if ($user && $user->role == UserRole::ADMIN) {
             $data = $request->all();
             // Search for user's company Data
-            $userC = Clients::where('userId','=',$user->id)->where('isData','=',1)->first();
+            $userC = Clients::where('userId','=',$user->id)->first();
             $userC->name = $data['name'];
             $userC->userId = $user->id;
-            $userC->isData = 1;
             $userC->fantasyName = $data['fantasyName'];
             $userC->email = $data['email'];
             $userC->place = $data['place'];
@@ -101,9 +98,11 @@ class ClientsController extends Controller
             $userC->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
             $userC->cuentasGenerales = $data['cuentasGenerales'];
             $userC->percepcionDeGanancia = $data['percepcionDeGanancia'];
+            $userC->save();  
 
-            $userC->save();
-            
+            return response()->json(['success' => 'Saved successfully'], 200);
+        } else {
+            return response()->json(['error' => 'Permissions Error'], 401);            
         }
     }
 
@@ -116,10 +115,7 @@ class ClientsController extends Controller
                 $data = $request->all();
                 $client = new Clients();
                 $client->name = $data['name'];
-                $client->userId = $user->id;
-
-                // If client record is from user's company set isData as False
-                $client->isData = 0;
+                $client->company_id = $user->company_id;
                 $client->fantasyName = $data['fantasyName'];
                 $client->email = $data['email'];
                 $client->place = $data['place'];
@@ -161,10 +157,7 @@ class ClientsController extends Controller
             try {
                 $client = Clients::where('id',$data['id'])->where('userId',$user->id)->first();
                     $client->name = $data['name'];
-                    $client->userId = $user->id;
-
-                    // If client record is from user's company set isData as False                
-                    $client->isData = 0;
+                    $client->company_id = $user->company_id;                
                     $client->fantasyName = $data['fantasyName'];
                     $client->email = $data['email'];
                     $client->place = $data['place'];
@@ -204,7 +197,7 @@ class ClientsController extends Controller
 
         if ($user) {
             $data = $request->all();
-            Clients::where('id',$data['id'])->where('isData',0)->delete();
+            Clients::where('id',$data['id'])->delete();
 
             return response()->json(['success' => 'Deleted successfully'], 200);            
         }

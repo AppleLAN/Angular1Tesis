@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClientTable extends Migration
+class CreateCompaniesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateClientTable extends Migration
      */
     public function up()
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('fantasyName');
@@ -40,7 +40,20 @@ class CreateClientTable extends Migration
             $table->date('created_at')->nullable();
             $table->date('updated_at')->nullable();
             $table->date('deleted_at')->nullable();
+            $table->unique('name', 'fantasyName');
         });
+        
+        Schema::table('users', function (Blueprint $table) {
+             $table->integer('company_id')->unsigned()->nullable()->after('id');
+            $table->foreign('company_id')->references('id')->on('companies');
+        });
+
+        Schema::table('clients', function (Blueprint $table) {
+            $table->integer('company_id')->unsigned()->nullable()->after('id');            
+            $table->foreign('company_id')->references('id')->on('companies');
+        });
+
+
     }
 
     /**
@@ -50,6 +63,6 @@ class CreateClientTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clients');
+        //
     }
 }

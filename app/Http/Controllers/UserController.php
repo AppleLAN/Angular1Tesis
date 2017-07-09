@@ -41,6 +41,7 @@ class UserController extends Controller
     {
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
+        
         if ($user){
             $apps = new \Illuminate\Database\Eloquent\Collection;
             $apps->add((object) ['app'=>'sales', 'active' => $user->sales]);
@@ -49,6 +50,7 @@ class UserController extends Controller
             $apps->add((object) ['app'=>'providers', 'active' => $user->providers]);
             return response()->json(['apps' => $apps], 200);
         }
+        
         else return response()->json(['error' => 'no_user_found'], 500);
 
     }
