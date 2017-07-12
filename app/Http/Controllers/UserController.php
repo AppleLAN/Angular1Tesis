@@ -66,6 +66,30 @@ class UserController extends Controller
         //
     }
 
+    public function createInternalUser() {
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+
+        $credentials = $request->only('birthday','lastname','name','username','email','password','address','sales','stock','clients','providers');
+        $credentials['password'] = Hash::make( $credentials['password'] );
+        $credentials['company_id'] = $user->company_id;
+
+        try {
+            $user = User::create($credentials);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return Response::json(['error' => $e->getMessage()]);
+        } catch (\Exception $e) {
+            return Response::json(['error' => 'Error saving user information'], HttpResponse::HTTP_CONFLICT);
+        }
+
+        $role = new UserRoles();
+        $role->user_id = $user->id;
+        $role->role_id = UserRole::NORMAL_USER;
+        $role->save();
+    
+        return response()->json(['success' => 'Saved successfully'], 200);
+    }
+
     /**
      * Display the specified resource.
      *

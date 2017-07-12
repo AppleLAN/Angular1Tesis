@@ -3,10 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
 
 class Companies extends Model
 {
-        /**
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

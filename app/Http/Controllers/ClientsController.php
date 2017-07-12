@@ -8,6 +8,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 use App\Clients;
 use App\User;
+use App\Companies;
 use App\Enums\UserRole;
 use Hash;
 
@@ -17,22 +18,29 @@ class ClientsController extends Controller
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
         if ($user){
-           return Clients::where('userId',$user->id)->get(); 
+           return Clients::where('company_id',$user->company_id)->get(); 
         }
     }
 
     public function getProfileData() {
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
-       
         if ($user) {
-            
-            if ($user->role == UserRole::ADMIN) {
-                $clients = Clients::where('user_id',$user->id)->first();
+            $role = HelpersController::checkUserRole($user->id);
+            if ($user && $role->role_id == UserRole::ADMIN) {
+      
+                $clients = Clients::select('id','company_id','created_at','updated_at','deleted_at',
+                'name','fantasyName','email','place','codigoPostal','codigoProvincia','address','telephone','cuit',
+                'web','iib','pib','epib','responsableInscripto','excento','responsableMonotributo','ivaInscripto','precioLista',
+                'condicionDeVenta','limiteDeCredito','numeroDeInscripcionesIB','cuentasGenerales','percepcionDeGanancia') 
+                        ->where('company_id',$user->company_id) 
+                        ->first(); 
                 $response['company'] = $clients;
             }
             
-            $users = User::where('id',$user->id)->first();
+            $users = User::select('username','company_id','name','lastname','email','birthday','address','sales','providers','stock','clients') 
+                         ->where('id',$user->id) 
+                         ->first(); 
             $response['profile'] = $users;
 
             return $response;
@@ -42,7 +50,7 @@ class ClientsController extends Controller
     public function updateUserProfile(Request $request){
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
-
+        
         if ($user) {
             $data = $request->all();
             // Search for user personal Data
@@ -70,13 +78,18 @@ class ClientsController extends Controller
     public function updateUserCompany(Request $request){
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
+        $role = HelpersController::checkUserRole($user->id);
 
-        if ($user && $user->role == UserRole::ADMIN) {
+        if ($user && $role->role_id == UserRole::ADMIN) {
             $data = $request->all();
+
             // Search for user's company Data
-            $userC = Clients::where('userId','=',$user->id)->first();
+            if ($data['type'] == 'CREATE') {
+                $userC = new Companies();
+            } else {
+                $userC = Clients::where('company_id','=',$user->company_id)->first();
+            }
             $userC->name = $data['name'];
-            $userC->userId = $user->id;
             $userC->fantasyName = $data['fantasyName'];
             $userC->email = $data['email'];
             $userC->place = $data['place'];
@@ -100,6 +113,9 @@ class ClientsController extends Controller
             $userC->percepcionDeGanancia = $data['percepcionDeGanancia'];
             $userC->save();  
 
+            $userData = User::find($user->id);
+            $userData->company_id = $userC->id;
+            $userData->save();
             return response()->json(['success' => 'Saved successfully'], 200);
         } else {
             return response()->json(['error' => 'Permissions Error'], 401);            
@@ -155,7 +171,7 @@ class ClientsController extends Controller
 
             $data = $request->all();
             try {
-                $client = Clients::where('id',$data['id'])->where('userId',$user->id)->first();
+                $client = Clients::where('id',$data['id'])->where('company_id',$user->company_id)->first();
                     $client->name = $data['name'];
                     $client->company_id = $user->company_id;                
                     $client->fantasyName = $data['fantasyName'];

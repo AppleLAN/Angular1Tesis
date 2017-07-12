@@ -8,6 +8,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 use App\Clients;
 use App\User;
+use App\UserRoles;
 use DB;
 use Carbon\Carbon;
 
@@ -22,7 +23,6 @@ class HelpersController extends Controller
             if ($request['operation'] == 'cat') {
                 $result = DB::table($data['table'])
                     ->select(DB::raw('count(id) as quantity'), DB::raw('YEAR(created_at) as year, MONTH(created_at) as month'))
-                    ->where('isData',0)
                     ->whereNull('deleted_at')
                     ->whereYear('created_at', '=', Carbon::now()->year)
                     ->groupby('year','month')
@@ -30,7 +30,6 @@ class HelpersController extends Controller
             } else {
                 $result =  DB::table($data['table'])
                     ->select(DB::raw('count(id) as quantity'), DB::raw('YEAR(deleted_at) as year, MONTH(deleted_at) as month'))
-                    ->where('isData',0)
                     ->whereNotNull('deleted_at')
                     ->whereYear('deleted_at', '=', Carbon::now()->year)
                     ->groupby('year','month')
@@ -56,5 +55,12 @@ class HelpersController extends Controller
                         
             return $response;
         }
+    }
+
+    public static function checkUserRole($id)
+    {
+        $role = UserRoles::where('user_id',$id)->first();
+
+        return $role;
     }
 }

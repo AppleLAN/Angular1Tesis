@@ -16,8 +16,9 @@ class CompaniesController extends Controller
     public function IsGranted() {
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
-        
-        if ($user->role == UserRole::ADMIN) {
+        $role = HelpersController::checkUserRole($user->id);
+
+        if ($user && $role->role_id == UserRole::ADMIN) {
             return true;
         } else {
             return false;

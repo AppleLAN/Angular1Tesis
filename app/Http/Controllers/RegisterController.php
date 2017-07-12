@@ -55,7 +55,7 @@ class RegisterController extends Controller
         } catch (\Illuminate\Database\QueryException $e) {
             return Response::json(['error' => $e->getMessage()]);
         } catch (\Exception $e) {
-            return Response::json(['error' => 'Error saving company information'], HttpResponse::HTTP_CONFLICT);
+            return Response::json(['error' => 'Error saving user information'], HttpResponse::HTTP_CONFLICT);
         }
 
         $token = JWTAuth::fromUser($user);
