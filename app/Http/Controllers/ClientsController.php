@@ -31,10 +31,11 @@ class ClientsController extends Controller
             if ($user && $role->role_id == UserRole::ADMIN) {
                 $isAdmin = true;
                 $clients = Clients::select('id','company_id','created_at','updated_at','deleted_at',
+
                 'name','fantasyName','email','place','codigoPostal','codigoProvincia','address','telephone','cuit',
                 'web','iib','pib','epib','responsableInscripto','excento','responsableMonotributo','ivaInscripto','precioLista',
                 'condicionDeVenta','limiteDeCredito','numeroDeInscripcionesIB','cuentasGenerales','percepcionDeGanancia') 
-                        ->where('company_id',$user->company_id) 
+                        ->where('id',$user->company_id) 
                         ->first(); 
                 $response['company'] = $clients;
             }
@@ -90,7 +91,7 @@ class ClientsController extends Controller
             if ($data['type'] == 'CREATE') {
                 $userC = new Companies();
             } else {
-                $userC = Clients::where('company_id','=',$user->company_id)->first();
+                $userC = Companies::where('id','=',$user->company_id)->first();
             }
             $userC->name = $data['name'];
             $userC->fantasyName = $data['fantasyName'];
