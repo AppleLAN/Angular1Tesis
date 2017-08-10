@@ -26,9 +26,10 @@ class ClientsController extends Controller
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
         if ($user) {
+            $isAdmin = false;
             $role = HelpersController::checkUserRole($user->id);
             if ($user && $role->role_id == UserRole::ADMIN) {
-      
+                $isAdmin = true;
                 $clients = Clients::select('id','company_id','created_at','updated_at','deleted_at',
                 'name','fantasyName','email','place','codigoPostal','codigoProvincia','address','telephone','cuit',
                 'web','iib','pib','epib','responsableInscripto','excento','responsableMonotributo','ivaInscripto','precioLista',
@@ -41,6 +42,7 @@ class ClientsController extends Controller
             $users = User::select('username','company_id','name','lastname','email','birthday','address','sales','providers','stock','clients') 
                          ->where('id',$user->id) 
                          ->first(); 
+            $users->isAdmin = $isAdmin;
             $response['profile'] = $users;
 
             return $response;
@@ -58,6 +60,7 @@ class ClientsController extends Controller
             $userI->username = $data['username'];
             $userI->lastname = $data['lastname'];
             $userI->email = $data['email'];
+            $userI->name = $data['name'];
             if(isset($data['newPassword']) || isset($data['password']))
                 $userI->password = isset($data['newPassword']) ?  Hash::make( $data['newPassword'] ): Hash::make( $data['password'] );
             $userI->birthday = $data['birthday'];

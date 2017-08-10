@@ -20,6 +20,9 @@ use Illuminate\Contracts\Cookie\QueueingFactory as CookieJar;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use App\User;
+use Hash;
+use App\Enums\UserRole;
+use App\UserRoles;
 
 class UserController extends Controller
 {
@@ -66,14 +69,13 @@ class UserController extends Controller
         //
     }
 
-    public function createInternalUser() {
+    public function createInternalUser(Request $request) {
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
 
         $credentials = $request->only('birthday','lastname','name','username','email','password','address','sales','stock','clients','providers');
         $credentials['password'] = Hash::make( $credentials['password'] );
         $credentials['company_id'] = $user->company_id;
-
         try {
             $user = User::create($credentials);
         } catch (\Illuminate\Database\QueryException $e) {
