@@ -42,7 +42,7 @@ class HelpersController extends Controller
             }
 
             foreach ($result as $res) {
-                $quantities[$res->month] = $res->quantity;
+                $quantities[$res->month - 1] = $res->quantity;
             }
 
             $months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
