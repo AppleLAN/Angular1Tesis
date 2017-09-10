@@ -43,7 +43,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'cors'], function () {
     Route::post('/saveCategories','CategoriesController@saveCategories');
     Route::post('/updateCategories','CategoriesController@updateCategories');
     Route::post('/deleteCategories','CategoriesController@deleteCategories');
-    Route::get('/getProductStock','MovementsController@getProductStock');
+    Route::post('/getProductStock','MovementsController@getProductStock');
     Route::post('/saveMovements','MovementsController@saveMovements');
     Route::post('/updateMovements','MovementsController@updateMovements');
     Route::post('/deleteMovements','MovementsController@deleteMovements');

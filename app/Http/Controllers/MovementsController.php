@@ -16,7 +16,7 @@ class MovementsController extends Controller
         $data = $request->all();
         
         if ($user){
-           $movements = Movements::where('company_id',$user->company_id)->where('product_id',$data['prod_id'])->get(); 
+           $movements = Movements::where('company_id',$user->company_id)->where('product_id',$data['id'])->get(); 
            $total = 0;
            foreach($movements as $mov) {
                 if ($mov['type'] == 'in') {
