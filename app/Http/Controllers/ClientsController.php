@@ -31,7 +31,6 @@ class ClientsController extends Controller
             if ($user && $role->role_id == UserRole::ADMIN) {
                 $isAdmin = true;
                 $clients = Clients::select('id','company_id','created_at','updated_at','deleted_at',
-
                 'name','fantasyName','email','place','codigoPostal','codigoProvincia','address','telephone','cuit',
                 'web','iib','pib','epib','responsableInscripto','excento','responsableMonotributo','ivaInscripto','precioLista',
                 'condicionDeVenta','limiteDeCredito','numeroDeInscripcionesIB','cuentasGenerales','percepcionDeGanancia') 

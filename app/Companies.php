@@ -16,4 +16,12 @@ class Companies extends Model
     protected $fillable = [
         'name','fantasyName', 'email', 'place', 'address','telephone','cuit','web','new','codigoPostal','iib','pib','epib','codigoProvincia','excento','responsableMonotributo','ivaInscripto','precioLista','condicionDeVenta','limiteDeCredito','numeroDeInscripcionesIB','cuentasGenerales','percepcionDeGanancia',
     ];
+
+    /**
+     * Get the product that the company has.
+     */
+    public function product()
+    {
+        return $this->belongsTo('App\Product');
+    }
 }

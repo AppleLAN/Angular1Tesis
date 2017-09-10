@@ -39,4 +39,16 @@ Route::group(['prefix' => 'api', 'middleware' => 'cors'], function () {
     Route::post('/updateCompany','CompaniesController@updateCompanyInfo');
     Route::post('/deleteCompany','CompaniesController@deleteCompany');
     Route::get('/getCompanyInfo','CompaniesController@getCompanyInfo');
+    Route::get('/getCategories','CategoriesController@getCategories');
+    Route::post('/saveCategories','CategoriesController@saveCategories');
+    Route::post('/updateCategories','CategoriesController@updateCategories');
+    Route::post('/deleteCategories','CategoriesController@deleteCategories');
+    Route::get('/getProductStock','MovementsController@getProductStock');
+    Route::post('/saveMovements','MovementsController@saveMovements');
+    Route::post('/updateMovements','MovementsController@updateMovements');
+    Route::post('/deleteMovements','MovementsController@deleteMovements');
+    Route::get('/getProducts','ProductsController@getProducts');
+    Route::post('/saveProducts','ProductsController@saveProducts');
+    Route::post('/updateProducts','ProductsController@updateProducts');
+    Route::post('/deleteProducts','ProductsController@deleteProducts');    
 });
