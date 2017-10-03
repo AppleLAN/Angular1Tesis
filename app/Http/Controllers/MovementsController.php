@@ -29,7 +29,7 @@ class MovementsController extends Controller
         }
     }
 
-    public function saveMovements(Request $request) {
+    public function saveManualMovements(Request $request) {
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
 
@@ -45,6 +45,32 @@ class MovementsController extends Controller
                 $movement->type = $data['type'];
 
                 $movement->save();
+            }  catch (\Exception $e) {
+                return response()->json(['error' => $e->getMessage()], 401);
+            }
+
+            return response()->json(['success' => 'Saved successfully'], 200);
+        }
+    }
+
+    public function saveAutomaticMovements(Request $request) {
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+
+        if ($user) {
+            $data = $request->all();
+            try {    
+                foreach ($products as $data) {
+                    $movement = new Movements();
+                    $movement->product_id = $data['product_id'];
+                    $movement->order_id = $data['order_id'];
+                    $movement->sale_id = $data['sale_id'];
+                    $movement->quantity = $data['quantity'];
+                    $movement->type = $data['type'];
+                    $movement->price = $data['price'];
+                    $movement->tax = $data['tax'];
+                    $movement->save();
+                }
             }  catch (\Exception $e) {
                 return response()->json(['error' => $e->getMessage()], 401);
             }

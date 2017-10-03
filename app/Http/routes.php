@@ -50,5 +50,6 @@ Route::group(['prefix' => 'api', 'middleware' => 'cors'], function () {
     Route::get('/getProducts','ProductsController@getProducts');
     Route::post('/saveProducts','ProductsController@saveProducts');
     Route::post('/updateProducts','ProductsController@updateProducts');
-    Route::post('/deleteProducts','ProductsController@deleteProducts');    
+    Route::post('/deleteProducts','ProductsController@deleteProducts'); 
+    Route::post('/saveBuyOrder','OrderController@postOrder');   
 });

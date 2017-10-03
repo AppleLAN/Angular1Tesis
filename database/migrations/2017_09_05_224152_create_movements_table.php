@@ -15,11 +15,12 @@ class CreateMovementsTable extends Migration
         Schema::create('movements', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id')->unsigned();
-            $table->integer('company_id');
             $table->integer('order_id')->nullable();
             $table->integer('sale_id')->nullable();
             $table->integer('quantity');
             $table->enum('type',['in','out']);
+            $table->float('price');
+            $table->integer('tax');
             $table->date('created_at')->nullable();
             $table->date('updated_at')->nullable();
             $table->date('deleted_at')->nullable();
