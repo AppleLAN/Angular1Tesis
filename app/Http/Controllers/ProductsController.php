@@ -7,7 +7,7 @@ use App\Http\Requests;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 use App\Products;
-
+use App\Providers;
 class ProductsController extends Controller
 {
     public function getProducts() {
@@ -28,6 +28,7 @@ class ProductsController extends Controller
                 
                 $product = new Products();
                 $product->company_id = $user->company_id;
+                $product->provider_id = $data['provider_id'];
                 $product->name = $data['name'];
                 $product->code = $data['code'];
                 $product->description = $data['description'];
@@ -56,6 +57,7 @@ class ProductsController extends Controller
                 $product = Products::where('id',$data['id'])->where('company_id',$user->company_id)->first();                
                 if (count($product) > 0) {    
                     $product->company_id = $user->company_id;
+                    $product->company_id = $data['provider_id'];
                     $product->name = $data['name'];
                     $product->code = $data['code'];
                     $product->description = $data['description'];

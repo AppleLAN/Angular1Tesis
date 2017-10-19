@@ -20,16 +20,14 @@ class OrderController extends Controller
 	    $data = $request->all();   
 	    DB::beginTransaction();
 
-        $token = JWTAuth::getToken();         
-        $user = JWTAuth::toUser($token);
-	  
-	  	$providerInfo = Providers::find($data['provider']);
+			$token = JWTAuth::getToken();         
+			$user = JWTAuth::toUser($token);
 
+	  	$providerInfo = Providers::where('id',$data['provider_id'])->where('company_id', $user->company_id)->first();
 	    # Save Order
 	    $order = new Order;
 	    $order->provider_id = $providerInfo->id;
 	    $order->user_id = $user->id;
-	    $order->letter = $data['invoiceType'];
 	    $order->status = "C";
 	    $order->provider_name = $providerInfo->name;
 	    $order->provider_cuit = $providerInfo->cuit;
