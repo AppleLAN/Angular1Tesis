@@ -5,12 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Order extends Model
+class SaleDetail extends Model
 {
     use SoftDeletes;
 
-	protected $table = 'orders';
-
+    protected $table = 'sales_detail';
     /**
      * The attributes that should be mutated to dates.
      *
@@ -28,6 +27,6 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'provider_id','user_id','status','letter','provider_name','provider_cuit','provider_address','subtotal','discount','taxes','total','company_id'
+        'product_id','sale_id','quantity','price','tax'
     ];
 }

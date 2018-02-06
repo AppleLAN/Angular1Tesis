@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Providers;
 use App\Order;
 use App\OrderDetail;
 use App\Products;
+use App\Movements;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
+use App\Helpers\ApiResponse;
 use DB;
+use Auth; 
 
 class OrderController extends Controller
 {
@@ -20,15 +22,16 @@ class OrderController extends Controller
 	    $data = $request->all();   
 	    DB::beginTransaction();
 
-			$token = JWTAuth::getToken();         
-			$user = JWTAuth::toUser($token);
+		$token = JWTAuth::getToken();         
+		$user = JWTAuth::toUser($token);
 
 	  	$providerInfo = Providers::where('id',$data['provider_id'])->where('company_id', $user->company_id)->first();
 	    # Save Order
 	    $order = new Order;
 	    $order->provider_id = $providerInfo->id;
 	    $order->user_id = $user->id;
-	    $order->status = "C";
+			$order->status = "C";
+			$order->letter = $data['typeOfBuy'];
 	    $order->provider_name = $providerInfo->name;
 	    $order->provider_cuit = $providerInfo->cuit;
 	    $order->provider_address = $providerInfo->address;
@@ -59,4 +62,101 @@ class OrderController extends Controller
 
 			return response()->json(['Success' => 'Compra guardada exitosamente'], 200);				
 	}
+
+	public function getAllOrders() {
+		$token = JWTAuth::getToken();         
+		$user = JWTAuth::toUser($token);
+	  if ($user) {
+			$orders = Order::where('company_id',$user->company_id)->get(); 
+			$orderInformation = [];
+			foreach ($orders as $order) {
+				$information['order'] = array('id' => $order->id, 'orderTotal' => $order->total, 'provider' => $order->provider_name, 'status' => $order->status, 'typeOfBuy' => $order->letter);
+				$orderDetail = OrderDetail::where('order_id', $order->id)->get();
+				$information['details'] = $orderDetail;
+				$information['products'] = [];
+				foreach ($orderDetail as $detail) {
+					$product[$detail['product_id']] = Products::where('id', $detail['product_id'])->first();
+				}					
+				$information['products'] = $product;
+				array_push($orderInformation, $information);
+			}
+			$r = new ApiResponse();
+			$r->success = true;
+			$r->message = 'Orden obtenida con exito';
+			$r->code = 200;
+			$r->data = $orderInformation;
+	 
+			return $r->doResponse();
+		}
+
+	}
+
+	public function getOrderById($id) {
+		$token = JWTAuth::getToken();         
+		$user = JWTAuth::toUser($token);
+	  
+		$order = Order::find($id);
+
+		$orderInformation['order'] = array('id' => $id, 'orderTotal' => $order->subtotal, 'provider' => $order->provider_name,'status' => $order->status, 'typeOfBuy' => $order->letter);
+		$orderInformation['details'] = OrderDetail::where('order_id',$id)->get();
+
+		$r = new ApiResponse();
+		$r->success = true;
+		$r->message = 'Orden obtenida con exito';
+		$r->code = 200;
+		$r->data = $orderInformation;
+
+		return $r->doResponse();
+	}
+
+	// Necesitamos luego agregar restricciones a la hora de borrar una orden.
+	// Luego cambiamos el hard delete por soft delete.
+	public function deleteOrderById($id) {
+		$token = JWTAuth::getToken();
+		$user = JWTAuth::toUser($token);
+	
+		$order = Order::find($id)->delete();
+		$orderDetail = OrderDetail::where('order_id',$id)->delete();
+
+		$r = new ApiResponse();
+		$r->success = true;
+		$r->message = 'Orden borrada con exito';
+		$r->code = 200;
+		$r->data = $id;
+
+		return $r->doResponse();
+	}
+
+	public function completeOrder($id) {
+
+		$token = JWTAuth::getToken();
+		$user = JWTAuth::toUser($token);		
+		$order = Order::find($id);
+
+		$order->status = 'R';
+
+		$order->save();
+
+		$items = OrderDetail::where('order_id', $id)->get();
+		foreach ($items as $it) {
+			$movement =  new Movements();
+			$movement->product_id = $it['product_id'];
+			$movement->company_id = $user->company_id;
+			$movement->order_id = $id;
+			$movement->quantity = $it['quantity'];
+			$movement->type = 'in';
+			$movement->price = $it['price'];
+			$movement->tax = $it['tax'];
+			$movement->save();
+		}
+
+		$r = new ApiResponse();
+		$r->success = true;
+		$r->message = 'Orden actualizada con exito';
+		$r->code = 200;
+		$r->data = $id;
+
+		return $r->doResponse();		
+	}
+
 }

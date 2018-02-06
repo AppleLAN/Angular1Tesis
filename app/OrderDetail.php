@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderDetail extends Model
 {
+    use SoftDeletes;
+
+    protected $table = 'order_details';
     /**
      * The attributes that should be mutated to dates.
      *

@@ -14,6 +14,7 @@ class CreateMovementsTable extends Migration
     {
         Schema::create('movements', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('company_id')->unsigned();
             $table->integer('product_id')->unsigned();
             $table->integer('order_id')->nullable();
             $table->integer('sale_id')->nullable();

@@ -7,12 +7,14 @@ use App\Http\Requests;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 use App\Movements;
+use Auth;
 
 class MovementsController extends Controller
 {
     public function getProductStock(Request $request) {
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
+        
         $data = $request->all();
         
         if ($user){
