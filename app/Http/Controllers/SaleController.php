@@ -17,6 +17,7 @@ use App\Helpers\ApiResponse;
 use Auth;
 use Carbon\Carbon;
 use Avalith\AFIP\Afip;
+use App\Http\Controllers\Response;
 
 class SaleController extends Controller
 {
@@ -158,55 +159,65 @@ class SaleController extends Controller
 	}
 
 	public function getAfipCae(Request $request){
-		$afip = new Afip("wsfe");
-	
-		$status = $afip->serverStatus();
-	
-		if ($request->isMethod('post')) {
-				$pointSale = 1;
-				$type = 3; // A B C
-				$documentType = 80; //CUIT
-				$cuit = 20366017314;
-				$date = \Carbon\Carbon::now()->format('Ymd');
-	
-				$lastVoucher = $afip->lastVoucher($pointSale, $type);
-				$voucherNumber = $lastVoucher['CbteNro'] + 1;
-				$voucher = $afip->voucher();
-				$voucher->voucherNumber($voucherNumber)
-								->voucherType($type)
-								->pointSale($pointSale)
-								->documentType($documentType)
-								->documentNumber($cuit)
-								->date($date)
-								->currencyType('PES')
-								->currencyTrading(1)
-								->fromDate('20161001')
-								->toDate('20161031')
-								->expirationDate('20161101');
-	
-				$product = $afip->concept();
-				$product->conceptType(1)
-								->ivaType(3)
-								->taxNet(100)
-								->taxUntaxed(0)
-								->taxExemp(0)
-								->taxIva(0);
-				$service = $afip->concept();
-				$service->conceptType(2)
-								->ivaType(3)
-								->taxNet(100)
-								->taxUntaxed(0)
-								->taxExemp(0)
-								->taxIva(0);
-	
-				$voucher->addConcept($product);
-				$voucher->addConcept($service);
-				$options = $voucher->getRequest();
-				$cae = $afip->requestCAE($options);
+		
+		$sale = Sale::find($request->input('saleId'));
+		try {
+				if ($sale->cae_data != NULL) {
+					return response()->json(['success' => json_decode($sale->cae_data)], 200);
+				} else{
+						$afip = new Afip("wsfe");
+					
+						$status = $afip->serverStatus();
+						if ($request->isMethod('post')) {
+								$pointSale = 1;
+								$type = 3; // A B C
+								$documentType = 80; //CUIT
+								$cuit = 20354108209;
+								$date = \Carbon\Carbon::now()->format('Ymd');
+					
+								$lastVoucher = $afip->lastVoucher($pointSale, $type);
+								$voucherNumber = $lastVoucher['CbteNro'] + 1;
+								$voucher = $afip->voucher();
+								$voucher->voucherNumber($voucherNumber)
+												->voucherType($type)
+												->pointSale($pointSale)
+												->documentType($documentType)
+												->documentNumber($cuit)
+												->date($date)
+												->currencyType('PES')
+												->currencyTrading(1)
+												->fromDate('20180301')
+												->toDate('20181031')
+												->expirationDate('20181031');
+					
+								$product = $afip->concept();
+								$product->conceptType(1)
+												->ivaType(3)
+												->taxNet(100)
+												->taxUntaxed(0)
+												->taxExemp(0)
+												->taxIva(0);
+								$service = $afip->concept();
+								$service->conceptType(2)
+												->ivaType(3)
+												->taxNet(100)
+												->taxUntaxed(0)
+												->taxExemp(0)
+												->taxIva(0);
+					
+								$voucher->addConcept($product);
+								$voucher->addConcept($service);
+								$options = $voucher->getRequest();
+								$cae = $afip->requestCAE($options);
+							
+								$sale->cae_data = json_encode($cae);
+								$sale->save();
 				
-				return $cae;
-		} else {
-			return Response::json(['error' => 'Error getting cae'], HttpResponse::HTTP_CONFLICT);
+								return response()->json(['success' => $cae], 200);
+					}
+				}
+		} catch (\Exception $e) {
+				return response()->json(['error' => $e->getMessage()], 500);
 		}
 	}
 }

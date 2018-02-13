@@ -8,13 +8,28 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 use App\Products;
 use App\Providers;
+use App\Movements;
 class ProductsController extends Controller
 {
     public function getProducts() {
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
         if ($user){
-           return Products::where('company_id',$user->company_id)->get(); 
+
+           $products = Products::where('company_id',$user->company_id)->get();
+           foreach ($products as $p) {
+               $movements = Movements::where('company_id',$user->company_id)->where('product_id',$p->id)->get(); 
+               $total = 0;
+               foreach($movements as $mov) {
+                       if ($mov['type'] == 'in') {
+                           $total += $mov['quantity'];
+                       } else {
+                           $total -= $mov['quantity'];
+                       }
+               }
+               $p->stock = $total;
+           }
+           return $products;
         }
     }
 

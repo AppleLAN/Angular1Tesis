@@ -27,7 +27,7 @@ class MovementsController extends Controller
                     $total -= $mov['quantity'];
                 }
            }
-           return $total; 
+           return $total;
         }
     }
 
