@@ -52,11 +52,5 @@
     },
     "config": {
         "preferred-install": "dist"
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url":  "git@gitlab.avalith.net:avalith.private/afip.git"
-        }
-    ]
+    }
 }
