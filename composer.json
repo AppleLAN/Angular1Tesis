@@ -12,7 +12,9 @@
         "laravel-doctrine/migrations": "1.0.*",
         "mmerian/doctrine-timestamp": "dev-master",
         "gedmo/doctrine-extensions": "^2.4",
-        "laravel-doctrine/orm": "1.2.*"
+        "laravel-doctrine/orm": "1.2.*",
+        "asm89/stack-cors": "dev-master as 0.2.2",
+        "barryvdh/laravel-cors": "0.8.x@dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
