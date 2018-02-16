@@ -7,34 +7,6 @@
     "content-hash": "f4ef6c6dec267ca7f7badf5b24e68071",
     "packages": [
         {
-            "name": "avalith/afip",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "git@gitlab.avalith.net:avalith.private/afip.git",
-                "reference": "6e60b9ebea653757c2ce6374fc815fa8b93f4fc3"
-            },
-            "require": {
-                "php": ">=5.5.0"
-            },
-            "type": "package",
-            "autoload": {
-                "psr-4": {
-                    "Avalith\\AFIP\\": "src"
-                }
-            },
-            "license": [
-                "GNU"
-            ],
-            "authors": [
-                {
-                    "name": "Dario Nahuel Rodriguez",
-                    "email": "darionahuel.parse@gmail.com"
-                }
-            ],
-            "time": "2017-03-23 13:00:47"
-        },
-        {
             "name": "behat/transliterator",
             "version": "v1.2.0",
             "source": {
@@ -4576,8 +4548,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "mmerian/doctrine-timestamp": 20,
-        "avalith/afip": 20
+        "mmerian/doctrine-timestamp": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
