@@ -60,3 +60,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'cors'], function () {
     Route::post('/createNewSale', 'SaleController@postSale');
     Route::post('/getAfipCae','SaleController@getAfipCae');
 });
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
