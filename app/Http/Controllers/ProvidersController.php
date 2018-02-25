@@ -11,6 +11,7 @@ use App\User;
 use App\Companies;
 use App\Enums\UserRole;
 use Hash;
+use Carbon\Carbon;
 
 class ProvidersController extends Controller
 {
