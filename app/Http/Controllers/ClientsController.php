@@ -216,8 +216,9 @@ class ClientsController extends Controller
 
         if ($user) {
             $data = $request->all();
-            Clients::where('id',$data['id'])->delete();
-
+            $client = Clients::where('id',$data['id']);
+            $client->deleted_at = Carbon::now();
+            $client->save();
             return response()->json(['success' => 'Deleted successfully'], 200);            
         }
     }
