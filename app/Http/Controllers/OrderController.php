@@ -115,8 +115,8 @@ class OrderController extends Controller
 		$token = JWTAuth::getToken();
 		$user = JWTAuth::toUser($token);
 	
-		$order = Order::find($id)->delete();
 		$orderDetail = OrderDetail::where('order_id',$id)->delete();
+		$order = Order::find($id)->delete();
 
 		$r = new ApiResponse();
 		$r->success = true;
