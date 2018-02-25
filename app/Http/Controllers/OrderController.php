@@ -17,8 +17,9 @@ use Auth;
 
 class OrderController extends Controller
 {
-    public function postOrder(Request $request) {
-	
+
+	public function postOrder(Request $request) {
+
 	    $data = $request->all();   
 	    DB::beginTransaction();
 
@@ -112,6 +113,11 @@ class OrderController extends Controller
 	// Necesitamos luego agregar restricciones a la hora de borrar una orden.
 	// Luego cambiamos el hard delete por soft delete.
 	public function deleteOrderById($id) {
+		if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
+			// Ignores notices and reports all other kinds... and warnings
+			error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+			// error_reporting(E_ALL ^ E_WARNING); // Maybe this is enough
+		}
 		$token = JWTAuth::getToken();
 		$user = JWTAuth::toUser($token);
 	
