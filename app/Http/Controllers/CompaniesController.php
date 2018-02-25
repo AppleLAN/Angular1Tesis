@@ -74,7 +74,11 @@ class CompaniesController extends Controller
     public function updateCompanyInfo(Request $request){
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
-
+        if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
+			// Ignores notices and reports all other kinds... and warnings
+			error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+			// error_reporting(E_ALL ^ E_WARNING); // Maybe this is enough
+		}
         if ($user && $this->IsGranted()) {
             $data = $request->all();
 
@@ -116,7 +120,11 @@ class CompaniesController extends Controller
     public function deleteCompany(Request $request) {
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
-
+        if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
+			// Ignores notices and reports all other kinds... and warnings
+			error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+			// error_reporting(E_ALL ^ E_WARNING); // Maybe this is enough
+		}
         if ($user && $this->IsGranted()) {
             $data = $request->all();
             Companies::where('id',$data['id'])->delete();

@@ -67,7 +67,11 @@ class ProvidersController extends Controller
     public function updateProvider(Request $request) {
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
-
+        if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
+			// Ignores notices and reports all other kinds... and warnings
+			error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+			// error_reporting(E_ALL ^ E_WARNING); // Maybe this is enough
+		}
         if ($user) {
 
             $data = $request->all();
@@ -111,7 +115,11 @@ class ProvidersController extends Controller
     public function deleteProvider(Request $request) {
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
-
+        if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
+			// Ignores notices and reports all other kinds... and warnings
+			error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+			// error_reporting(E_ALL ^ E_WARNING); // Maybe this is enough
+		}
         if ($user) {
             $data = $request->all();
             $provider = Providers::where('id',$data['id'])->first();

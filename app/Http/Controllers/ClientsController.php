@@ -53,7 +53,11 @@ class ClientsController extends Controller
     public function updateUserProfile(Request $request){
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
-        
+        if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
+			// Ignores notices and reports all other kinds... and warnings
+			error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+			// error_reporting(E_ALL ^ E_WARNING); // Maybe this is enough
+		}
         if ($user) {
             $data = $request->all();
             // Search for user personal Data
@@ -83,7 +87,11 @@ class ClientsController extends Controller
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
         $role = HelpersController::checkUserRole($user->id);
-
+        if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
+			// Ignores notices and reports all other kinds... and warnings
+			error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+			// error_reporting(E_ALL ^ E_WARNING); // Maybe this is enough
+		}
         if ($user && $role->role_id == UserRole::ADMIN) {
             $data = $request->all();
 
@@ -170,7 +178,11 @@ class ClientsController extends Controller
     public function updateClient(Request $request) {
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
-
+        if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
+			// Ignores notices and reports all other kinds... and warnings
+			error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+			// error_reporting(E_ALL ^ E_WARNING); // Maybe this is enough
+		}
         if ($user) {
 
             $data = $request->all();
@@ -214,7 +226,11 @@ class ClientsController extends Controller
     public function deleteClient(Request $request) {
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
-
+        if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
+			// Ignores notices and reports all other kinds... and warnings
+			error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+			// error_reporting(E_ALL ^ E_WARNING); // Maybe this is enough
+		}
         if ($user) {
             $data = $request->all();
             $client = Clients::where('id',$data['id'])->first();
