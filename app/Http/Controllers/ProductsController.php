@@ -18,7 +18,7 @@ class ProductsController extends Controller
         $user = JWTAuth::toUser($token);
         if ($user){
 
-           $products = Products::where('company_id',$user->company_id)->get();
+           $products = Products::where('company_id',$user->company_id)->whereNull('deleted_at')->get();
            foreach ($products as $p) {
                $movements = Movements::where('company_id',$user->company_id)->where('product_id',$p->id)->get(); 
                $total = 0;
