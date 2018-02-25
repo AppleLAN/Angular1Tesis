@@ -18,11 +18,12 @@ class HelpersController extends Controller
         $data = $request->all();
         /*$table,$typeOperation,$label*/
         $token = JWTAuth::getToken();
+        //$token = $request->input('token');
         $user = JWTAuth::toUser($token);
         if ($user){
             if ($request['operation'] == 'cat') {
                 $result = DB::table($data['table'])
-                    ->select(DB::raw('count(id) as quantity'), DB::raw('YEAR(created_at) as year, MONTH(created_at) as month'))
+                    ->select(DB::raw('count(id) as quantity, YEAR(created_at) as year, MONTH(created_at) as month'))
                     ->whereNull('deleted_at')
                     ->whereYear('created_at', '=', Carbon::now()->year)
                     ->groupby('year','month')
