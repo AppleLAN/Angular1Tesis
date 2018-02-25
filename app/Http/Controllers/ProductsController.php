@@ -98,7 +98,7 @@ class ProductsController extends Controller
 
         if ($user) {
             $data = $request->all();
-            $product = Products::where('id',$data['id']);
+            $product = Products::where('id',$data['id'])->first();
             $product->deleted_at = Carbon::now();
             $product->save();
             return response()->json(['success' => 'Deleted successfully'], 200);            

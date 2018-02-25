@@ -114,7 +114,7 @@ class ProvidersController extends Controller
 
         if ($user) {
             $data = $request->all();
-            $provider = Providers::where('id',$data['id']);
+            $provider = Providers::where('id',$data['id'])->first();
             $provider->deleted_at = Carbon::now();
             $provider->save();
             return response()->json(['success' => 'Deleted successfully'], 200);            
