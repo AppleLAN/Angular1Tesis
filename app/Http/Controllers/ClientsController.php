@@ -101,6 +101,7 @@ class ClientsController extends Controller
             } else {
                 $userC = Companies::where('id','=',$user->company_id)->first();
             }
+
             $userC->name = $data['name'];
             $userC->fantasyName = $data['fantasyName'];
             $userC->email = $data['email'];
@@ -123,11 +124,15 @@ class ClientsController extends Controller
             $userC->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
             $userC->cuentasGenerales = $data['cuentasGenerales'];
             $userC->percepcionDeGanancia = $data['percepcionDeGanancia'];
-            $userC->save();  
+            
+            if($userC->save()) {
+                $userData = User::find($user->id);
+                $userData->company_id = $userC->id;
+                $userData->save();
+            } else {
+                return response()->json(['error' => 'Error while saving company data']);
+            }
 
-            $userData = User::find($user->id);
-            $userData->company_id = $userC->id;
-            $userData->save();
             return response()->json(['success' => 'Saved successfully'], 200);
         } else {
             return response()->json(['error' => 'Permissions Error'], 401);            
