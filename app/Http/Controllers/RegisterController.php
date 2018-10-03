@@ -53,7 +53,7 @@ class RegisterController extends Controller
         try {
             $user = User::create($credentials);
         } catch (\Illuminate\Database\QueryException $e) {
-            return Response::json(['error' => $e->getMessage()]);
+            return Response::json(['error' => $e->getMessage()],500);
         } catch (\Exception $e) {
             return Response::json(['error' => 'Error saving user information'], HttpResponse::HTTP_CONFLICT);
         }
