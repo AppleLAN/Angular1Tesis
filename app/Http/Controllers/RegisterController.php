@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -12,6 +11,7 @@ use Tymon\JWTAuthExceptions\JWTException;
 use Hash;
 use Response;
 use App\User;
+use Illuminate\Http\Response as HttpResponse;
 use App\Clients;
 use App\Folder;
 use App\Country;
@@ -55,7 +55,7 @@ class RegisterController extends Controller
         } catch (\Illuminate\Database\QueryException $e) {
             return Response::json(['error' => $e->getMessage()],500);
         } catch (\Exception $e) {
-            return Response::json(['error' => 'Error saving user information'], HttpResponse::HTTP_CONFLICT);
+            return Response::json(['error' => $e->getMessage()], HttpResponse::HTTP_CONFLICT);
         }
 
         $token = JWTAuth::fromUser($user);
