@@ -95,11 +95,11 @@ class OrderController extends Controller
 	public function getOrderById(Request $request) {
 		$token = JWTAuth::getToken();         
 		$user = JWTAuth::toUser($token);
-	  
-		$order = Order::find($request->$id);
+		$data = $request->all();   
+		$order = Order::find($data['id']);
 
-		$orderInformation['order'] = array('id' => $request->$id, 'orderTotal' => $order->subtotal, 'provider' => $order->provider_name,'status' => $order->status, 'typeOfBuy' => $order->letter);
-		$orderInformation['details'] = OrderDetail::where('order_id',$request->$id)->get();
+		$orderInformation['order'] = array('id' => $data['id'], 'orderTotal' => $order->subtotal, 'provider' => $order->provider_name,'status' => $order->status, 'typeOfBuy' => $order->letter);
+		$orderInformation['details'] = OrderDetail::where('order_id',$data['id'])->get();
 
 		$r = new ApiResponse();
 		$r->success = true;
@@ -120,15 +120,15 @@ class OrderController extends Controller
 		}
 		$token = JWTAuth::getToken();
 		$user = JWTAuth::toUser($token);
-	
-		$orderDetail = OrderDetail::where('order_id',$request->$id)->delete();
-		$order = Order::find($request->$id)->delete();
+		$data = $request->all();   
+		$orderDetail = OrderDetail::where('order_id',$data['id'])->delete();
+		$order = Order::find($data['id'])->delete();
 
 		$r = new ApiResponse();
 		$r->success = true;
 		$r->message = 'Orden borrada con exito';
 		$r->code = 200;
-		$r->data = $request->$id;
+		$r->data = $data['id'];
 
 		return $r->doResponse();
 	}
@@ -137,18 +137,18 @@ class OrderController extends Controller
 
 		$token = JWTAuth::getToken();
 		$user = JWTAuth::toUser($token);		
-		$order = Order::find($request->$id);
-
+		$order = Order::find($data['id']);
+		$data = $request->all();   
 		$order->status = 'R';
 
 		$order->save();
 
-		$items = OrderDetail::where('order_id', $request->$id)->get();
+		$items = OrderDetail::where('order_id', $data['id'])->get();
 		foreach ($items as $it) {
 			$movement =  new Movements();
 			$movement->product_id = $it['product_id'];
 			$movement->company_id = $user->company_id;
-			$movement->order_id = $request->$id;
+			$movement->order_id = $data['id'];
 			$movement->quantity = $it['quantity'];
 			$movement->type = 'in';
 			$movement->price = $it['price'];
@@ -160,7 +160,7 @@ class OrderController extends Controller
 		$r->success = true;
 		$r->message = 'Orden actualizada con exito';
 		$r->code = 200;
-		$r->data = $request->$id;
+		$r->data = $data['id'];
 
 		return $r->doResponse();		
 	}
