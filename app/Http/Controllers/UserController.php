@@ -19,6 +19,7 @@ use Tymon\JWTAuthExceptions\JWTException;
 use Illuminate\Contracts\Cookie\QueueingFactory as CookieJar;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Http\Response as HttpResponse;
 use App\User;
 use Hash;
 use App\Enums\UserRole;
@@ -79,7 +80,7 @@ class UserController extends Controller
         try {
             $user = User::create($credentials);
         } catch (\Illuminate\Database\QueryException $e) {
-            return Response::json(['error' => $e->getMessage()]);
+            return Response::json(['error' => $e->getMessage()], HttpResponse::HTTP_CONFLICT);
         } catch (\Exception $e) {
             return Response::json(['error' => 'Error saving user information'], HttpResponse::HTTP_CONFLICT);
         }
