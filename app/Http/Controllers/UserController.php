@@ -80,9 +80,9 @@ class UserController extends Controller
         try {
             $user = User::create($credentials);
         } catch (\Illuminate\Database\QueryException $e) {
-            return Response::json(['error' => $e->getMessage()], HttpResponse::HTTP_CONFLICT);
+            return response()->json(['error'=>$e->getMessage()]);
         } catch (\Exception $e) {
-            return Response::json(['error' => 'Error saving user information'], HttpResponse::HTTP_CONFLICT);
+            return response()->json(['error'=> 'Error guardando la información del usuario']);
         }
 
         $role = new UserRoles();
