@@ -137,8 +137,8 @@ class OrderController extends Controller
 
 		$token = JWTAuth::getToken();
 		$user = JWTAuth::toUser($token);		
-		$order = Order::find($data['id']);
 		$data = $request->all();   
+		$order = Order::find($data['id']);
 		$order->status = 'R';
 
 		$order->save();
