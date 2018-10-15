@@ -52,10 +52,10 @@ Route::group(['prefix' => 'api', 'middleware' => 'cors'], function () {
     Route::post('/updateProducts','ProductsController@updateProducts');
     Route::post('/deleteProducts','ProductsController@deleteProducts'); 
     Route::post('/saveBuyOrder','OrderController@postOrder');
-    Route::get('/buyOrderInformation/{id}', 'OrderController@getOrderById');
+    Route::get('/buyOrderInformation', 'OrderController@getOrderById');
     Route::get('/getBuyOrders', 'OrderController@getAllOrders');
-    Route::post('/deleteOrder/{id}', 'OrderController@deleteOrderById');
-    Route::post('/completeOrder/{id}', 'OrderController@completeOrder');
+    Route::post('/deleteOrder', 'OrderController@deleteOrderById');
+    Route::post('/completeOrder', 'OrderController@completeOrder');
     Route::get('/saleInformation/{id?}', 'SaleController@getSaleInfo');
     Route::post('/createNewSale', 'SaleController@postSale');
     Route::post('/getAfipCae','SaleController@getAfipCae');
