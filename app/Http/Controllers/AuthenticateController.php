@@ -43,11 +43,11 @@ class AuthenticateController extends Controller
         return response()->json(compact('token'));
     }
 
-    public function refreshToken(Request $request) 
+    public function refreshToken() 
     {
         $token = JWTAuth::getToken();
         try {
-            $new_token = JWTAuth::refresh($token);
+            $new_token = JWTAuth::refresh($token->get());
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
