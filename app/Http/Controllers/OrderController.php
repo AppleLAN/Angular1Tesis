@@ -92,14 +92,14 @@ class OrderController extends Controller
 
 	}
 
-	public function getOrderById($id) {
+	public function getOrderById(Request $request) {
 		$token = JWTAuth::getToken();         
 		$user = JWTAuth::toUser($token);
-	  
-		$order = Order::find($id);
+		$data = $request->all();   
+		$order = Order::find($data['id']);
 
-		$orderInformation['order'] = array('id' => $id, 'orderTotal' => $order->subtotal, 'provider' => $order->provider_name,'status' => $order->status, 'typeOfBuy' => $order->letter);
-		$orderInformation['details'] = OrderDetail::where('order_id',$id)->get();
+		$orderInformation['order'] = array('id' => $data['id'], 'orderTotal' => $order->subtotal, 'provider' => $order->provider_name,'status' => $order->status, 'typeOfBuy' => $order->letter);
+		$orderInformation['details'] = OrderDetail::where('order_id',$data['id'])->get();
 
 		$r = new ApiResponse();
 		$r->success = true;
@@ -112,7 +112,7 @@ class OrderController extends Controller
 
 	// Necesitamos luego agregar restricciones a la hora de borrar una orden.
 	// Luego cambiamos el hard delete por soft delete.
-	public function deleteOrderById($id) {
+	public function deleteOrderById(Request $request) {
 		if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
 			// Ignores notices and reports all other kinds... and warnings
 			error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
@@ -120,35 +120,35 @@ class OrderController extends Controller
 		}
 		$token = JWTAuth::getToken();
 		$user = JWTAuth::toUser($token);
-	
-		$orderDetail = OrderDetail::where('order_id',$id)->delete();
-		$order = Order::find($id)->delete();
+		$data = $request->all();   
+		$orderDetail = OrderDetail::where('order_id',$data['id'])->delete();
+		$order = Order::find($data['id'])->delete();
 
 		$r = new ApiResponse();
 		$r->success = true;
 		$r->message = 'Orden borrada con exito';
 		$r->code = 200;
-		$r->data = $id;
+		$r->data = $data['id'];
 
 		return $r->doResponse();
 	}
 
-	public function completeOrder($id) {
+	public function completeOrder(Request $request) {
 
 		$token = JWTAuth::getToken();
 		$user = JWTAuth::toUser($token);		
-		$order = Order::find($id);
-
+		$data = $request->all();   
+		$order = Order::find($data['id']);
 		$order->status = 'R';
 
 		$order->save();
 
-		$items = OrderDetail::where('order_id', $id)->get();
+		$items = OrderDetail::where('order_id', $data['id'])->get();
 		foreach ($items as $it) {
 			$movement =  new Movements();
 			$movement->product_id = $it['product_id'];
 			$movement->company_id = $user->company_id;
-			$movement->order_id = $id;
+			$movement->order_id = $data['id'];
 			$movement->quantity = $it['quantity'];
 			$movement->type = 'in';
 			$movement->price = $it['price'];
@@ -160,7 +160,7 @@ class OrderController extends Controller
 		$r->success = true;
 		$r->message = 'Orden actualizada con exito';
 		$r->code = 200;
-		$r->data = $id;
+		$r->data = $data['id'];
 
 		return $r->doResponse();		
 	}
