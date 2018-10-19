@@ -42,4 +42,15 @@ class AuthenticateController extends Controller
         // if no errors are encountered we can return a JWT
         return response()->json(compact('token'));
     }
+
+    public function refreshToken(Request $request) 
+    {
+        $token = JWTAuth::getToken();
+        try {
+            $new_token = JWTAuth::refresh($token);
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'could_not_create_token'], 500);
+        }
+        return response()->json(compact('token'));
+    }
 }
