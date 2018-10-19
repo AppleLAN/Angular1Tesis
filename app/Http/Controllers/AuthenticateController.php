@@ -54,7 +54,7 @@ class AuthenticateController extends Controller
             ], 400);
         }
 
-        $token = JWTAuth::refresh($token->get());
+        $token = JWTAuth::refresh(false);
 
         return response()->json(compact('token'));
     }
