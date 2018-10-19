@@ -43,11 +43,6 @@ class AuthenticateController extends Controller
         return response()->json(compact('token'));
     }
 
-    /**
-     * Refresh token
-     *
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|mixed
-     */
     public function refreshToken()
     {
         $token = JWTAuth::getToken();
@@ -61,6 +56,6 @@ class AuthenticateController extends Controller
 
         $token = JWTAuth::refresh($token->get());
 
-        return $this->success(['token' => $token], 'Token refreshed successfully');
+        return response()->json(compact('token'));
     }
 }
