@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'api', 'middleware' => 'cors'], function () {
     Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
     Route::post('/authenticate', 'AuthenticateController@authenticate');
-    Route::get('/refreshToken', ['uses' =>'AuthenticateController@refreshToken', 'middleware' => 'jwt.refresh']);
+    Route::get('/refreshToken', 'AuthenticateController@refreshToken');
     Route::get('/getID','UserController@getLoginID');
     Route::get('/getUsers','UserController@getUsers');
     Route::get('/getProfileInfo','ClientsController@getProfileData');

@@ -43,22 +43,24 @@ class AuthenticateController extends Controller
         return response()->json(compact('token'));
     }
 
-    public function refreshToken() 
+    /**
+     * Refresh token
+     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|mixed
+     */
+    public function refreshToken()
     {
         $token = JWTAuth::getToken();
 
         if (!$token) {
             return response([
                 'status' => 'error',
-                'message' => 'no token detected'
-            ], 401);
+                'message' => 'Invalid Credentials.'
+            ], 400);
         }
 
-        try {
-            $new_token = JWTAuth::refresh($token);
-        } catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
-        }
-        return response()->json(compact('token'));
+        $token = JWTAuth::refresh($token->get());
+
+        return $this->success(['token' => $token], 'Token refreshed successfully');
     }
 }
