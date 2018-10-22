@@ -74,23 +74,27 @@ class UserController extends Controller
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
 
-        $credentials = $request->only('birthday','lastname','name','username','email','password','address','sales','stock','clients','providers');
-        $credentials['password'] = Hash::make( $credentials['password'] );
-        $credentials['company_id'] = $user->company_id;
-        try {
-            $user = User::create($credentials);
-        } catch (\Illuminate\Database\QueryException $e) {
-            return response()->json(['error'=>$e->getMessage()]);
-        } catch (\Exception $e) {
-            return response()->json(['error'=> 'Error guardando la información del usuario']);
-        }
+        if ($user){
+            $credentials = $request->only('birthday', 'company_id', 'lastname','name','username','email','password','address','sales','stock','clients','providers');
+            $credentials['password'] = Hash::make( $credentials['password'] );
+            try {
+                $newUser = User::create($credentials);
+            } catch (\Illuminate\Database\QueryException $e) {
+                return response()->json(['error'=>$e->getMessage()]);
+            } catch (\Exception $e) {
+                return response()->json(['error'=> 'Error guardando la información del usuario']);
+            }
 
-        $role = new UserRoles();
-        $role->user_id = $user->id;
-        $role->role_id = UserRole::NORMAL_USER;
-        $role->save();
-    
-        return response()->json(['success' => 'Saved successfully'], 200);
+            $role = new UserRoles();
+            $role->user_id = $newUser->id;
+            $role->role_id = UserRole::NORMAL_USER;
+            $role->save();
+        
+            return response()->json(['success' => 'Saved successfully'], 200);
+        } 
+        
+        else return response()->json(['error' => 'no_user_found'], 500);
+
     }
 
     /**
