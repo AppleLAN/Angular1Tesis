@@ -42,4 +42,20 @@ class AuthenticateController extends Controller
         // if no errors are encountered we can return a JWT
         return response()->json(compact('token'));
     }
+
+    public function refreshToken()
+    {
+        $token = JWTAuth::getToken();
+
+        if (!$token) {
+            return response([
+                'status' => 'error',
+                'message' => 'Invalid Credentials.'
+            ], 400);
+        }
+
+        $token = JWTAuth::refresh(false);
+
+        return response()->json(compact('token'));
+    }
 }
