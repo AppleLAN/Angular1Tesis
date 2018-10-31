@@ -106,15 +106,16 @@ class ClientsController extends Controller
             $userC->fantasyName = $data['fantasyName'];
             $userC->email = $data['email'];
             $userC->place = $data['place'];
+            $userC->codigoPostal = $data['codigoPostal'];
+            $userC->codigoProvincia = $data['codigoProvincia'];
             $userC->address = $data['address'];
             $userC->telephone = $data['telephone'];
             $userC->cuit = $data['cuit'];
             $userC->web = $data['web'];
-            $userC->codigoPostal = $data['codigoPostal'];
             $userC->iib = $data['iib'];
             $userC->pib = $data['pib'];
             $userC->epib = $data['epib'];
-            $userC->responsableInscripto = $data['codigoProvincia'];
+            $userC->responsableInscripto = $data['responsableInscripto'];
             $userC->excento = $data['excento'];
             $userC->responsableMonotributo = $data['responsableMonotributo'];
             $userC->ivaInscripto = $data['ivaInscripto'];
@@ -124,7 +125,7 @@ class ClientsController extends Controller
             $userC->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
             $userC->cuentasGenerales = $data['cuentasGenerales'];
             $userC->percepcionDeGanancia = $data['percepcionDeGanancia'];
-            
+        
             if($userC->save()) {
                 $userData = User::find($user->id);
                 $userData->company_id = $userC->id;
@@ -147,20 +148,22 @@ class ClientsController extends Controller
             try {
                 $data = $request->all();
                 $client = new Clients();
+                
                 $client->name = $data['name'];
                 $client->company_id = $user->company_id;
                 $client->fantasyName = $data['fantasyName'];
                 $client->email = $data['email'];
                 $client->place = $data['place'];
+                $client->codigoPostal = $data['codigoPostal'];
+                $client->codigoProvincia = $data['codigoProvincia'];
                 $client->address = $data['address'];
                 $client->telephone = $data['telephone'];
                 $client->cuit = $data['cuit'];
                 $client->web = $data['web'];
-                $client->codigoPostal = $data['codigoPostal'];
                 $client->iib = $data['iib'];
                 $client->pib = $data['pib'];
                 $client->epib = $data['epib'];
-                $client->responsableInscripto = $data['codigoProvincia'];
+                $client->responsableInscripto = $data['responsableInscripto'];
                 $client->excento = $data['excento'];
                 $client->responsableMonotributo = $data['responsableMonotributo'];
                 $client->ivaInscripto = $data['ivaInscripto'];
@@ -169,7 +172,7 @@ class ClientsController extends Controller
                 $client->limiteDeCredito = $data['limiteDeCredito'];
                 $client->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
                 $client->cuentasGenerales = $data['cuentasGenerales'];
-                $client->percepcionDeGanancia = $data['percepcionDeGanancia'];            
+                $client->percepcionDeGanancia = $data['percepcionDeGanancia'];         
 
                 $client->save();
             }  catch (\Exception $e) {
@@ -193,31 +196,31 @@ class ClientsController extends Controller
             $data = $request->all();
             try {
                 $client = Clients::where('id',$data['id'])->where('company_id',$user->company_id)->first();
-                    $client->name = $data['name'];
-                    $client->company_id = $user->company_id;                
-                    $client->fantasyName = $data['fantasyName'];
-                    $client->email = $data['email'];
-                    $client->place = $data['place'];
-                    $client->codigoPostal = $data['codigoPostal'];
-                    $client->codigoProvincia = $data['codigoProvincia'];
-                    $client->address = $data['address'];
-                    $client->telephone = $data['telephone'];
-                    $client->cuit = $data['cuit'];
-                    $client->web = $data['web'];
-                    $client->codigoPostal = $data['codigoPostal'];
-                    $client->iib = $data['iib'];
-                    $client->pib = $data['pib'];
-                    $client->epib = $data['epib'];
-                    $client->responsableInscripto = $data['codigoProvincia'];
-                    $client->excento = $data['excento'];
-                    $client->responsableMonotributo = $data['responsableMonotributo'];
-                    $client->ivaInscripto = $data['ivaInscripto'];
-                    $client->precioLista = $data['precioLista'];
-                    $client->condicionDeVenta = $data['condicionDeVenta'];
-                    $client->limiteDeCredito = $data['limiteDeCredito'];
-                    $client->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
-                    $client->cuentasGenerales = $data['cuentasGenerales'];
-                    $client->percepcionDeGanancia = $data['percepcionDeGanancia'];            
+                
+                $client->name = $data['name'];
+                $client->company_id = $user->company_id;
+                $client->fantasyName = $data['fantasyName'];
+                $client->email = $data['email'];
+                $client->place = $data['place'];
+                $client->codigoPostal = $data['codigoPostal'];
+                $client->codigoProvincia = $data['codigoProvincia'];
+                $client->address = $data['address'];
+                $client->telephone = $data['telephone'];
+                $client->cuit = $data['cuit'];
+                $client->web = $data['web'];
+                $client->iib = $data['iib'];
+                $client->pib = $data['pib'];
+                $client->epib = $data['epib'];
+                $client->responsableInscripto = $data['responsableInscripto'];
+                $client->excento = $data['excento'];
+                $client->responsableMonotributo = $data['responsableMonotributo'];
+                $client->ivaInscripto = $data['ivaInscripto'];
+                $client->precioLista = $data['precioLista'];
+                $client->condicionDeVenta = $data['condicionDeVenta'];
+                $client->limiteDeCredito = $data['limiteDeCredito'];
+                $client->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
+                $client->cuentasGenerales = $data['cuentasGenerales'];
+                $client->percepcionDeGanancia = $data['percepcionDeGanancia'];         
 
                 $client->save();
 
