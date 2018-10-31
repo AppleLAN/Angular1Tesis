@@ -59,6 +59,8 @@ class ClientsController extends Controller
 			// error_reporting(E_ALL ^ E_WARNING); // Maybe this is enough
 		}
         if ($user) {
+            $role = HelpersController::checkUserRole($user->id);
+
             $data = $request->all();
             // Search for user personal Data
             $userI = User::where('id','=',$user->id)->first();
@@ -71,7 +73,7 @@ class ClientsController extends Controller
             $userI->birthday = $data['birthday'];
             $userI->address = $data['address'];
             
-            if ($user->role == UserRole::ADMIN) {
+            if ($role->role_id == UserRole::ADMIN) {
                 $userI->sales = $data['sales'];
                 $userI->stock = $data['stock'];
                 $userI->clients = $data['clients'];
