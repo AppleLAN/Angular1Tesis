@@ -53,12 +53,12 @@ class RegisterController extends Controller
         try {
             $existentUser = User::where('email', $credentials['email'])->first();
             if ($existentUser) {
-                return response()->json(['error'=> "Ya existe un usuario con el email ingresado"]);
+                return response()->json(['error'=> "Ya existe un usuario con el email ingresado"], 500);
             } else {
                 $user = User::create($credentials);
             }
         } catch (\Illuminate\Database\QueryException $e) {
-            return Response::json(['error' => $e->getMessage()],500);
+            return Response::json(['error' => $e->getMessage()], 500);
         } catch (\Exception $e) {
             return Response::json(['error' => $e->getMessage()], HttpResponse::HTTP_CONFLICT);
         }
