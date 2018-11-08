@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Http\Controllers\DB ;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 use App\Products;
 use App\Providers;
 use App\Movements;
 use Carbon\Carbon;
+use DB;
 
 class ProductsController extends Controller
 {
