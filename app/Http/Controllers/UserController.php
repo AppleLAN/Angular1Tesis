@@ -80,14 +80,14 @@ class UserController extends Controller
             try {
                 $existentUser = User::where('email', $credentials['email'])->first();
                 if ($existentUser) {
-                    return response()->json(['error'=> "Ya existe un usuario con el email ingresado"]);
+                    return response()->json(['error'=> "Ya existe un usuario con el email ingresado"], 500);
                 } else {
                     $newUser = User::create($credentials);
                 }
             } catch (\Illuminate\Database\QueryException $e) {
-                return response()->json(['error'=>$e->getMessage()]);
+                return response()->json(['error'=>$e->getMessage()], 500);
             } catch (\Exception $e) {
-                return response()->json(['error'=> 'Error guardando la información del usuario']);
+                return response()->json(['error'=> 'Error guardando la información del usuario'], 500);
             }
 
             $role = new UserRoles();
