@@ -78,7 +78,12 @@ class UserController extends Controller
             $credentials = $request->only('birthday', 'company_id', 'lastname','name','username','email','password','address','sales','stock','clients','providers');
             $credentials['password'] = Hash::make( $credentials['password'] );
             try {
-                $newUser = User::create($credentials);
+                $existentUser = User::where('email', $credentials['email'])->first();
+                if ($existentUser) {
+                    return response()->json(['error'=> "Ya existe un usuario con el email ingresado"]);
+                } else {
+                    $newUser = User::create($credentials);
+                }
             } catch (\Illuminate\Database\QueryException $e) {
                 return response()->json(['error'=>$e->getMessage()]);
             } catch (\Exception $e) {

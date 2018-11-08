@@ -51,7 +51,12 @@ class RegisterController extends Controller
         $credentials['company_id'] = null;
 
         try {
-            $user = User::create($credentials);
+            $existentUser = User::where('email', $credentials['email'])->first();
+            if ($existentUser) {
+                return response()->json(['error'=> "Ya existe un usuario con el email ingresado"]);
+            } else {
+                $user = User::create($credentials);
+            }
         } catch (\Illuminate\Database\QueryException $e) {
             return Response::json(['error' => $e->getMessage()],500);
         } catch (\Exception $e) {
