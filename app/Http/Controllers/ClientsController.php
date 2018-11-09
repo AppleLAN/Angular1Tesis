@@ -59,28 +59,32 @@ class ClientsController extends Controller
 			// error_reporting(E_ALL ^ E_WARNING); // Maybe this is enough
 		}
         if ($user) {
+            $existentUser = User::where('email', $data['email'])->first();
+            if ($user->email !== $data->email && $existentUser) {
+                return response()->json(['error'=> "Ya existe un usuario con el email ingresado"], 500);
+            } else { 
+                $data = $request->all();
+                // Search for user personal Data
+                $userI = User::where('id','=',$user->id)->first();
+                $userI->username = $data['username'];
+                $userI->lastname = $data['lastname'];
+                $userI->email = $data['email'];
+                $userI->name = $data['name'];
+                if(isset($data['newPassword']) || isset($data['password']))
+                    $userI->password = isset($data['newPassword']) ?  Hash::make( $data['newPassword'] ): Hash::make( $data['password'] );
+                $userI->birthday = $data['birthday'];
+                $userI->address = $data['address'];
+                
+                if ($data['sales'] || $data['stock'] ||$data['clients'] || $data['providers']) {
+                    $userI->sales = $data['sales'];
+                    $userI->stock = $data['stock'];
+                    $userI->clients = $data['clients'];
+                    $userI->providers = $data['providers'];
+                }
 
-            $data = $request->all();
-            // Search for user personal Data
-            $userI = User::where('id','=',$user->id)->first();
-            $userI->username = $data['username'];
-            $userI->lastname = $data['lastname'];
-            $userI->email = $data['email'];
-            $userI->name = $data['name'];
-            if(isset($data['newPassword']) || isset($data['password']))
-                $userI->password = isset($data['newPassword']) ?  Hash::make( $data['newPassword'] ): Hash::make( $data['password'] );
-            $userI->birthday = $data['birthday'];
-            $userI->address = $data['address'];
-            
-            if ($data['sales'] || $data['stock'] ||$data['clients'] || $data['providers']) {
-                $userI->sales = $data['sales'];
-                $userI->stock = $data['stock'];
-                $userI->clients = $data['clients'];
-                $userI->providers = $data['providers'];
-            }
-
-            $userI->save();
-            return response()->json(['success' => 'Saved successfully'], 200);            
+                $userI->save();
+                return response()->json(['success' => 'Saved successfully'], 200);     
+            }       
         }
     }
 
