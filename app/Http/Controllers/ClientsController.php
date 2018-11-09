@@ -59,11 +59,11 @@ class ClientsController extends Controller
 			// error_reporting(E_ALL ^ E_WARNING); // Maybe this is enough
 		}
         if ($user) {
+            $data = $request->all();
             $existentUser = User::where('email', $data['email'])->first();
             if ($user->email !== $data->email && $existentUser) {
                 return response()->json(['error'=> "Ya existe un usuario con el email ingresado"], 500);
             } else { 
-                $data = $request->all();
                 // Search for user personal Data
                 $userI = User::where('id','=',$user->id)->first();
                 $userI->username = $data['username'];
