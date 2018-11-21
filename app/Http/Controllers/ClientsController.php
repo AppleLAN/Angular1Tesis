@@ -61,7 +61,7 @@ class ClientsController extends Controller
         if ($user) {
             $data = $request->all();
             $existentUser = User::where('email', $data['email'])->first();
-            if ($user->email !== $data->email && $existentUser) {
+            if (($user->email !== $data['email']) && $existentUser) {
                 return response()->json(['error'=> "Ya existe un usuario con el email ingresado"], 500);
             } else { 
                 // Search for user personal Data
