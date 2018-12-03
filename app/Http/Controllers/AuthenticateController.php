@@ -26,7 +26,7 @@ class AuthenticateController extends Controller
         
     }    
   
-    public function authenticate(Request $request)
+    public function authenticateUser(Request $request)
     {
         $credentials = $request->only('email', 'password');
         try {
