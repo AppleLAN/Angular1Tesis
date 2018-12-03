@@ -18,7 +18,7 @@ class AuthenticateController extends Controller
        // Apply the jwt.auth middleware to all methods in this controller
        // except for the authenticate method. We don't want to prevent
        // the user from retrieving their token if they don't already have it
-       $this->middleware('jwt.auth', ['except' => ['authenticate']]);
+       $this->middleware('jwt.auth', ['except' => ['authenticate', 'index']]);
    }
 
     public function index()
