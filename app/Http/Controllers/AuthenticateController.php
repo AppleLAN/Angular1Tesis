@@ -23,7 +23,8 @@ class AuthenticateController extends Controller
 
     public function index()
     {
-        
+        $users = User::all();
+        return $users;
     }    
   
     public function authenticate(Request $request)
