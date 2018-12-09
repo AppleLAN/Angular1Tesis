@@ -32,7 +32,7 @@ class OrderController extends Controller
 	    $order->provider_id = $providerInfo->id;
 	    $order->user_id = $user->id;
 			$order->status = "C";
-			$order->letter = $data['typeOfBuy'];
+			$order->letter = $data->typeOfBuy;
 	    $order->provider_name = $providerInfo->name;
 	    $order->provider_cuit = $providerInfo->cuit;
 	    $order->provider_address = $providerInfo->address;
