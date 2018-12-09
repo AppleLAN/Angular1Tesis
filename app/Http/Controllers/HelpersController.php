@@ -24,6 +24,7 @@ class HelpersController extends Controller
             if ($request['operation'] == 'cat') {
                 $result = DB::table($data['table'])
                     ->select(DB::raw('count(id) as quantity, YEAR(created_at) as year, MONTH(created_at) as month'))
+                    ->where('company_id',$user->company_id)
                     ->whereNull('deleted_at')
                     ->whereYear('created_at', '=', Carbon::now()->year)
                     ->groupby('year','month')
@@ -31,6 +32,7 @@ class HelpersController extends Controller
             } else {
                 $result =  DB::table($data['table'])
                     ->select(DB::raw('count(id) as quantity'), DB::raw('YEAR(deleted_at) as year, MONTH(deleted_at) as month'))
+                    ->where('company_id',$user->company_id)
                     ->whereNotNull('deleted_at')
                     ->whereYear('deleted_at', '=', Carbon::now()->year)
                     ->groupby('year','month')
