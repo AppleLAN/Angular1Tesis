@@ -108,7 +108,7 @@ class ProductsController extends Controller
 		}
         if ($user) {
             $data = $request->all();
-            $product = DB::table('Products')->where('id', $data['id'])->update(['deleted_at' => Carbon::now()]);
+            $product = DB::table('products')->where('id', $data['id'])->update(['deleted_at' => Carbon::now()]);
             return response()->json(['success' => 'Deleted successfully'], 200);            
         }
     }
