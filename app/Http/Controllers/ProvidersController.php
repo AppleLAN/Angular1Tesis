@@ -7,6 +7,7 @@ use App\Http\Requests;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuthExceptions\JWTException;
 use App\Providers;
+use App\Products;
 use App\User;
 use App\Companies;
 use App\Enums\UserRole;
@@ -128,10 +129,15 @@ class ProvidersController extends Controller
 		}
         if ($user) {
             $data = $request->all();
-            $provider = Providers::where('id',$data['id'])->first();
-            $provider->deleted_at = Carbon::now();
-            $provider->save();
-            return response()->json(['success' => 'Deleted successfully'], 200);            
+            $hasProducts = Products::where('provider_id',$data['id'])->where('company_id',$user->company_id)->whereNull('deleted_at')->first()
+            if ($hasProducts) {
+                return response()->json(['error'=> "El proveedor posee productos para este usuario, por favor eliminarlos primero"], 500);
+            } else {
+                $provider = Providers::where('id',$data['id'])->first();
+                $provider->deleted_at = Carbon::now();
+                $provider->save();
+                return response()->json(['success' => 'Deleted successfully'], 200);            
+            }
         }
     }
 }
