@@ -27,16 +27,68 @@ class ProvidersController extends Controller
     public function saveProvider(Request $request) {
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
+        $data = $request->all();
 
         if ($user) {
+            $existentProvider = Providers::where('fantasyName','=', $data['fantasyName'])->where('company_id','=', $user->company_id)->first();
+            if ($existentProvider) {
+                return response()->json(['error'=> "Ya existe un proveedor con ese nombre de fantasia"], 500);
+            else {
+                try {
+                    $provider = new Providers();
+                    $provider->name = $data['name'];
+                    $provider->company_id = $user->company_id;
+                    $provider->fantasyName = $data['fantasyName'];
+                    $provider->email = $data['email'];
+                    $provider->place = $data['place'];
+                    $provider->address = $data['address'];
+                    $provider->telephone = $data['telephone'];
+                    $provider->cuit = $data['cuit'];
+                    $provider->web = $data['web'];
+                    $provider->codigoPostal = $data['codigoPostal'];
+                    $provider->iib = $data['iib'];
+                    $provider->pib = $data['pib'];
+                    $provider->epib = $data['epib'];
+                    $provider->responsableInscripto = $data['codigoProvincia'];
+                    $provider->excento = $data['excento'];
+                    $provider->responsableMonotributo = $data['responsableMonotributo'];
+                    $provider->ivaInscripto = $data['ivaInscripto'];
+                    $provider->precioLista = $data['precioLista'];
+                    $provider->condicionDeVenta = $data['condicionDeVenta'];
+                    $provider->limiteDeCredito = $data['limiteDeCredito'];
+                    $provider->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
+                    $provider->cuentasGenerales = $data['cuentasGenerales'];
+                    $provider->percepcionDeGanancia = $data['percepcionDeGanancia'];            
+
+                    $provider->save();
+                }  catch (\Exception $e) {
+                    return response()->json(['error' => $e->getMessage()], 401);
+                }
+            }
+            return response()->json(['success' => 'Saved successfully'], 200);
+        }
+    }
+
+    public function updateProvider(Request $request) {
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
+			// Ignores notices and reports all other kinds... and warnings
+			error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+			// error_reporting(E_ALL ^ E_WARNING); // Maybe this is enough
+		}
+        if ($user) {
+
+            $data = $request->all();
             try {
-                $data = $request->all();
-                $provider = new Providers();
+                $provider = Providers::where('id',$data['id'])->where('company_id',$user->company_id)->first();
                 $provider->name = $data['name'];
-                $provider->company_id = $user->company_id;
+                $provider->company_id = $user->company_id;                
                 $provider->fantasyName = $data['fantasyName'];
                 $provider->email = $data['email'];
                 $provider->place = $data['place'];
+                $provider->codigoPostal = $data['codigoPostal'];
+                $provider->codigoProvincia = $data['codigoProvincia'];
                 $provider->address = $data['address'];
                 $provider->telephone = $data['telephone'];
                 $provider->cuit = $data['cuit'];
@@ -57,66 +109,12 @@ class ProvidersController extends Controller
                 $provider->percepcionDeGanancia = $data['percepcionDeGanancia'];            
 
                 $provider->save();
-            }  catch (\Exception $e) {
+
+                return response()->json(['success' => 'Updated successfully'], 200);
+            } catch (\Exception $e) {
                 return response()->json(['error' => $e->getMessage()], 401);
             }
-
-            return response()->json(['success' => 'Saved successfully'], 200);
-        }
-    }
-
-    public function updateProvider(Request $request) {
-        $token = JWTAuth::getToken();
-        $user = JWTAuth::toUser($token);
-        if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
-			// Ignores notices and reports all other kinds... and warnings
-			error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
-			// error_reporting(E_ALL ^ E_WARNING); // Maybe this is enough
-		}
-        if ($user) {
-
-            $data = $request->all();
-
-            $existentProvider = Providers::where('fantasyName','=', $data['fantasyName'])->where('name','=', $data['name'])->where('company_id','=', $user->company_id)->first();
-            if ($existentProvider) {
-                return response()->json(['error'=> "Ya existe un proveedor con ese nombre o nombre de fantasia"], 500);
-            } else {
-                try {
-                    $provider = Providers::where('id',$data['id'])->where('company_id',$user->company_id)->first();
-                        $provider->name = $data['name'];
-                        $provider->company_id = $user->company_id;                
-                        $provider->fantasyName = $data['fantasyName'];
-                        $provider->email = $data['email'];
-                        $provider->place = $data['place'];
-                        $provider->codigoPostal = $data['codigoPostal'];
-                        $provider->codigoProvincia = $data['codigoProvincia'];
-                        $provider->address = $data['address'];
-                        $provider->telephone = $data['telephone'];
-                        $provider->cuit = $data['cuit'];
-                        $provider->web = $data['web'];
-                        $provider->codigoPostal = $data['codigoPostal'];
-                        $provider->iib = $data['iib'];
-                        $provider->pib = $data['pib'];
-                        $provider->epib = $data['epib'];
-                        $provider->responsableInscripto = $data['codigoProvincia'];
-                        $provider->excento = $data['excento'];
-                        $provider->responsableMonotributo = $data['responsableMonotributo'];
-                        $provider->ivaInscripto = $data['ivaInscripto'];
-                        $provider->precioLista = $data['precioLista'];
-                        $provider->condicionDeVenta = $data['condicionDeVenta'];
-                        $provider->limiteDeCredito = $data['limiteDeCredito'];
-                        $provider->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
-                        $provider->cuentasGenerales = $data['cuentasGenerales'];
-                        $provider->percepcionDeGanancia = $data['percepcionDeGanancia'];            
-
-                    $provider->save();
-
-                    return response()->json(['success' => 'Updated successfully'], 200);
-                } catch (\Exception $e) {
-                    return response()->json(['error' => $e->getMessage()], 401);
-                } 
-            }
-        }
+        } 
     }
 
     public function deleteProvider(Request $request) {

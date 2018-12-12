@@ -102,10 +102,9 @@ class ClientsController extends Controller
 
             // Search for user's company Data
             if ($data['type'] == 'CREATE') {
-                $existentCompany = Companies::where('fantasyName','=',$data['fantasyName'])->first() ||
-                                   Companies::where('name','=',$data['name'])->first();
+                $existentCompany = Companies::where('fantasyName','=', $data['fantasyName'])->first();
                 if ($existentCompany) {
-                    return response()->json(['error'=> "Ya existe una compania con mismo nombre o nombre de fantasia"], 500);
+                    return response()->json(['error'=> "Ya existe una compania con mismo nombre de fantasia"], 500);
                 } else {
                     $userC = new Companies();
                 }
