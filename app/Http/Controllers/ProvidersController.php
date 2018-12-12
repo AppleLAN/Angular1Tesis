@@ -129,7 +129,7 @@ class ProvidersController extends Controller
 		}
         if ($user) {
             $data = $request->all();
-            $hasProducts = Products::where('provider_id',$data['id'])->where('company_id',$user->company_id)->whereNull('deleted_at')->first()
+            $hasProducts = Products::where('provider_id',$data['id'])->where('company_id',$user->company_id)->whereNull('deleted_at')->first();
             if ($hasProducts) {
                 return response()->json(['error'=> "El proveedor posee productos para este usuario, por favor eliminarlos primero"], 500);
             } else {
