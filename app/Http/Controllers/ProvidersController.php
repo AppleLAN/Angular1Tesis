@@ -19,7 +19,7 @@ class ProvidersController extends Controller
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
         if ($user){
-           return Providers::where('company_id',$user->company_id)->get(); 
+            return  Providers::where('company_id',$user->company_id)->whereNull('deleted_at')->get()
         }
     }
 
