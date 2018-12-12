@@ -44,7 +44,7 @@ class ProductsController extends Controller
             try {
                 $data = $request->all();
                 
-                $existentProduct = Products::where('provider_id','=', $data['provider_id'])->where('name','=', $data['name'])->where('company_id','=', $user->company_id)->first();
+                $existentProduct = Products::where('provider_id','=', $data['provider_id'])->where('name','=', $data['name'])->where('company_id','=', $user->company_id)->whereNull('deleted_at')->first();
                 if ($existentProduct) {
                     return response()->json(['error'=> "Ya existe un producto con ese nombre para ese proveedor"], 500);
                 } else {

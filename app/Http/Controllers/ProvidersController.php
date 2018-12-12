@@ -30,7 +30,7 @@ class ProvidersController extends Controller
         $data = $request->all();
 
         if ($user) {
-            $existentProvider = Providers::where('fantasyName','=', $data['fantasyName'])->where('company_id','=', $user->company_id)->first();
+            $existentProvider = Providers::where('fantasyName','=', $data['fantasyName'])->where('company_id','=', $user->company_id)->whereNull('deleted_at')->first();
             if ($existentProvider) {
                 return response()->json(['error'=> "Ya existe un proveedor con ese nombre de fantasia"], 500);
             } else {

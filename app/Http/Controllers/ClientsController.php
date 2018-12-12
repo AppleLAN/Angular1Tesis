@@ -60,7 +60,7 @@ class ClientsController extends Controller
 		}
         if ($user) {
             $data = $request->all();
-            $existentUser = User::where('email', $data['email'])->first();
+            $existentUser = User::where('email', $data['email'])->whereNull('deleted_at')->first();
             if (($user->email !== $data['email']) && $existentUser) {
                 return response()->json(['error'=> "Ya existe un usuario con el email ingresado"], 500);
             } else { 
@@ -102,7 +102,7 @@ class ClientsController extends Controller
 
             // Search for user's company Data
             if ($data['type'] == 'CREATE') {
-                $existentCompany = Companies::where('fantasyName','=', $data['fantasyName'])->first();
+                $existentCompany = Companies::where('fantasyName','=', $data['fantasyName'])->whereNull('deleted_at')->first();
                 if ($existentCompany) {
                     return response()->json(['error'=> "Ya existe una compania con mismo nombre de fantasia"], 500);
                 } else {
@@ -158,7 +158,7 @@ class ClientsController extends Controller
             try {
                 $data = $request->all();
 
-                $existentCompany = Clients::where('fantasyName', '=', $data['fantasyName'])->first();
+                $existentCompany = Clients::where('fantasyName', '=', $data['fantasyName'])->whereNull('deleted_at')->first();
                 if ($existentCompany) {
                     return response()->json(['error'=> "Ya existe un Cliente con mismo nombre de fantasia"], 500);
                 } else {
