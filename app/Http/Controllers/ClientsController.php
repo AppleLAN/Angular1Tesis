@@ -19,7 +19,7 @@ class ClientsController extends Controller
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
         if ($user){
-            return  Clients::where('company_id',$user->company_id)->whereNull('deleted_at')->get()
+            return Clients::where('company_id',$user->company_id)->whereNull('deleted_at')->get();
         }
     }
 
