@@ -157,38 +157,43 @@ class ClientsController extends Controller
         if ($user) {
             try {
                 $data = $request->all();
-                $client = new Clients();
-                
-                $client->name = $data['name'];
-                $client->company_id = $user->company_id;
-                $client->fantasyName = $data['fantasyName'];
-                $client->email = $data['email'];
-                $client->place = $data['place'];
-                $client->codigoPostal = $data['codigoPostal'];
-                $client->codigoProvincia = $data['codigoProvincia'];
-                $client->address = $data['address'];
-                $client->telephone = $data['telephone'];
-                $client->cuit = $data['cuit'];
-                $client->web = $data['web'];
-                $client->iib = $data['iib'];
-                $client->pib = $data['pib'];
-                $client->epib = $data['epib'];
-                $client->responsableInscripto = $data['responsableInscripto'];
-                $client->excento = $data['excento'];
-                $client->responsableMonotributo = $data['responsableMonotributo'];
-                $client->ivaInscripto = $data['ivaInscripto'];
-                $client->precioLista = $data['precioLista'];
-                $client->condicionDeVenta = $data['condicionDeVenta'];
-                $client->limiteDeCredito = $data['limiteDeCredito'];
-                $client->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
-                $client->cuentasGenerales = $data['cuentasGenerales'];
-                $client->percepcionDeGanancia = $data['percepcionDeGanancia'];         
 
-                $client->save();
+                $existentCompany = Clients::where('fantasyName', '=', $data['fantasyName'])->first();
+                if ($existentCompany) {
+                    return response()->json(['error'=> "Ya existe un Cliente con mismo nombre de fantasia"], 500);
+                } else {
+                    $client = new Clients();
+                    $client->name = $data['name'];
+                    $client->company_id = $user->company_id;
+                    $client->fantasyName = $data['fantasyName'];
+                    $client->email = $data['email'];
+                    $client->place = $data['place'];
+                    $client->codigoPostal = $data['codigoPostal'];
+                    $client->codigoProvincia = $data['codigoProvincia'];
+                    $client->address = $data['address'];
+                    $client->telephone = $data['telephone'];
+                    $client->cuit = $data['cuit'];
+                    $client->web = $data['web'];
+                    $client->iib = $data['iib'];
+                    $client->pib = $data['pib'];
+                    $client->epib = $data['epib'];
+                    $client->responsableInscripto = $data['responsableInscripto'];
+                    $client->excento = $data['excento'];
+                    $client->responsableMonotributo = $data['responsableMonotributo'];
+                    $client->ivaInscripto = $data['ivaInscripto'];
+                    $client->precioLista = $data['precioLista'];
+                    $client->condicionDeVenta = $data['condicionDeVenta'];
+                    $client->limiteDeCredito = $data['limiteDeCredito'];
+                    $client->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
+                    $client->cuentasGenerales = $data['cuentasGenerales'];
+                    $client->percepcionDeGanancia = $data['percepcionDeGanancia'];         
+
+                    $client->save();
+                }
             }  catch (\Exception $e) {
                 return response()->json(['error' => $e->getMessage()], 401);
             }
-
+    
             return response()->json(['success' => 'Saved successfully'], 200);
         }
     }
