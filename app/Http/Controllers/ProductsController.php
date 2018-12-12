@@ -44,17 +44,24 @@ class ProductsController extends Controller
             try {
                 $data = $request->all();
                 
-                $product = new Products();
-                $product->company_id = $user->company_id;
-                $product->provider_id = $data['provider_id'];
-                $product->name = $data['name'];
-                $product->code = $data['code'];
-                $product->description = $data['description'];
-                $product->cost_price = $data['cost_price'];
-                $product->sale_price = $data['sale_price'];
-                $product->category_id = $data['category_id']; 
+                $existentProduct = Products::where('provider_id','=', $data['provider_id'])
+                                           ::where('name','=', $data['name'])
+                                           ::where('company_id','=', $user->company_id)->first();
+                if ($existentProduct) {
+                    return response()->json(['error'=> "Ya existe un producto con ese nombre para ese proveedor"], 500);
+                } else {
+                    $product = new Products();
+                    $product->company_id = $user->company_id;
+                    $product->provider_id = $data['provider_id'];
+                    $product->name = $data['name'];
+                    $product->code = $data['code'];
+                    $product->description = $data['description'];
+                    $product->cost_price = $data['cost_price'];
+                    $product->sale_price = $data['sale_price'];
+                    $product->category_id = $data['category_id']; 
 
-                $product->save();
+                    $product->save();
+                }
             }  catch (\Exception $e) {
                 return response()->json(['error' => $e->getMessage()], 401);
             }

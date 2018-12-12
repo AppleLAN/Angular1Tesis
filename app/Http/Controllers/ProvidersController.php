@@ -75,39 +75,47 @@ class ProvidersController extends Controller
         if ($user) {
 
             $data = $request->all();
-            try {
-                $provider = Providers::where('id',$data['id'])->where('company_id',$user->company_id)->first();
-                    $provider->name = $data['name'];
-                    $provider->company_id = $user->company_id;                
-                    $provider->fantasyName = $data['fantasyName'];
-                    $provider->email = $data['email'];
-                    $provider->place = $data['place'];
-                    $provider->codigoPostal = $data['codigoPostal'];
-                    $provider->codigoProvincia = $data['codigoProvincia'];
-                    $provider->address = $data['address'];
-                    $provider->telephone = $data['telephone'];
-                    $provider->cuit = $data['cuit'];
-                    $provider->web = $data['web'];
-                    $provider->codigoPostal = $data['codigoPostal'];
-                    $provider->iib = $data['iib'];
-                    $provider->pib = $data['pib'];
-                    $provider->epib = $data['epib'];
-                    $provider->responsableInscripto = $data['codigoProvincia'];
-                    $provider->excento = $data['excento'];
-                    $provider->responsableMonotributo = $data['responsableMonotributo'];
-                    $provider->ivaInscripto = $data['ivaInscripto'];
-                    $provider->precioLista = $data['precioLista'];
-                    $provider->condicionDeVenta = $data['condicionDeVenta'];
-                    $provider->limiteDeCredito = $data['limiteDeCredito'];
-                    $provider->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
-                    $provider->cuentasGenerales = $data['cuentasGenerales'];
-                    $provider->percepcionDeGanancia = $data['percepcionDeGanancia'];            
 
-                $provider->save();
+            $existentProvider = Providers::where('fantasyName','=', $data['fantasyName'])
+                                           ::where('name','=', $data['name'])
+                                           ::where('company_id','=', $user->company_id)->first();
+            if ($existentProvider) {
+                return response()->json(['error'=> "Ya existe un proveedor con ese nombre o nombre de fantasia"], 500);
+            } else {
+                try {
+                    $provider = Providers::where('id',$data['id'])->where('company_id',$user->company_id)->first();
+                        $provider->name = $data['name'];
+                        $provider->company_id = $user->company_id;                
+                        $provider->fantasyName = $data['fantasyName'];
+                        $provider->email = $data['email'];
+                        $provider->place = $data['place'];
+                        $provider->codigoPostal = $data['codigoPostal'];
+                        $provider->codigoProvincia = $data['codigoProvincia'];
+                        $provider->address = $data['address'];
+                        $provider->telephone = $data['telephone'];
+                        $provider->cuit = $data['cuit'];
+                        $provider->web = $data['web'];
+                        $provider->codigoPostal = $data['codigoPostal'];
+                        $provider->iib = $data['iib'];
+                        $provider->pib = $data['pib'];
+                        $provider->epib = $data['epib'];
+                        $provider->responsableInscripto = $data['codigoProvincia'];
+                        $provider->excento = $data['excento'];
+                        $provider->responsableMonotributo = $data['responsableMonotributo'];
+                        $provider->ivaInscripto = $data['ivaInscripto'];
+                        $provider->precioLista = $data['precioLista'];
+                        $provider->condicionDeVenta = $data['condicionDeVenta'];
+                        $provider->limiteDeCredito = $data['limiteDeCredito'];
+                        $provider->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
+                        $provider->cuentasGenerales = $data['cuentasGenerales'];
+                        $provider->percepcionDeGanancia = $data['percepcionDeGanancia'];            
 
-                return response()->json(['success' => 'Updated successfully'], 200);
-            } catch (\Exception $e) {
-                return response()->json(['error' => $e->getMessage()], 401);
+                    $provider->save();
+
+                    return response()->json(['success' => 'Updated successfully'], 200);
+                } catch (\Exception $e) {
+                    return response()->json(['error' => $e->getMessage()], 401);
+                } 
             }
         }
     }
