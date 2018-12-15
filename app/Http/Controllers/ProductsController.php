@@ -85,7 +85,7 @@ class ProductsController extends Controller
                 $product = Products::where('id',$data['id'])->where('company_id',$user->company_id)->first();                
                 if (count($product) > 0) {    
                     $product->company_id = $user->company_id;
-                    $product->company_id = $data['provider_id'];
+                    $product->provider_id = $data['provider_id'];
                     $product->name = $data['name'];
                     $product->code = $data['code'];
                     $product->description = $data['description'];
