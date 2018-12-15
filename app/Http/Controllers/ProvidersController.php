@@ -49,7 +49,7 @@ class ProvidersController extends Controller
                     $provider->iib = $data['iib'];
                     $provider->pib = $data['pib'];
                     $provider->epib = $data['epib'];
-                    $provider->responsableInscripto = $data['codigoProvincia'];
+                    $provider->responsableInscripto = $data['responsableInscripto'];
                     $provider->excento = $data['excento'];
                     $provider->responsableMonotributo = $data['responsableMonotributo'];
                     $provider->ivaInscripto = $data['ivaInscripto'];
@@ -97,7 +97,7 @@ class ProvidersController extends Controller
                 $provider->iib = $data['iib'];
                 $provider->pib = $data['pib'];
                 $provider->epib = $data['epib'];
-                $provider->responsableInscripto = $data['codigoProvincia'];
+                $provider->responsableInscripto = $data['responsableInscripto'];
                 $provider->excento = $data['excento'];
                 $provider->responsableMonotributo = $data['responsableMonotributo'];
                 $provider->ivaInscripto = $data['ivaInscripto'];
