@@ -41,11 +41,12 @@ class ProvidersController extends Controller
                     $provider->fantasyName = $data['fantasyName'];
                     $provider->email = $data['email'];
                     $provider->place = $data['place'];
+                    $provider->codigoPostal = $data['codigoPostal'];
+                    $provider->codigoProvincia = $data['codigoProvincia'];
                     $provider->address = $data['address'];
                     $provider->telephone = $data['telephone'];
                     $provider->cuit = $data['cuit'];
                     $provider->web = $data['web'];
-                    $provider->codigoPostal = $data['codigoPostal'];
                     $provider->iib = $data['iib'];
                     $provider->pib = $data['pib'];
                     $provider->epib = $data['epib'];
@@ -58,7 +59,7 @@ class ProvidersController extends Controller
                     $provider->limiteDeCredito = $data['limiteDeCredito'];
                     $provider->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
                     $provider->cuentasGenerales = $data['cuentasGenerales'];
-                    $provider->percepcionDeGanancia = $data['percepcionDeGanancia'];            
+                    $provider->percepcionDeGanancia = $data['percepcionDeGanancia'];         
 
                     $provider->save();
                 }  catch (\Exception $e) {
