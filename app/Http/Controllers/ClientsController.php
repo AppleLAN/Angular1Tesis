@@ -158,7 +158,7 @@ class ClientsController extends Controller
             try {
                 $data = $request->all();
 
-                $existentCompany = Clients::where('fantasyName', '=', $data['fantasyName'])->whereNull('deleted_at')->first();
+                $existentCompany = Clients::where('fantasyName', '=', $data['fantasyName'])->where('company_id','=', $user->company_id)->whereNull('deleted_at')->first();
                 if ($existentCompany) {
                     return response()->json(['error'=> "Ya existe un Cliente con mismo nombre de fantasia"], 500);
                 } else {
