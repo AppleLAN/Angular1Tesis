@@ -194,7 +194,7 @@ class ClientsController extends Controller
                 return response()->json(['error' => $e->getMessage()], 401);
             }
     
-            return response()->json(['success' => 'Saved successfully'], 200);
+            return response()->json(['success' => $client], 200);
         }
     }
 
