@@ -77,26 +77,46 @@ class ClientsController extends Controller
                 $userI->address = $data['address'];
                 
                 if ($data['sales'] || $data['stock'] || $data['clients'] || $data['providers']) {
+                    $role = HelpersController::checkUserRole($user->id);
+                    if ($user && $role->role_id == UserRole::ADMIN) { 
+                        $subUsers = DB::table('users')
+                                    ->where('company_id', $user->company_id)
+                                    ->join('user_roles', 'users.id', '=', 'user_roles.user_id') 
+                                    ->where('user_roles.role_id', UserRole::NORMAL_USER)
+                                    ->get();                   
+                        foreach ($subUsers as $subUser) {
 
-                    $subUsers = DB::table('users')
-                    ->where('company_id', $user->company_id)
-                    ->join('user_roles', 'users.id', '=', 'user_roles.user_id') 
-                    ->where('user_roles.role_id', UserRole::NORMAL_USER)
-                    ->get();
-
-                    foreach ($subUsers as $subUser) {
-
-                        if ($subUser->sales && ($data['sales'] == 0)) {
-                            return response()->json(['error'=> "Existen sub-usuarios que poseen el modulo 'Ventas' habilitado"], 500); 
+                            if ($subUser->sales && !$data['sales']) {
+                                return response()->json(['error'=> "Existen sub-usuarios que poseen el módulo 'Ventas' habilitado"], 500); 
+                            }
+                            if ($subUser->stock && !$data['stock']) {
+                                return response()->json(['error'=> "Existen sub-usuarios que poseen el módulo 'Productos' habilitado"], 500); 
+                            }
+                            if ($subUser->clients && !$data['clients']) {
+                                return response()->json(['error'=> "Existen sub-usuarios que poseen el módulo 'Clientes' habilitado"], 500); 
+                            }
+                            if ($subUser->providers && !$data['providers']) {
+                                return response()->json(['error'=> "Existen sub-usuarios que poseen el módulo 'Proveedores' habilitado"], 500); 
+                            }
                         }
-                        if ($subUser->stock && ($data['stock'] == 0)) {
-                            return response()->json(['error'=> "Existen sub-usuarios que poseen el modulo 'Productos' habilitado"], 500); 
+                    } else {
+                        $adminUser = DB::table('users')
+                            ->where('company_id', $user->company_id)
+                            ->join('user_roles', 'users.id', '=', 'user_roles.user_id') 
+                            ->where('user_roles.role_id', UserRole::ADMIN)
+                            ->find();
+                        
+                        if (!$adminUser->sales && $data['sales'])) {
+                            return response()->json(['error'=> "El módulo 'Ventas' no esta habilitado"], 500); 
                         }
-                        if ($subUser->clients && ($data['clients'] == 0)) {
-                            return response()->json(['error'=> "Existen sub-usuarios que poseen el modulo 'Clientes' habilitado"], 500); 
+                        if (!$adminUser->stock && $data['stock']) {
+                            return response()->json(['error'=> "El módulo 'Productos' no esta habilitado"], 500); 
                         }
-                        if ($subUser->providers && ($data['providers'] == 0)) {
-                            return response()->json(['error'=> "Existen sub-usuarios que poseen el modulo 'Proveedores' habilitado"], 500); 
+                        if (!$adminUser->clients && $data['clients']) {
+                            return response()->json(['error'=> "El módulo 'Clientes' no esta habilitado"], 500); 
+                        }
+                        if (!$adminUser->providers && $data['providers']) {
+                            return response()->json(['error'=> "El módulo 'Proveedores' no esta habilitado"], 500); 
                         }
                     }
 
