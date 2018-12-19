@@ -106,7 +106,7 @@ class ClientsController extends Controller
                             ->where('user_roles.role_id', UserRole::ADMIN)
                             ->find();
                         
-                        if (!$adminUser->sales && $data['sales'])) {
+                        if (!$adminUser->sales && $data['sales']) {
                             return response()->json(['error'=> "El módulo 'Ventas' no esta habilitado"], 500); 
                         }
                         if (!$adminUser->stock && $data['stock']) {
