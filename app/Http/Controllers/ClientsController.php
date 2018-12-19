@@ -12,6 +12,7 @@ use App\Companies;
 use App\Enums\UserRole;
 use Hash;
 use Carbon\Carbon;
+use DB;
 
 class ClientsController extends Controller
 {
