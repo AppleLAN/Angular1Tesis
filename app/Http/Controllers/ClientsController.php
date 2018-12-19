@@ -76,6 +76,29 @@ class ClientsController extends Controller
                 $userI->address = $data['address'];
                 
                 if ($data['sales'] || $data['stock'] ||$data['clients'] || $data['providers']) {
+
+                    $subUsers = DB::table('user')
+                    ->where('company_id', $user->company_id)
+                    ->join('user_roles', 'user.id', '=', 'user_roles.user_id') 
+                    ->where('user_roles.role_id', UserRole::NORMAL_USER)
+                    ->get();
+
+                    foreach ($subUsers as $subUser) {
+
+                        if ($subUser->sales && !$data['sales']) {
+                            return response()->json(['error'=> "Existen sub-usuarios que poseen el modulo 'Ventas' habilitado"], 500); 
+                        }
+                        if ($subUser->stock && !$data['stock']) {
+                            return response()->json(['error'=> "Existen sub-usuarios que poseen el modulo 'Productos' habilitado"], 500); 
+                        }
+                        if ($subUser->clients && !$data['clients']) {
+                            return response()->json(['error'=> "Existen sub-usuarios que poseen el modulo 'Clientes' habilitado"], 500); 
+                        }
+                        if ($subUser->providers && !$data['providers']) {
+                            return response()->json(['error'=> "Existen sub-usuarios que poseen el modulo 'Proveedores' habilitado"], 500); 
+                        }
+                    }
+
                     $userI->sales = $data['sales'];
                     $userI->stock = $data['stock'];
                     $userI->clients = $data['clients'];
