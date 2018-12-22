@@ -146,9 +146,12 @@ class ClientsController extends Controller
 
             // Search for user's company Data
             if ($data['type'] == 'CREATE') {
-                $existentCompany = Companies::where('fantasyName','=', $data['fantasyName'])->whereNull('deleted_at')->first();
-                if ($existentCompany) {
+                $existentCompanyFantasyName = Companies::where('fantasyName','=', $data['fantasyName'])->whereNull('deleted_at')->first();
+                $existentCompanyCuit = Companies::where('cuit','=', $data['cuit'])->whereNull('deleted_at')->first();
+                if ($existentCompanyFantasyName) {
                     return response()->json(['error'=> "Ya existe una compania con mismo nombre de fantasia"], 500);
+                } else if ($existentCompanyCuit) {
+                    return response()->json(['error'=> "Ya existe una compania con mismo C.U.I.T"], 500);
                 } else {
                     $userC = new Companies();
                 }
@@ -202,9 +205,13 @@ class ClientsController extends Controller
             try {
                 $data = $request->all();
 
-                $existentCompany = Clients::where('fantasyName', '=', $data['fantasyName'])->where('company_id','=', $user->company_id)->whereNull('deleted_at')->first();
-                if ($existentCompany) {
+                $existentCompanyFantasyName = Clients::where('fantasyName', '=', $data['fantasyName'])->where('company_id','=', $user->company_id)->whereNull('deleted_at')->first();
+                $existentCompanyCuit = Clients::where('cuit', '=', $data['cuit'])->where('company_id','=', $user->company_id)->whereNull('deleted_at')->first();
+                
+                if ($existentCompanyFantasyName) {
                     return response()->json(['error'=> "Ya existe un Cliente con mismo nombre de fantasia"], 500);
+                } else if ($existentCompanyCuit) {
+                    return response()->json(['error'=> "Ya existe un Cliente con mismo C.U.I.T"], 500);
                 } else {
                     $client = new Clients();
                     $client->name = $data['name'];

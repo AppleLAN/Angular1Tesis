@@ -44,9 +44,12 @@ class ProductsController extends Controller
             try {
                 $data = $request->all();
                 
-                $existentProduct = Products::where('provider_id','=', $data['provider_id'])->where('name','=', $data['name'])->where('company_id','=', $user->company_id)->whereNull('deleted_at')->first();
-                if ($existentProduct) {
-                    return response()->json(['error'=> "Ya existe un producto con ese nombre para ese proveedor"], 500);
+                $existentProductName = Products::where('provider_id','=', $data['provider_id'])->where('name','=', $data['name'])->where('company_id','=', $user->company_id)->whereNull('deleted_at')->first();
+                $existentProductCode = Products::where('provider_id','=', $data['provider_id'])->where('code','=', $data['code'])->where('company_id','=', $user->company_id)->whereNull('deleted_at')->first();
+                if ($existentProductName) {
+                    return response()->json(['error'=> "Ya existe un producto con mismo nombre para mismo proveedor"], 500);
+                } else if ($existentProductCode) {
+                    return response()->json(['error'=> "Ya existe un producto con mismo código para mismo proveedor"], 500);
                 } else {
                     $product = new Products();
                     $product->company_id = $user->company_id;
@@ -79,24 +82,32 @@ class ProductsController extends Controller
 
         if ($user) {
 
-            $data = $request->all();
             try {
-                
+                $data = $request->all();
+
+                $existentProductName = Products::where('provider_id','=', $data['provider_id'])->where('name','=', $data['name'])->where('company_id','=', $user->company_id)->whereNull('deleted_at')->first();
+                $existentProductCode = Products::where('provider_id','=', $data['provider_id'])->where('code','=', $data['code'])->where('company_id','=', $user->company_id)->whereNull('deleted_at')->first();
                 $product = Products::where('id',$data['id'])->where('company_id',$user->company_id)->first();                
-                if (count($product) > 0) {    
-                    $product->company_id = $user->company_id;
-                    $product->provider_id = $data['provider_id'];
-                    $product->name = $data['name'];
-                    $product->code = $data['code'];
-                    $product->description = $data['description'];
-                    $product->cost_price = $data['cost_price'];
-                    $product->sale_price = $data['sale_price'];
-                    $product->category_id = $data['category_id']; 
+                if ($data['name'] !== $product->name && $existentProductName) {
+                    return response()->json(['error'=> "Ya existe un producto con mismo nombre para mismo proveedor"], 500);
+                } else if ($data['code'] !== $product->code && $existentProductCode) {
+                    return response()->json(['error'=> "Ya existe un producto con mismo código para mismo proveedor"], 500);
+                } else {
+                    if (count($product) > 0) {    
+                        $product->company_id = $user->company_id;
+                        $product->provider_id = $data['provider_id'];
+                        $product->name = $data['name'];
+                        $product->code = $data['code'];
+                        $product->description = $data['description'];
+                        $product->cost_price = $data['cost_price'];
+                        $product->sale_price = $data['sale_price'];
+                        $product->category_id = $data['category_id']; 
+                    }
+
+                    $product->save();
+
+                    return response()->json(['success' => 'Updated successfully'], 200);
                 }
-
-                $product->save();
-
-                return response()->json(['success' => 'Updated successfully'], 200);
             } catch (\Exception $e) {
                 return response()->json(['error' => $e->getMessage()], 401);
             }
