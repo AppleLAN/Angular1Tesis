@@ -32,7 +32,7 @@ class Afip extends SoapClient
     */
     public function __construct($service)
     {
-        if (config('afip.production') === true) {
+        if (false === true) {
             $this->wsfeUri = config('afip.wsfe_pro');
             $this->wsfeWsdlUri = config('afip.wsfe_wsdl_pro');
         } else {

@@ -52,7 +52,7 @@ class Wsaa extends SoapClient
     */
     public function __construct($service)
     {
-        if (config('afip.production') === true) {
+        if (false === true) {
             $this->wsaaUri = config('afip.wsaa_pro');
             $this->wsaaWsdlUri = config('afip.wsaa_wsdl_pro');
         } else {
