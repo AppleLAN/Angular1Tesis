@@ -32,13 +32,13 @@ class Afip extends SoapClient
     */
     public function __construct($service)
     {
-        if (false === true) {
+        /* if (false === true) {
             $this->wsfeUri = config('afip.wsfe_pro');
             $this->wsfeWsdlUri = config('afip.wsfe_wsdl_pro');
-        } else {
+        } else { */
             $this->wsfeUri = 'https://wswhomo.afip.gov.ar/wsfev1/service.asmx';
             $this->wsfeWsdlUri = 'https://wswhomo.afip.gov.ar/wsfev1/service.asmx?WSDL';
-        }
+        /* } */
 
         $this->wsaa = Wsaa::getInstance($service)->init();
         parent::SoapClient($this->wsfeWsdlUri, $this->WSFEoptions());

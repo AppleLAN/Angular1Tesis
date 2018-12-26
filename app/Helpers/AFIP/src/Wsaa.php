@@ -52,13 +52,15 @@ class Wsaa extends SoapClient
     */
     public function __construct($service)
     {
-       /*  if (false === true) {
-            $this->wsaaUri = config('afip.wsaa_pro');
-            $this->wsaaWsdlUri = config('afip.wsaa_wsdl_pro');
-        } else { */
+        if (false === true) {
+            $this->wsaaUri = 'https://wsaa.afip.gov.ar/ws/services/LoginCms';
+            $this->wsaaWsdlUri = 'https://wsaa.afip.gov.ar/ws/services/LoginCms?WSDL';
+        } else {
             $this->wsaaUri = 'https://wsaahomo.afip.gov.ar/ws/services/LoginCms';
             $this->wsaaWsdlUri = 'https://wsaahomo.afip.gov.ar/ws/services/LoginCms?WSDL';
-       /*  } */
+        }
+        $this->wsaaUri = 'https://wsaahomo.afip.gov.ar/ws/services/LoginCms';
+        $this->wsaaWsdlUri = 'https://wsaahomo.afip.gov.ar/ws/services/LoginCms?WSDL';
 
         parent::SoapClient($this->wsaaWsdlUri, $this->WSAAoptions());
         $this->service = $service;
@@ -180,6 +182,7 @@ class Wsaa extends SoapClient
         $header->appendChild($dom->createElement("expirationTime", date('c', date('U') + 60)));
 
         $root->appendChild($dom->createElement("service", $this->service));
+
         return $dom->saveXml();
     }
 
@@ -198,12 +201,12 @@ class Wsaa extends SoapClient
         $status = openssl_pkcs7_sign(
             $traFile,
             $traCmsFile,
-            "file://" . storage_path('certificates/miClaveFiscalRequest.pem'),
+            "file://" . storage_path('certificates/miClaveFiscal.pem'),
             'file://' . storage_path('certificates/miClaveFiscal'),
             [],
             0
         );
-        
+
         if (! $status) {
             throw new Exception("Error generating PKCS7 signature.");
         }
@@ -273,7 +276,7 @@ class Wsaa extends SoapClient
             'Auth' => [
                 'Token' => $this->token(),
                 'Sign' => $this->sign(),
-                'Cuit' => '20366017314'
+                'Cuit' => 20293599948
             ]
         ];
     }

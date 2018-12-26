@@ -20,14 +20,14 @@ return [
     | Certificate file path
     |--------------------------------------------------------------------------
     */
-    'certificate_file' => "file://" . storage_path('certification/sawmill_cert.pem'),
+    'certificate_file' => "file://" . storage_path('certificates/miClaveFiscal.pem'),
 
     /*
     |--------------------------------------------------------------------------
     | Private key file path
     |--------------------------------------------------------------------------
     */
-    'private_key' => 'file://' . storage_path('certification/sawmill_sandbox'),
+    'private_key' => 'file://' . storage_path('certificates/miClaveFiscal'),
 
     /*
     |--------------------------------------------------------------------------
