@@ -137,7 +137,7 @@ class SaleController extends Controller
 				$product[$detail['product_id']] = Products::where('id', $detail['product_id'])->first();
 			}	
 			$sale['products'] = $product;
-			array_push($saleInfo, $sale);
+			array_unshift($saleInfo, $sale);
 		} else {
 			$sales = Sale::where('company_id',$user->company_id)->get(); 			
 
@@ -149,7 +149,7 @@ class SaleController extends Controller
 					$product[$detail['product_id']] = Products::where('id', $detail['product_id'])->first();
 				}	
 				$sale['products'] = $product;
-				array_push($saleInfo, $sale);				
+				array_unshift($saleInfo, $sale);				
 			}
 		}
 

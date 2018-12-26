@@ -79,7 +79,7 @@ class OrderController extends Controller
 					$product[$detail['product_id']] = Products::where('id', $detail['product_id'])->first();
 				}					
 				$information['products'] = $product;
-				array_push($orderInformation, $information);
+				array_unshift($orderInformation, $information);
 			}
 			$r = new ApiResponse();
 			$r->success = true;
