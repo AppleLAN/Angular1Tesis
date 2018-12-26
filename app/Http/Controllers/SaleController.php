@@ -192,7 +192,7 @@ class SaleController extends Controller
 												->currencyTrading(1)
 												->fromDate('20180301')
 												->toDate('20181031')
-												->expirationDate('20181031');
+												->expirationDate('20191031');
 					
 								$product = $afip->concept();
 								$product->conceptType(1)
