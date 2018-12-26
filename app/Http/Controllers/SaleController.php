@@ -16,7 +16,7 @@ use Tymon\JWTAuthExceptions\JWTException;
 use App\Helpers\ApiResponse;
 use Auth;
 use Carbon\Carbon;
-use Avalith\AFIP\Afip;
+use App\Helpers\AFIP\Afip;
 use App\Http\Controllers\Response;
 
 class SaleController extends Controller
