@@ -166,7 +166,8 @@ class SaleController extends Controller
 		
 		$sale = Sale::find($request->input('saleId'));
 		try {
-				if ($sale->cae_data != NULL && json_decode($sale->cae_data)->FeDetResp->FECAEDetResponse->CAE !== '') {
+				print_r(json_decode($sale->cae_data));
+				if (is_null($sale->cae_data) && json_decode($sale->cae_data)->FeDetResp->FECAEDetResponse->CAE !== '') {
 					return response()->json(['success' => json_decode($sale->cae_data)], 200);
 				} else{
 						$afip = new Afip("wsfe");
