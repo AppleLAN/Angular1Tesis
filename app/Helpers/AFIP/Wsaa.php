@@ -190,7 +190,8 @@ class Wsaa extends SoapClient
             $header->appendChild($dom->createElement("expirationTime", date('c', date('U') + 60)));
     
             $root->appendChild($dom->createElement("service", $this->service));
-            return $dom->saveXml();
+            this->$dom = $dom;
+            return this->$dom->saveXml();
         } else {
             return this->$dom;
         }
