@@ -198,7 +198,7 @@ class Wsaa extends SoapClient
         $status = openssl_pkcs7_sign(
             $traFile,
             $traCmsFile,
-            "file://" . storage_path('certificates/miClaveFiscal.pem'),
+            "file://" . storage_path('certificates/miClaveFiscalRequest.pem'),
             'file://' . storage_path('certificates/miClaveFiscal'),
             [],
             0
