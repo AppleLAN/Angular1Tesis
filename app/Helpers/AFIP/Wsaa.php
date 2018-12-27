@@ -191,9 +191,9 @@ class Wsaa extends SoapClient
     
             $root->appendChild($dom->createElement("service", $this->service));
             this->$dom = $dom;
-            return this->$dom->saveXml();
+            return $dom->saveXml();
         } else {
-            return this->$dom;
+            return this->$dom->saveXml();
         }
     }
 
