@@ -116,13 +116,7 @@ class UserController extends Controller
             } catch (\Exception $e) {
 				return response()->json(['Error' => 'Error: "'.$e->getMessage().'" obteniendo usuarios internos'], 500);				
 			}
-            $r = new ApiResponse();
-            $r->success = true;
-            $r->message = "Usuarios Internos obtenidos exitosamente";
-            $r->code = 200;
-            $r->data = $subUsers;
-
-            return $r->doResponse();
+            return response()->json(['success' => $subUsers], 200);
         }
     }
 
