@@ -24,6 +24,7 @@ use App\User;
 use Hash;
 use App\Enums\UserRole;
 use App\UserRoles;
+use DB;
 
 class UserController extends Controller
 {
