@@ -106,7 +106,18 @@ class UserController extends Controller
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
         if ($user){
-            return User::where('company_id',$user->company_id)->where('role_id', UserRole::NORMAL_USER)->whereNull('deleted_at')->get();
+            try {
+                $users = User::where('company_id',$user->company_id)->where('role_id', UserRole::NORMAL_USER)->whereNull('deleted_at')->get();
+            } catch (\Exception $e) {
+				return response()->json(['Error' => 'Error: "'.$e->getMessage().'" obteniendo usuarios internos'], 500);				
+			}
+            $r = new ApiResponse();
+            $r->success = true;
+            $r->message = "Usuarios Internos obtenidos exitosamente";
+            $r->code = 200;
+            $r->data = $users;
+
+            return $r->doResponse();
         }
     }
 
