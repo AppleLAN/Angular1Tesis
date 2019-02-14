@@ -27,6 +27,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'cors'], function () {
     Route::post('/signup','RegisterController@signup');    
     Route::get('/getUserApps','UserController@getUserApps');
     Route::post('/createInternalUser','UserController@createInternalUser');
+    Route::get('/getAllInternalUsers','UserController@getAllInternalUsers');
     Route::get('/getClients','ClientsController@getClients');
     Route::post('/saveClient','ClientsController@saveClient');
     Route::post('/updateClient','ClientsController@updateClient');

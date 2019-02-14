@@ -102,6 +102,15 @@ class UserController extends Controller
 
     }
 
+    public function getAllInternalUsers() {
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user){
+            return User::where('company_id',$user->company_id)->where('role_id', UserRole::NORMAL_USER)->whereNull('deleted_at')->get();
+        }
+    }
+
+
     /**
      * Display the specified resource.
      *
