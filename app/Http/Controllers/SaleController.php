@@ -55,16 +55,16 @@ class SaleController extends Controller
 	        $sale->client_name= $client['name'];
 	    } else {
 	        $sale->client_id = $sale->client_cuit = $sale->client_address = $sale->client_name = null;
-	    }
-	    
-	    if ($company['responsableMonotributo']  == 1 || $company['excento'] == 1) {
+			}
+			
+			if ($company['responsableInscripto']  == 1) {
+				if ( $client['responsableInscripto'] == 1) {
+					$sale->letter = 'A';
+				} else {
+					$sale->letter = 'B';
+				}
+			} else {
 	    	$sale->letter = 'C';
-	    } else {
-	    	if ($client['responsableInscripto'] == 1) {
-	    		$sale->letter = 'A';
-	    	} else {
-	    		$sale->letter = 'B';
-	    	}
 			}
 
 	    $sale->date = $data['saleDate'];
@@ -170,14 +170,14 @@ class SaleController extends Controller
 					return response()->json(['success' => json_decode($sale->cae_data)], 200);
 				} else{
 						$afip = new Afip("wsfe");
-					
+						$company = Companies::find($user->company_id);
 						$status = $afip->serverStatus();
 						if ($request->isMethod('post')) {
-								$pointSale = 1;
-								$type = 3; // A B C
-								$documentType = 80; //CUIT
-								$cuit = 20354108209;
-								$date = \Carbon\Carbon::now()->format('Ymd');
+								$pointSale = $company->address;
+								$type = $sale->letter; // A B C
+								$documentType = 80; //Document Type of the customer
+								$cuit = $sale->client_cuit;
+								$date = $sale->created_at;
 					
 								$lastVoucher = $afip->lastVoucher($pointSale, $type);
 								$voucherNumber = $lastVoucher['CbteNro'] + 1;
