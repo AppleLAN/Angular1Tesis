@@ -57,8 +57,8 @@ class SaleController extends Controller
 	        $sale->client_id = $sale->client_cuit = $sale->client_address = $sale->client_name = null;
 			}
 			
-			if ($company['responsableInscripto']  == 1 || $company['ivaInscripto']  == 1) {
-				if ($client['responsableInscripto'] == 1 || $client['ivaInscripto']  == 1) {
+			if ($company['responsableInscripto']  == 1) {
+				if ($client['responsableInscripto'] == 1) {
 					$sale->letter = 'A';
 				} else {
 					$sale->letter = 'B';
