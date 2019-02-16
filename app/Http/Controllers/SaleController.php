@@ -174,7 +174,7 @@ class SaleController extends Controller
 						$company = Companies::find($user->company_id);
 						$status = $afip->serverStatus();
 						if ($request->isMethod('post')) {
-								$pointSale = $company->address;
+								$pointSale = $company->id;
 								$type = $sale->letter; // A B C
 								$documentType = 80; //Document Type of the customer
 								$cuit = $sale->client_cuit;
