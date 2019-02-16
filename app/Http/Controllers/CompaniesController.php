@@ -43,6 +43,8 @@ class CompaniesController extends Controller
 
                 $companyInformation = new Companies();
                 $companyInformation->name = $data['name'];
+                $companyInformation->sale_point = $data['sale_point'];
+                $companyInformation->start_date = $data['start_date'];
                 $companyInformation->fantasyName = $data['fantasyName'];
                 $companyInformation->email = $data['email'];
                 $companyInformation->place = $data['place'];
@@ -88,6 +90,8 @@ class CompaniesController extends Controller
 
                 $companyInformation->name = $data['name'];
                 $companyInformation->fantasyName = $data['fantasyName'];
+                $companyInformation->sale_point = $data['sale_point'];
+                $companyInformation->start_date = $data['start_date'];
                 $companyInformation->email = $data['email'];
                 $companyInformation->place = $data['place'];
                 $companyInformation->codigoPostal = $data['codigoPostal'];

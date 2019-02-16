@@ -161,6 +161,8 @@ class ClientsController extends Controller
 
             $userC->name = $data['name'];
             $userC->fantasyName = $data['fantasyName'];
+            $userC->sale_point = $data['sale_point'];
+            $userC->start_date = $data['start_date'];
             $userC->email = $data['email'];
             $userC->place = $data['place'];
             $userC->codigoPostal = $data['codigoPostal'];
@@ -217,6 +219,8 @@ class ClientsController extends Controller
                     $client->name = $data['name'];
                     $client->company_id = $user->company_id;
                     $client->fantasyName = $data['fantasyName'];
+                    $client->sale_point = $data['sale_point'];
+                    $client->start_date = $data['start_date'];
                     $client->email = $data['email'];
                     $client->place = $data['place'];
                     $client->codigoPostal = $data['codigoPostal'];
@@ -266,6 +270,8 @@ class ClientsController extends Controller
                 $client->name = $data['name'];
                 $client->company_id = $user->company_id;
                 $client->fantasyName = $data['fantasyName'];
+                $client->sale_point = $data['sale_point'];
+                $client->start_date = $data['start_date'];
                 $client->email = $data['email'];
                 $client->place = $data['place'];
                 $client->codigoPostal = $data['codigoPostal'];

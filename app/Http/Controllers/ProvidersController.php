@@ -41,6 +41,8 @@ class ProvidersController extends Controller
                     $provider = new Providers();
                     $provider->name = $data['name'];
                     $provider->company_id = $user->company_id;
+                    $provider->sale_point = $data['sale_point'];
+                    $provider->start_date = $data['start_date'];
                     $provider->fantasyName = $data['fantasyName'];
                     $provider->email = $data['email'];
                     $provider->place = $data['place'];
@@ -89,6 +91,8 @@ class ProvidersController extends Controller
                 $provider->name = $data['name'];
                 $provider->company_id = $user->company_id;                
                 $provider->fantasyName = $data['fantasyName'];
+                $provider->sale_point = $data['sale_point'];
+                $provider->start_date = $data['start_date'];
                 $provider->email = $data['email'];
                 $provider->place = $data['place'];
                 $provider->codigoPostal = $data['codigoPostal'];
