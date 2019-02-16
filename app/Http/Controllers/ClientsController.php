@@ -35,7 +35,7 @@ class ClientsController extends Controller
                 $clients = Companies::select('id','created_at','updated_at','deleted_at',
                 'name','fantasyName','email','place','codigoPostal','codigoProvincia','address','telephone','cuit',
                 'web','iib','pib','epib','responsableInscripto','excento','responsableMonotributo','ivaInscripto','precioLista',
-                'condicionDeVenta','limiteDeCredito','numeroDeInscripcionesIB','cuentasGenerales','percepcionDeGanancia') 
+                'condicionDeVenta','limiteDeCredito','numeroDeInscripcionesIB','cuentasGenerales','percepcionDeGanancia', 'start_date', 'sale_point') 
                         ->where('id',$user->company_id) 
                         ->first(); 
                 $response['company'] = $clients;
