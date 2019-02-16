@@ -169,15 +169,16 @@ class SaleController extends Controller
 				if (!empty($sale->cae_data) && json_decode($sale->cae_data)->FeDetResp->FECAEDetResponse->CAE !== '') {
 					return response()->json(['success' => json_decode($sale->cae_data)], 200);
 				} else{
+					try {
 						$afip = new Afip("wsfe");
 					
 						$status = $afip->serverStatus();
 						if ($request->isMethod('post')) {
 								$pointSale = 1;
-								$type = 3; // A B C
+								$type = $sale->letter; // A B C
 								$documentType = 80; //CUIT
-								$cuit = 20354108209;
-								$date = \Carbon\Carbon::now()->format('Ymd');
+								$cuit = $sale->client_cuit;
+								$date = $sale->created_at;
 					
 								$lastVoucher = $afip->lastVoucher($pointSale, $type);
 								$voucherNumber = $lastVoucher['CbteNro'] + 1;
@@ -218,7 +219,10 @@ class SaleController extends Controller
 								$sale->save();
 				
 								return response()->json(['success' => $cae], 200);
-					}
+						}
+					} catch (\Exception $e) {
+						return response()->json(['error' => $e->getMessage()], 500);
+				}
 				}
 		} catch (\Exception $e) {
 				return response()->json(['error' => $e->getMessage()], 500);
