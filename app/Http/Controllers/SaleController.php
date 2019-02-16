@@ -163,22 +163,21 @@ class SaleController extends Controller
 	}
 
 	public function getAfipCae(Request $request){
-		$token = JWTAuth::getToken();
-		$user = JWTAuth::toUser($token);
+		
 		$sale = Sale::find($request->input('saleId'));
 		try {
 				if (!empty($sale->cae_data) && json_decode($sale->cae_data)->FeDetResp->FECAEDetResponse->CAE !== '') {
 					return response()->json(['success' => json_decode($sale->cae_data)], 200);
 				} else{
 						$afip = new Afip("wsfe");
-						$company = Companies::find($user->company_id);
+					
 						$status = $afip->serverStatus();
 						if ($request->isMethod('post')) {
-								$pointSale = $company->id;
+								$pointSale = 1;
 								$type = $sale->letter; // A B C
-								$documentType = 80; //Document Type of the customer
+								$documentType = 80; //CUIT
 								$cuit = $sale->client_cuit;
-								$date = $sale->created_at;
+								$date = \Carbon\Carbon::now()->format('Ymd');
 					
 								$lastVoucher = $afip->lastVoucher($pointSale, $type);
 								$voucherNumber = $lastVoucher['CbteNro'] + 1;
