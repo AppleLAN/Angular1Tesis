@@ -188,7 +188,7 @@ class SaleController extends Controller
 		$userC = Companies::where('id','=',$user->company_id)->first();
 
 		try {
-			if (!empty($sale->cae_data) && json_decode($sale->cae_data)->FeDetResp->FECAEDetResponse->CAE !== '') {
+			if (!empty($sale->cae_data) && json_decode($sale->cae_data)->CAE !== '') {
 				return response()->json(['success' => json_decode($sale->cae_data)], 200);
 			} else{
 				try {
