@@ -222,11 +222,11 @@ class SaleController extends Controller
 							'MonCotiz' 	=> 1,     // Cotización de la moneda usada (1 para pesos argentinos)  
 						);
 						
-						$res = $afip->ElectronicBilling->CreateVoucher($data);
-						
-						$cae = $res['CAE']; //CAE asignado el comprobante
-						$caeVto = $res['CAEFchVto']; //Fecha de vencimiento del CAE (yyyy-mm-dd)				
-						return response()->json(['cae' => $cae, 'vtoCae' => $caeVto], 200);
+						$cae = $afip->ElectronicBilling->CreateVoucher($data);
+					
+						$sale->cae_data = json_encode($cae);
+						$sale->save();			
+						return response()->json(['success' => $cae], 200);
 					}
 				} catch (\Exception $e) {
 					return response()->json(['error' => $e->getMessage()], 500);
