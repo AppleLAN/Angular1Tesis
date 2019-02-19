@@ -221,7 +221,7 @@ class SaleController extends Controller
 							'MonId' 	=> 'PES', //Tipo de moneda usada en el comprobante (ver tipos disponibles)('PES' para pesos argentinos) 
 							'MonCotiz' 	=> 1,     // Cotización de la moneda usada (1 para pesos argentinos)  
 						);
-						
+						print_r($data);
 						$cae = $afip->ElectronicBilling->CreateVoucher($data);
 					
 						$sale->cae_data = json_encode($cae);
