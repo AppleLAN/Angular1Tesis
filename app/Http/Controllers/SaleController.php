@@ -200,8 +200,11 @@ class SaleController extends Controller
 						} else {
 							$CbteTipo = 15;
 						}
-						// converts MM/DD/YYYY to YYYY/MM/DD
-						$CbteFch = Carbon::parse(Carbon::now())->format('Ymd');
+						// convierte MM/DD/YYYY en YYYY/MM/DD
+						$CbteFch = Carbon::parse($sale->created_at)->format('Ymd');
+						//Devuelve el número del último comprobante creado para el punto de venta y el tipo de comprobante
+						$last_voucher = $afip->ElectronicBilling->GetLastVoucher($userC->sale_point,$CbteTipo);
+						$valfac = $last_voucher + 1;
 						$data = array(
 							'CantReg' 	=> 1,  // Cantidad de comprobantes a registrar
 							'PtoVta' 	=> $userC->sale_point,  // Punto de venta
@@ -209,8 +212,8 @@ class SaleController extends Controller
 							'Concepto' 	=> 1,  // Concepto del Comprobante: (1)Productos, (2)Servicios, (3)Productos y Servicios
 							'DocTipo' 	=> 80, // Tipo de documento del comprador (99 consumidor final, ver tipos disponibles)
 							'DocNro' 	=> $sale->client_cuit,  // Número de documento del comprador (0 consumidor final)
-							'CbteDesde' 	=> $sale->id,  // Número de comprobante o numero del primer comprobante en caso de ser mas de uno
-							'CbteHasta' 	=> $sale->id,  // Número de comprobante o numero del último comprobante en caso de ser mas de uno
+							'CbteDesde' 	=> $valfac,  // Número de comprobante o numero del primer comprobante en caso de ser mas de uno
+							'CbteHasta' 	=> $valfac,  // Número de comprobante o numero del último comprobante en caso de ser mas de uno
 							'CbteFch' 	=> $CbteFch, // (Opcional) Fecha del comprobante (yyyymmdd) o fecha actual si es nulo
 							'ImpTotal' 	=> $sale->total, // Importe total del comprobante
 							'ImpTotConc' 	=> $sale->total,   // Importe neto no gravado
