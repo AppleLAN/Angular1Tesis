@@ -188,8 +188,9 @@ class SaleController extends Controller
 		$userC = Companies::where('id','=',$user->company_id)->first();
 
 		try {
+			if (false) {
 			if (!empty($sale->cae_data) && isset(json_decode($sale->cae_data)->CAE)) {
-				return response()->json(['success' => json_decode($sale->cae_data)], 200);
+					return response()->json(['success' => json_decode($sale->cae_data)], 200);
 			} else{
 				try {
 					if ($request->isMethod('post')) {
@@ -240,13 +241,13 @@ class SaleController extends Controller
 						$client = Clients::find($sale->client_id);
 
 						if ($client['excento'] == 1) {
-							$cae['condicion_user'] = 'Exento';
+							$cae['condicion_client'] = 'Exento';
 						} else if ($client['responsableMonotributo'] == 1) {
-							$cae['condicion_user'] = 'Responsable de Monotributo';
+							$cae['condicion_client'] = 'Responsable de Monotributo';
 						} else if ($client['ivaInscripto'] == 1) {
-							$cae['condicion_user'] = 'Iva No Inscripto';
+							$cae['condicion_client'] = 'Iva No Inscripto';
 						} else {
-							$cae['condicion_user'] = 'Responsable Inscripto';
+							$cae['condicion_client'] = 'Responsable Inscripto';
 						}
 						
 						$sale->cae_data = json_encode($cae);
