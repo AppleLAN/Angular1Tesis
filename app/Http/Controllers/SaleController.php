@@ -202,7 +202,6 @@ class SaleController extends Controller
 						}
 						// converts MM/DD/YYYY to YYYY/MM/DD
 						$CbteFch = Carbon::parse($sale->created_at)->format('Ymd');
-						print_r($CbteFch);
 						$data = array(
 							'CantReg' 	=> 1,  // Cantidad de comprobantes a registrar
 							'PtoVta' 	=> $userC->sale_point,  // Punto de venta
@@ -214,7 +213,7 @@ class SaleController extends Controller
 							'CbteHasta' 	=> 1,  // Número de comprobante o numero del último comprobante en caso de ser mas de uno
 							'CbteFch' 	=> $CbteFch, // (Opcional) Fecha del comprobante (yyyymmdd) o fecha actual si es nulo
 							'ImpTotal' 	=> $sale->total, // Importe total del comprobante
-							'ImpTotConc' 	=> 0,   // Importe neto no gravado
+							'ImpTotConc' 	=> $sale->total,   // Importe neto no gravado
 							'ImpNeto' 	=> 0, // Importe neto gravado
 							'ImpOpEx' 	=> 0,   // Importe exento de IVA
 							'ImpIVA' 	=> 0,  //Importe total de IVA
