@@ -1,4 +1,5 @@
 <?php
+use App\Helpers\afipsdk\afipphp\src\AfipWebService;
 /**
  * SDK for AFIP Electronic Billing (wsfe1)
  * 
@@ -11,7 +12,7 @@
 
 class ElectronicBilling extends AfipWebService {
 
-	var $soap_version 	= SOAP_1_2;
+	var $soap_version 	= 'SOAP_1_2';
 	var $WSDL 			= 'wsfe-production.wsdl';
 	var $URL 			= 'https://servicios1.afip.gov.ar/wsfev1/service.asmx';
 	var $WSDL_TEST 		= 'wsfe.wsdl';
@@ -301,10 +302,9 @@ class ElectronicBilling extends AfipWebService {
 	 **/
 	public function ExecuteRequest($operation, $params = array())
 	{
-		$params = array_replace($this->GetWSInitialRequest($operation), $params); 
-
+		$params = array_replace($this->GetWSInitialRequest($operation), $params);
 		$results = parent::ExecuteRequest($operation, $params);
-
+		
 		$this->_CheckErrors($operation, $results);
 
 		return $results->{$operation.'Result'};

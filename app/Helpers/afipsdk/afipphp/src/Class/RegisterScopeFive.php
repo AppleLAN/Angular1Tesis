@@ -1,21 +1,23 @@
 <?php
+use App\Helpers\afipsdk\afipphp\src\AfipWebService;
+
 /**
- * SDK for AFIP Register Scope Ten (ws_sr_padron_a10)
+ * SDK for AFIP Register Scope Five (ws_sr_padron_a5)
  * 
- * @link http://www.afip.gob.ar/ws/ws_sr_padron_a10/manual_ws_sr_padron_a10_v1.1.pdf WS Specification
+ * @link http://www.afip.gob.ar/ws/ws_sr_padron_a5/manual_ws_sr_padron_a5_v1.0.pdf WS Specification
  *
  * @author 	Ivan Muñoz
  * @package Afip
  * @version 1.0
  **/
 
-class RegisterScopeTen extends AfipWebService {
+class RegisterScopeFive extends AfipWebService {
 
 	var $soap_version 	= SOAP_1_1;
-	var $WSDL 			= 'ws_sr_padron_a10-production.wsdl';
-	var $URL 			= 'https://aws.afip.gov.ar/sr-padron/webservices/personaServiceA10';
-	var $WSDL_TEST 		= 'ws_sr_padron_a10.wsdl';
-	var $URL_TEST 		= 'https://awshomo.afip.gov.ar/sr-padron/webservices/personaServiceA10';
+	var $WSDL 			= 'ws_sr_padron_a5-production.wsdl';
+	var $URL 			= 'https://aws.afip.gov.ar/sr-padron/webservices/personaServiceA5';
+	var $WSDL_TEST 		= 'ws_sr_padron_a5.wsdl';
+	var $URL_TEST 		= 'https://awshomo.afip.gov.ar/sr-padron/webservices/personaServiceA5';
 
 	/**
 	 * Asks to web service for servers status {@see WS 
@@ -41,12 +43,12 @@ class RegisterScopeTen extends AfipWebService {
 	 * @throws Exception if exists an error in response 
 	 *
 	 * @return object|null if taxpayer does not exists, return null,  
-	 * if it exists, returns persona property of response {@see 
+	 * if it exists, returns full response {@see 
 	 * WS Specification item 3.2.2}
 	**/
 	public function GetTaxpayerDetails($identifier)
 	{
-		$ta = $this->afip->GetServiceTA('ws_sr_padron_a10');
+		$ta = $this->afip->GetServiceTA('ws_sr_padron_a5');
 		
 		$params = array(
 			'token' 			=> $ta->token,
@@ -56,7 +58,7 @@ class RegisterScopeTen extends AfipWebService {
 		);
 
 		try {
-			return $this->ExecuteRequest('getPersona', $params)->persona;
+			return $this->ExecuteRequest('getPersona', $params);
 		} catch (Exception $e) {
 			if (strpos($e->getMessage(), 'No existe') !== FALSE)
 				return NULL;

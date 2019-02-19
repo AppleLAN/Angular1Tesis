@@ -17,6 +17,7 @@ use App\Helpers\ApiResponse;
 use Auth;
 use Carbon\Carbon;
 use App\Http\Controllers\Response;
+use App\Helpers\afipsdk\afipphp\src\Afip;
 
 class SaleController extends Controller
 {
@@ -121,7 +122,6 @@ class SaleController extends Controller
 	}
 
 	public function getSaleInfo(Request $request) {
-
 		$token = JWTAuth::getToken();
 		$user = JWTAuth::toUser($token);
 
@@ -162,47 +162,69 @@ class SaleController extends Controller
 	}
 
 	public function getAfipCae(Request $request){
-		include(app_path() . '\Helpers\afipsdk\afip.php\src\Afip.php');
+		$afip = new Afip(array('CUIT' => '20366017314','cert' => 'certifkey/cert/certificate.pem', 'key' => 'certifkey/cert/privada.key', 'passphrase' => 'liratkm'));
+		$token = JWTAuth::getToken();
+		$user = JWTAuth::toUser($token);
+
+		# Check server status
+		$server_status = $afip->ElectronicBilling->GetServerStatus();
+		$appServer = $server_status->AppServer === 'OK'?1:0;
+		$dbServer = $server_status->DbServer === 'OK'?1:0;
+		$authServer = $server_status->AuthServer === 'OK'?1:0;
+
+		if (!$appServer) {
+			return response()->json(['error' => 'Error from AFIP APP Server'], 500);
+		}
+
+		if (!$dbServer){
+			return response()->json(['error' => 'Error from AFIP DB Server'], 500);
+		}
+
+		if (!$authServer){
+			return response()->json(['error' => 'Error from AFIP AUTH Server'], 500);
+		}
 
 		$sale = Sale::find($request->input('saleId'));
+		$userC = Companies::where('id','=',$user->company_id)->first();
+
 		try {
 			if (!empty($sale->cae_data) && json_decode($sale->cae_data)->FeDetResp->FECAEDetResponse->CAE !== '') {
 				return response()->json(['success' => json_decode($sale->cae_data)], 200);
 			} else{
 				try {
 					if ($request->isMethod('post')) {
+						if($sale->letter == 'A') {
+							$CbteTipo = 63;
+						} else if ($sale->letter == 'B') {
+							$CbteTipo = 61;
+						} else {
+							$CbteTipo = 15;
+						}
 						$data = array(
 							'CantReg' 	=> 1,  // Cantidad de comprobantes a registrar
-							'PtoVta' 	=> 1,  // Punto de venta
-							'CbteTipo' 	=> 6,  // Tipo de comprobante (ver tipos disponibles) 
+							'PtoVta' 	=> $userC->sale_point,  // Punto de venta
+							'CbteTipo' 	=> $CbteTipo,  // Tipo de comprobante (ver tipos disponibles) 
 							'Concepto' 	=> 1,  // Concepto del Comprobante: (1)Productos, (2)Servicios, (3)Productos y Servicios
-							'DocTipo' 	=> 99, // Tipo de documento del comprador (99 consumidor final, ver tipos disponibles)
-							'DocNro' 	=> 0,  // Número de documento del comprador (0 consumidor final)
+							'DocTipo' 	=> 80, // Tipo de documento del comprador (99 consumidor final, ver tipos disponibles)
+							'DocNro' 	=> $sale->client_cuit,  // Número de documento del comprador (0 consumidor final)
 							'CbteDesde' 	=> 1,  // Número de comprobante o numero del primer comprobante en caso de ser mas de uno
 							'CbteHasta' 	=> 1,  // Número de comprobante o numero del último comprobante en caso de ser mas de uno
-							'CbteFch' 	=> intval(date('Ymd')), // (Opcional) Fecha del comprobante (yyyymmdd) o fecha actual si es nulo
-							'ImpTotal' 	=> 121, // Importe total del comprobante
+							'CbteFch' 	=> $sale->created_at, // (Opcional) Fecha del comprobante (yyyymmdd) o fecha actual si es nulo
+							'ImpTotal' 	=> $sale->total, // Importe total del comprobante
 							'ImpTotConc' 	=> 0,   // Importe neto no gravado
-							'ImpNeto' 	=> 100, // Importe neto gravado
+							'ImpNeto' 	=> 0, // Importe neto gravado
 							'ImpOpEx' 	=> 0,   // Importe exento de IVA
-							'ImpIVA' 	=> 21,  //Importe total de IVA
+							'ImpIVA' 	=> 0,  //Importe total de IVA
 							'ImpTrib' 	=> 0,   //Importe total de tributos
 							'MonId' 	=> 'PES', //Tipo de moneda usada en el comprobante (ver tipos disponibles)('PES' para pesos argentinos) 
 							'MonCotiz' 	=> 1,     // Cotización de la moneda usada (1 para pesos argentinos)  
-							'Iva' 		=> array( // (Opcional) Alícuotas asociadas al comprobante
-								array(
-									'Id' 		=> 5, // Id del tipo de IVA (5 para 21%)(ver tipos disponibles) 
-									'BaseImp' 	=> 100, // Base imponible
-									'Importe' 	=> 21 // Importe 
-								)
-							), 
 						);
 						
 						$res = $afip->ElectronicBilling->CreateVoucher($data);
 						
-						$res['CAE']; //CAE asignado el comprobante
-						$res['CAEFchVto']; //Fecha de vencimiento del CAE (yyyy-mm-dd)				
-						return response()->json(['success' => $cae], 200);
+						$cae = $res['CAE']; //CAE asignado el comprobante
+						$caeVto = $res['CAEFchVto']; //Fecha de vencimiento del CAE (yyyy-mm-dd)				
+						return response()->json(['cae' => $cae, 'vtoCae' => $caeVto], 200);
 					}
 				} catch (\Exception $e) {
 					return response()->json(['error' => $e->getMessage()], 500);

@@ -1,4 +1,6 @@
 <?php
+use App\Helpers\afipsdk\afipphp\src\AfipWebService;
+
 /**
  * SDK for AFIP Register Scope Four (ws_sr_padron_a4)
  * 
