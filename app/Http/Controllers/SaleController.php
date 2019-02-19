@@ -184,7 +184,8 @@ class SaleController extends Controller
 								$voucherNumber = $lastVoucher['CbteNro'] + 1;
 								print_r($voucherNumber);
 								print_r($lastVoucher);
-								
+								die();
+
 								$voucher = $afip->voucher();
 								$voucher->voucherNumber($voucherNumber)
 												->voucherType($type)
@@ -198,6 +199,7 @@ class SaleController extends Controller
 												->toDate('20181031')
 												->expirationDate('20191031');
 								print_r($voucher);
+								die();
 
 								$product = $afip->concept();
 								$product->conceptType(1)
