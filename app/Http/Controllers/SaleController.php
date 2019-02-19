@@ -211,7 +211,6 @@ class SaleController extends Controller
 							'DocNro' 	=> $sale->client_cuit,  // Número de documento del comprador (0 consumidor final)
 							'CbteDesde' 	=> $sale->id,  // Número de comprobante o numero del primer comprobante en caso de ser mas de uno
 							'CbteHasta' 	=> $sale->id,  // Número de comprobante o numero del último comprobante en caso de ser mas de uno
-							'CbteFch' 	=> null, // (Opcional) Fecha del comprobante (yyyymmdd) o fecha actual si es nulo
 							'ImpTotal' 	=> $sale->total, // Importe total del comprobante
 							'ImpTotConc' 	=> $sale->total,   // Importe neto no gravado
 							'ImpNeto' 	=> 0, // Importe neto gravado
