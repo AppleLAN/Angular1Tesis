@@ -217,11 +217,11 @@ class SaleController extends Controller
 							'CbteHasta' 	=> $valfac,  // Número de comprobante o numero del último comprobante en caso de ser mas de uno
 							'CbteFch' 	=> $CbteFch, // (Opcional) Fecha del comprobante (yyyymmdd) o fecha actual si es nulo
 							'ImpTotal' 	=> $sale->total, // Importe total del comprobante
-							'ImpTotConc' 	=> $sale->total,   // Importe neto no gravado
+							'ImpTotConc' 	=> $sale->total -1,   // Importe neto no gravado
 							'ImpNeto' 	=> 0, // Importe neto gravado
 							'ImpOpEx' 	=> 0,   // Importe exento de IVA
 							'ImpIVA' 	=> 0,  //Importe total de IVA
-							'ImpTrib' 	=> 0,   //Importe total de tributos
+							'ImpTrib' 	=> 1,   //Importe total de tributos
 							'MonId' 	=> 'PES', //Tipo de moneda usada en el comprobante (ver tipos disponibles)('PES' para pesos argentinos) 
 							'MonCotiz' 	=> 1,     // Cotización de la moneda usada (1 para pesos argentinos)  
 						);
