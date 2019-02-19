@@ -188,8 +188,8 @@ class SaleController extends Controller
 		$userC = Companies::where('id','=',$user->company_id)->first();
 
 		try {
-			if (false) {
-					return response()->json(['success' => json_decode($sale->cae_data)], 200);
+			if (!empty($sale->cae_data) && isset(json_decode($sale->cae_data)->CAE)) {
+				return response()->json(['success' => json_decode($sale->cae_data)], 200);
 			} else{
 				try {
 					if ($request->isMethod('post')) {
