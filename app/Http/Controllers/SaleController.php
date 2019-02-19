@@ -211,7 +211,7 @@ class SaleController extends Controller
 							'CbteTipo' 	=> $CbteTipo,  // Tipo de comprobante (ver tipos disponibles) 
 							'Concepto' 	=> 1,  // Concepto del Comprobante: (1)Productos, (2)Servicios, (3)Productos y Servicios
 							'DocTipo' 	=> 80, // Tipo de documento del comprador (99 consumidor final, ver tipos disponibles)
-							'DocNro' 	=> $sale->client_cuit,  // Número de documento del comprador (0 consumidor final)
+							'DocNro' 	=> 23000000000,  // Número de documento del comprador (0 consumidor final)
 							'CbteDesde' 	=> $valfac,  // Número de comprobante o numero del primer comprobante en caso de ser mas de uno
 							'CbteHasta' 	=> $valfac,  // Número de comprobante o numero del último comprobante en caso de ser mas de uno
 							'CbteFch' 	=> $CbteFch, // (Opcional) Fecha del comprobante (yyyymmdd) o fecha actual si es nulo
