@@ -206,6 +206,13 @@ class SaleController extends Controller
 						$last_voucher = $afip->ElectronicBilling->GetLastVoucher($userC->sale_point,$CbteTipo);
 						$valfac = $last_voucher + 1;
 						// 23000000000 no categorizado para que ignore la busqueda en padron;
+						if ($sale->letter == 'C') {
+							$ImpOpEx = 0;
+							$ImpNeto = $sale->total;
+						} else if ($sale->letter == 'B') {
+							$ImpOpEx = $sale->total;
+							$ImpNeto = 0;
+						}
 						$data = array(
 							'CantReg' 	=> 1,  // Cantidad de comprobantes a registrar
 							'PtoVta' 	=> $userC->sale_point,  // Punto de venta
@@ -218,8 +225,8 @@ class SaleController extends Controller
 							'CbteFch' 	=> $CbteFch, // (Opcional) Fecha del comprobante (yyyymmdd) o fecha actual si es nulo
 							'ImpTotal' 	=> $sale->total, // Importe total del comprobante
 							'ImpTotConc' 	=> 0,   // Importe neto no gravado
-							'ImpNeto' 	=> 0, // Importe neto gravado
-							'ImpOpEx' 	=> $sale->total,   // Importe exento de IVA
+							'ImpNeto' 	=> $ImpNeto, // Importe neto gravado
+							'ImpOpEx' 	=> $ImpOpEx,   // Importe exento de IVA
 							'ImpIVA' 	=> 0,  //Importe total de IVA
 							'ImpTrib' 	=> 0,   //Importe total de tributos
 							'MonId' 	=> 'PES', //Tipo de moneda usada en el comprobante (ver tipos disponibles)('PES' para pesos argentinos) 
