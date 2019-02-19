@@ -201,7 +201,7 @@ class SaleController extends Controller
 							$CbteTipo = 15;
 						}
 						// converts MM/DD/YYYY to YYYY/MM/DD
-						$CbteFch = Carbon::parse($sale->created_at)->format('Y-m-d');
+						$CbteFch = Carbon::parse($sale->created_at)->format('Ymd');
 						print_r($CbteFch);
 						$data = array(
 							'CantReg' 	=> 1,  // Cantidad de comprobantes a registrar
@@ -222,6 +222,8 @@ class SaleController extends Controller
 							'MonId' 	=> 'PES', //Tipo de moneda usada en el comprobante (ver tipos disponibles)('PES' para pesos argentinos) 
 							'MonCotiz' 	=> 1,     // Cotización de la moneda usada (1 para pesos argentinos)  
 						);
+						print_r($data);
+
 						
 						$res = $afip->ElectronicBilling->CreateVoucher($data);
 						
