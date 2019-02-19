@@ -209,8 +209,8 @@ class SaleController extends Controller
 							'Concepto' 	=> 1,  // Concepto del Comprobante: (1)Productos, (2)Servicios, (3)Productos y Servicios
 							'DocTipo' 	=> 80, // Tipo de documento del comprador (99 consumidor final, ver tipos disponibles)
 							'DocNro' 	=> $sale->client_cuit,  // Número de documento del comprador (0 consumidor final)
-							'CbteDesde' 	=> 1,  // Número de comprobante o numero del primer comprobante en caso de ser mas de uno
-							'CbteHasta' 	=> 1,  // Número de comprobante o numero del último comprobante en caso de ser mas de uno
+							'CbteDesde' 	=> $sale->id,  // Número de comprobante o numero del primer comprobante en caso de ser mas de uno
+							'CbteHasta' 	=> $sale->id,  // Número de comprobante o numero del último comprobante en caso de ser mas de uno
 							'CbteFch' 	=> $CbteFch, // (Opcional) Fecha del comprobante (yyyymmdd) o fecha actual si es nulo
 							'ImpTotal' 	=> $sale->total, // Importe total del comprobante
 							'ImpTotConc' 	=> $sale->total,   // Importe neto no gravado
