@@ -208,21 +208,27 @@ class SaleController extends Controller
 						// 23000000000 no categorizado para que ignore la busqueda en padron;
 						if ($sale->letter == 'C') {
 							$ImpOpEx = 0;
+							$docType = 99;
+							$DocNro = 0;
 							$ImpNeto = $sale->total;
 						} else if ($sale->letter == 'B') {
 							$ImpOpEx = $sale->total;
 							$ImpNeto = 0;
+							$docType = 99;
+							$DocNro = 0;
 						} else {
 							$ImpOpEx = $sale->total;
 							$ImpNeto = 0;
+							$docType = 80;
+							$DocNro = 23000000000;
 						}
 						$data = array(
 							'CantReg' 	=> 1,  // Cantidad de comprobantes a registrar
 							'PtoVta' 	=> $userC->sale_point,  // Punto de venta
 							'CbteTipo' 	=> $CbteTipo,  // Tipo de comprobante (ver tipos disponibles) 
 							'Concepto' 	=> 1,  // Concepto del Comprobante: (1)Productos, (2)Servicios, (3)Productos y Servicios
-							'DocTipo' 	=> 99, // Tipo de documento del comprador (99 consumidor final, ver tipos disponibles)
-							'DocNro' 	=> 0,  // Número de documento del comprador (0 consumidor final)
+							'DocTipo' 	=> $docType, // Tipo de documento del comprador (99 consumidor final, ver tipos disponibles)
+							'DocNro' 	=> $DocNro,  // Número de documento del comprador (0 consumidor final)
 							'CbteDesde' 	=> $valfac,  // Número de comprobante o numero del primer comprobante en caso de ser mas de uno
 							'CbteHasta' 	=> $valfac,  // Número de comprobante o numero del último comprobante en caso de ser mas de uno
 							'CbteFch' 	=> $CbteFch, // (Opcional) Fecha del comprobante (yyyymmdd) o fecha actual si es nulo
