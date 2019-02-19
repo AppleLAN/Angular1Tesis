@@ -218,8 +218,8 @@ class SaleController extends Controller
 							'CbteFch' 	=> $CbteFch, // (Opcional) Fecha del comprobante (yyyymmdd) o fecha actual si es nulo
 							'ImpTotal' 	=> $sale->total, // Importe total del comprobante
 							'ImpTotConc' 	=> 0,   // Importe neto no gravado
-							'ImpNeto' 	=> $sale->total, // Importe neto gravado
-							'ImpOpEx' 	=> 0,   // Importe exento de IVA
+							'ImpNeto' 	=> 0, // Importe neto gravado
+							'ImpOpEx' 	=> $sale->total,   // Importe exento de IVA
 							'ImpIVA' 	=> 0,  //Importe total de IVA
 							'ImpTrib' 	=> 0,   //Importe total de tributos
 							'MonId' 	=> 'PES', //Tipo de moneda usada en el comprobante (ver tipos disponibles)('PES' para pesos argentinos) 
