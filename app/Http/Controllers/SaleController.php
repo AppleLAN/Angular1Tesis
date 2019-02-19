@@ -226,7 +226,29 @@ class SaleController extends Controller
 							'MonCotiz' 	=> 1,     // Cotización de la moneda usada (1 para pesos argentinos)  
 						);
 						$cae = $afip->ElectronicBilling->CreateVoucher($data);
-					
+
+						if ($userC->excento) {
+							$cae->condicion_user = 'Exento';
+						} else if ($userC->responsableMonotributo) {
+							$cae->condicion_user = 'Responsable de Monotributo';
+						} else if ($userC->ivaInscripto) {
+							$cae->condicion_user = 'Iva No Inscripto';
+						} else {
+							$cae->condicion_user = 'Responsable Inscripto';
+						}
+
+						$client = Clients::find($sale->client_id);
+
+						if ($client->excento) {
+							$cae->condicion_client = 'Exento';
+						} else if ($client->responsableMonotributo) {
+							$cae->condicion_client = 'Responsable de Monotributo';
+						} else if ($client->ivaInscripto) {
+							$cae->condicion_client = 'Iva No Inscripto';
+						} else {
+							$cae->condicion_client = 'Responsable Inscripto';
+						}
+						
 						$sale->cae_data = json_encode($cae);
 						$sale->save();			
 						return response()->json(['success' => $cae], 200);
