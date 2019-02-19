@@ -227,26 +227,26 @@ class SaleController extends Controller
 						);
 						$cae = $afip->ElectronicBilling->CreateVoucher($data);
 
-						if ($userC->excento) {
-							$cae->condicion_user = 'Exento';
-						} else if ($userC->responsableMonotributo) {
-							$cae->condicion_user = 'Responsable de Monotributo';
-						} else if ($userC->ivaInscripto) {
-							$cae->condicion_user = 'Iva No Inscripto';
+						if ($userC['excento'] == 1) {
+							$cae['condicion_user'] = 'Exento';
+						} else if ($userC['responsableMonotributo'] == 1) {
+							$cae['condicion_user'] = 'Responsable de Monotributo';
+						} else if ($userC['ivaInscripto'] == 1) {
+							$cae['condicion_user'] = 'Iva No Inscripto';
 						} else {
-							$cae->condicion_user = 'Responsable Inscripto';
+							$cae['condicion_user'] = 'Responsable Inscripto';
 						}
 
 						$client = Clients::find($sale->client_id);
 
-						if ($client->excento) {
-							$cae->condicion_client = 'Exento';
-						} else if ($client->responsableMonotributo) {
-							$cae->condicion_client = 'Responsable de Monotributo';
-						} else if ($client->ivaInscripto) {
-							$cae->condicion_client = 'Iva No Inscripto';
+						if ($client['excento'] == 1) {
+							$cae['condicion_user'] = 'Exento';
+						} else if ($client['responsableMonotributo'] == 1) {
+							$cae['condicion_user'] = 'Responsable de Monotributo';
+						} else if ($client['ivaInscripto'] == 1) {
+							$cae['condicion_user'] = 'Iva No Inscripto';
 						} else {
-							$cae->condicion_client = 'Responsable Inscripto';
+							$cae['condicion_user'] = 'Responsable Inscripto';
 						}
 						
 						$sale->cae_data = json_encode($cae);
