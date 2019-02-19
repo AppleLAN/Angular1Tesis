@@ -205,6 +205,7 @@ class SaleController extends Controller
 						//Devuelve el número del último comprobante creado para el punto de venta y el tipo de comprobante
 						$last_voucher = $afip->ElectronicBilling->GetLastVoucher($userC->sale_point,$CbteTipo);
 						$valfac = $last_voucher + 1;
+						// 23000000000 no categorizado para que ignore la busqueda en padron;
 						$data = array(
 							'CantReg' 	=> 1,  // Cantidad de comprobantes a registrar
 							'PtoVta' 	=> $userC->sale_point,  // Punto de venta
@@ -224,7 +225,6 @@ class SaleController extends Controller
 							'MonId' 	=> 'PES', //Tipo de moneda usada en el comprobante (ver tipos disponibles)('PES' para pesos argentinos) 
 							'MonCotiz' 	=> 1,     // Cotización de la moneda usada (1 para pesos argentinos)  
 						);
-						print_r($data);
 						$cae = $afip->ElectronicBilling->CreateVoucher($data);
 					
 						$sale->cae_data = json_encode($cae);
