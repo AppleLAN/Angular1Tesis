@@ -189,7 +189,6 @@ class SaleController extends Controller
 
 		try {
 			if (false) {
-			if (!empty($sale->cae_data) && isset(json_decode($sale->cae_data)->CAE)) {
 					return response()->json(['success' => json_decode($sale->cae_data)], 200);
 			} else{
 				try {
