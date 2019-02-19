@@ -181,7 +181,7 @@ class SaleController extends Controller
 								$date = $sale->created_at;
 					
 								$lastVoucher = $afip->lastVoucher($pointSale, $type);
-								$voucherNumber = $lastVoucher['CbteNro'] + 1;
+								$voucherNumber = $lastVoucher->CbteNro + 1;
 								$voucher = $afip->voucher();
 								$voucher->voucherNumber($voucherNumber)
 												->voucherType($type)
