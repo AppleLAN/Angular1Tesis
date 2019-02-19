@@ -162,6 +162,8 @@ class SaleController extends Controller
 	}
 
 	public function getAfipCae(Request $request){
+		include(app_path() . '\Helpers\afipsdk\afip.php\src\Afip.php');
+
 		$sale = Sale::find($request->input('saleId'));
 		try {
 			if (!empty($sale->cae_data) && json_decode($sale->cae_data)->FeDetResp->FECAEDetResponse->CAE !== '') {
