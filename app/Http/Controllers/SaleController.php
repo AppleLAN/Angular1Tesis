@@ -188,7 +188,7 @@ class SaleController extends Controller
 		$userC = Companies::where('id','=',$user->company_id)->first();
 
 		try {
-			if (!empty($sale->cae_data) && json_decode($sale->cae_data)->CAE !== '') {
+			if (!empty($sale->cae_data) && isset(json_decode($sale->cae_data)->CAE)) {
 				return response()->json(['success' => json_decode($sale->cae_data)], 200);
 			} else{
 				try {
@@ -224,6 +224,7 @@ class SaleController extends Controller
 							'MonId' 	=> 'PES', //Tipo de moneda usada en el comprobante (ver tipos disponibles)('PES' para pesos argentinos) 
 							'MonCotiz' 	=> 1,     // Cotización de la moneda usada (1 para pesos argentinos)  
 						);
+						print_r($data);
 						$cae = $afip->ElectronicBilling->CreateVoucher($data);
 					
 						$sale->cae_data = json_encode($cae);
