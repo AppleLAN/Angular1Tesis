@@ -182,10 +182,6 @@ class SaleController extends Controller
 					
 								$lastVoucher = $afip->lastVoucher($pointSale, $type);
 								$voucherNumber = $lastVoucher['CbteNro'] + 1;
-								print_r($voucherNumber);
-								print_r($lastVoucher);
-								die();
-
 								$voucher = $afip->voucher();
 								$voucher->voucherNumber($voucherNumber)
 												->voucherType($type)
@@ -198,9 +194,7 @@ class SaleController extends Controller
 												->fromDate('20180301')
 												->toDate('20181031')
 												->expirationDate('20191031');
-								print_r($voucher);
-								die();
-
+					
 								$product = $afip->concept();
 								$product->conceptType(1)
 												->ivaType(3)
@@ -208,9 +202,6 @@ class SaleController extends Controller
 												->taxUntaxed(0)
 												->taxExemp(0)
 												->taxIva(0);
-								print_r($product);
-								die();
-
 								$service = $afip->concept();
 								$service->conceptType(2)
 												->ivaType(3)
@@ -218,15 +209,10 @@ class SaleController extends Controller
 												->taxUntaxed(0)
 												->taxExemp(0)
 												->taxIva(0);
-								print_r($service);
+					
 								$voucher->addConcept($product);
 								$voucher->addConcept($service);
-								print_r($voucher);
-								die();
-
 								$options = $voucher->getRequest();
-								print_r($options);
-								die();
 								$cae = $afip->requestCAE($options);
 							
 								$sale->cae_data = json_encode($cae);
