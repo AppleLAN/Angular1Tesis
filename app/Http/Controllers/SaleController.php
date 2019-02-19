@@ -211,17 +211,17 @@ class SaleController extends Controller
 							'PtoVta' 	=> $userC->sale_point,  // Punto de venta
 							'CbteTipo' 	=> $CbteTipo,  // Tipo de comprobante (ver tipos disponibles) 
 							'Concepto' 	=> 1,  // Concepto del Comprobante: (1)Productos, (2)Servicios, (3)Productos y Servicios
-							'DocTipo' 	=> 80, // Tipo de documento del comprador (99 consumidor final, ver tipos disponibles)
-							'DocNro' 	=> 23000000000,  // Número de documento del comprador (0 consumidor final)
+							'DocTipo' 	=> 99, // Tipo de documento del comprador (99 consumidor final, ver tipos disponibles)
+							'DocNro' 	=> 0,  // Número de documento del comprador (0 consumidor final)
 							'CbteDesde' 	=> $valfac,  // Número de comprobante o numero del primer comprobante en caso de ser mas de uno
 							'CbteHasta' 	=> $valfac,  // Número de comprobante o numero del último comprobante en caso de ser mas de uno
 							'CbteFch' 	=> $CbteFch, // (Opcional) Fecha del comprobante (yyyymmdd) o fecha actual si es nulo
 							'ImpTotal' 	=> $sale->total, // Importe total del comprobante
-							'ImpTotConc' 	=> $sale->total -1,   // Importe neto no gravado
+							'ImpTotConc' 	=> $sale->total,   // Importe neto no gravado
 							'ImpNeto' 	=> 0, // Importe neto gravado
 							'ImpOpEx' 	=> 0,   // Importe exento de IVA
 							'ImpIVA' 	=> 0,  //Importe total de IVA
-							'ImpTrib' 	=> 1,   //Importe total de tributos
+							'ImpTrib' 	=> 0,   //Importe total de tributos
 							'MonId' 	=> 'PES', //Tipo de moneda usada en el comprobante (ver tipos disponibles)('PES' para pesos argentinos) 
 							'MonCotiz' 	=> 1,     // Cotización de la moneda usada (1 para pesos argentinos)  
 						);
