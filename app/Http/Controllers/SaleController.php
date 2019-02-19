@@ -17,7 +17,6 @@ use App\Helpers\ApiResponse;
 use Auth;
 use Carbon\Carbon;
 use App\Http\Controllers\Response;
-include 'Afip.php';
 
 class SaleController extends Controller
 {
@@ -163,7 +162,7 @@ class SaleController extends Controller
 	}
 
 	public function getAfipCae(Request $request){
-		
+		include 'Afip.php';
 		$sale = Sale::find($request->input('saleId'));
 		try {
 			if (!empty($sale->cae_data) && json_decode($sale->cae_data)->FeDetResp->FECAEDetResponse->CAE !== '') {
