@@ -212,6 +212,9 @@ class SaleController extends Controller
 						} else if ($sale->letter == 'B') {
 							$ImpOpEx = $sale->total;
 							$ImpNeto = 0;
+						} else {
+							$ImpOpEx = $sale->total;
+							$ImpNeto = 0;
 						}
 						$data = array(
 							'CantReg' 	=> 1,  // Cantidad de comprobantes a registrar
