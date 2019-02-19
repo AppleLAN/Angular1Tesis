@@ -217,8 +217,8 @@ class SaleController extends Controller
 							'CbteHasta' 	=> $valfac,  // Número de comprobante o numero del último comprobante en caso de ser mas de uno
 							'CbteFch' 	=> $CbteFch, // (Opcional) Fecha del comprobante (yyyymmdd) o fecha actual si es nulo
 							'ImpTotal' 	=> $sale->total, // Importe total del comprobante
-							'ImpTotConc' 	=> $sale->total,   // Importe neto no gravado
-							'ImpNeto' 	=> 0, // Importe neto gravado
+							'ImpTotConc' 	=> 0,   // Importe neto no gravado
+							'ImpNeto' 	=> $sale->total, // Importe neto gravado
 							'ImpOpEx' 	=> 0,   // Importe exento de IVA
 							'ImpIVA' 	=> 0,  //Importe total de IVA
 							'ImpTrib' 	=> 0,   //Importe total de tributos
