@@ -59,7 +59,6 @@ class ProvidersController extends Controller
                     $provider->excento = $data['excento'];
                     $provider->responsableMonotributo = $data['responsableMonotributo'];
                     $provider->ivaInscripto = $data['ivaInscripto'];
-                    $provider->precioLista = $data['precioLista'];
                     $provider->condicionDeVenta = $data['condicionDeVenta'];
                     $provider->limiteDeCredito = $data['limiteDeCredito'];
                     $provider->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
@@ -109,7 +108,6 @@ class ProvidersController extends Controller
                 $provider->excento = $data['excento'];
                 $provider->responsableMonotributo = $data['responsableMonotributo'];
                 $provider->ivaInscripto = $data['ivaInscripto'];
-                $provider->precioLista = $data['precioLista'];
                 $provider->condicionDeVenta = $data['condicionDeVenta'];
                 $provider->limiteDeCredito = $data['limiteDeCredito'];
                 $provider->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];

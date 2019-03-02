@@ -61,7 +61,6 @@ CREATE TABLE IF NOT EXISTS `clients` (
   `responsableMonotributo` tinyint(1) NOT NULL,
   `responsableInscripto` tinyint(1) NOT NULL,
   `ivaInscripto` tinyint(1) NOT NULL,
-  `precioLista` double(8,2) NOT NULL,
   `condicionDeVenta` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `limiteDeCredito` double(8,2) NOT NULL,
   `numeroDeInscripcionesIB` int(11) NOT NULL,
@@ -76,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
 -- Dumping data for table `clients`
 --
 
-INSERT INTO `clients` (`id`, `company_id`, `name`, `fantasyName`, `email`, `place`, `codigoPostal`, `codigoProvincia`, `address`, `telephone`, `cuit`, `web`, `iib`, `pib`, `epib`, `excento`, `responsableMonotributo`, `responsableInscripto`, `ivaInscripto`, `precioLista`, `condicionDeVenta`, `limiteDeCredito`, `numeroDeInscripcionesIB`, `cuentasGenerales`, `percepcionDeGanancia`, `created_at`, `updated_at`, `deleted_at`) VALUES
+INSERT INTO `clients` (`id`, `company_id`, `name`, `fantasyName`, `email`, `place`, `codigoPostal`, `codigoProvincia`, `address`, `telephone`, `cuit`, `web`, `iib`, `pib`, `epib`, `excento`, `responsableMonotributo`, `responsableInscripto`, `ivaInscripto`, `condicionDeVenta`, `limiteDeCredito`, `numeroDeInscripcionesIB`, `cuentasGenerales`, `percepcionDeGanancia`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 2, 'client1', 'client1', 'client1', 'client1', 'client1', '1162', 'client1', 2000000000, 'client12222', 'client12222', 'client12222', 'client12222', 'client12222', 1, 0, 127, 1, 0.00, 'client12222', 0.00, 0, 'client12222', 0, '2017-09-29', '2018-02-12', NULL),
 (2, 2, 'client2', 'client2', 'client2', 'client2', 'client2', '', 'client2', 0, 'client22222', 'client2', 'client2', 'client2', 'client2', 0, 0, 0, 0, 0.00, 'client2', 0.00, 0, 'client2', 0, '2017-11-14', '2017-11-14', NULL);
 
@@ -105,7 +104,6 @@ CREATE TABLE IF NOT EXISTS `companies` (
   `responsableMonotributo` tinyint(1) NOT NULL,
   `responsableInscripto` tinyint(1) NOT NULL,
   `ivaInscripto` tinyint(1) NOT NULL,
-  `precioLista` double(8,2) NOT NULL,
   `condicionDeVenta` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `limiteDeCredito` double(8,2) NOT NULL,
   `numeroDeInscripcionesIB` int(11) NOT NULL,
@@ -120,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `companies` (
 -- Dumping data for table `companies`
 --
 
-INSERT INTO `companies` (`id`, `name`, `fantasyName`, `email`, `place`, `codigoPostal`, `codigoProvincia`, `address`, `telephone`, `cuit`, `web`, `iib`, `pib`, `epib`, `excento`, `responsableMonotributo`, `responsableInscripto`, `ivaInscripto`, `precioLista`, `condicionDeVenta`, `limiteDeCredito`, `numeroDeInscripcionesIB`, `cuentasGenerales`, `percepcionDeGanancia`, `created_at`, `updated_at`, `deleted_at`) VALUES
+INSERT INTO `companies` (`id`, `name`, `fantasyName`, `email`, `place`, `codigoPostal`, `codigoProvincia`, `address`, `telephone`, `cuit`, `web`, `iib`, `pib`, `epib`, `excento`, `responsableMonotributo`, `responsableInscripto`, `ivaInscripto`, `condicionDeVenta`, `limiteDeCredito`, `numeroDeInscripcionesIB`, `cuentasGenerales`, `percepcionDeGanancia`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (2, 'client1', 'client2', 'client2', 'client2', 'client2', '', 'client2', 1231231311, 'client22222', 'client2', 'client2', 'client2', 'client2', 0, 0, 0, 0, 0.00, 'client2', 0.00, 0, 'client2', 0, '2017-09-09', '2017-11-24', NULL);
 
 -- --------------------------------------------------------
@@ -312,7 +310,6 @@ CREATE TABLE IF NOT EXISTS `providers` (
   `responsableMonotributo` tinyint(1) NOT NULL,
   `responsableInscripto` tinyint(1) NOT NULL,
   `ivaInscripto` tinyint(1) NOT NULL,
-  `precioLista` double(8,2) NOT NULL,
   `condicionDeVenta` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `limiteDeCredito` double(8,2) NOT NULL,
   `numeroDeInscripcionesIB` int(11) NOT NULL,
@@ -327,7 +324,7 @@ CREATE TABLE IF NOT EXISTS `providers` (
 -- Dumping data for table `providers`
 --
 
-INSERT INTO `providers` (`id`, `company_id`, `name`, `fantasyName`, `email`, `place`, `codigoPostal`, `codigoProvincia`, `address`, `telephone`, `cuit`, `web`, `iib`, `pib`, `epib`, `excento`, `responsableMonotributo`, `responsableInscripto`, `ivaInscripto`, `precioLista`, `condicionDeVenta`, `limiteDeCredito`, `numeroDeInscripcionesIB`, `cuentasGenerales`, `percepcionDeGanancia`, `created_at`, `updated_at`, `deleted_at`) VALUES
+INSERT INTO `providers` (`id`, `company_id`, `name`, `fantasyName`, `email`, `place`, `codigoPostal`, `codigoProvincia`, `address`, `telephone`, `cuit`, `web`, `iib`, `pib`, `epib`, `excento`, `responsableMonotributo`, `responsableInscripto`, `ivaInscripto`, `condicionDeVenta`, `limiteDeCredito`, `numeroDeInscripcionesIB`, `cuentasGenerales`, `percepcionDeGanancia`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 2, 'a@gmail.com', 'a2@gmail.com', 'a2@gmail.com', 'a2@gmail.com', 'a2@gmail.com', 'stockStorage', 'a2@gmail.com', 1111111111, 'a2@gmail.co', 'a2@gmail.com', 'a2@gmail.com', 'a2@gmail.com', 'a2@gmail.com', 0, 0, 0, 0, 0.00, 'a2@gmail.com', 0.00, 0, 'a2@gmail.com', 0, '2017-09-09', '2018-01-24', NULL),
 (2, 2, 'proveedor2', 'proveedor2', 'proveedor2', 'proveedor2', 'proveedor2', '7600', 'proveedor2', 2147483647, 'proveedor22', 'proveedor2', 'proveedor2', 'proveedor2', 'proveedor2', 0, 0, 127, 1, 0.00, 'proveedor2', 0.00, 0, 'proveedor2', 0, '2017-10-19', '2018-02-12', NULL);
 

@@ -23,6 +23,6 @@ class Clients extends Model
      * @var array
      */
     protected $fillable = [
-        'name','fantasyName', 'email', 'place', 'address','telephone','cuit','web','new','codigoPostal','iib','pib','epib','codigoProvincia','excento','responsableMonotributo','ivaInscripto','precioLista','condicionDeVenta','limiteDeCredito','numeroDeInscripcionesIB','cuentasGenerales','percepcionDeGanancia',
+        'name','fantasyName', 'email', 'place', 'address','telephone','cuit','web','new','codigoPostal','iib','pib','epib','codigoProvincia','excento','responsableMonotributo','ivaInscripto','condicionDeVenta','limiteDeCredito','numeroDeInscripcionesIB','cuentasGenerales','percepcionDeGanancia',
     ];
 }

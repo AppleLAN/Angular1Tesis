@@ -34,7 +34,7 @@ class ClientsController extends Controller
                 $isAdmin = true;
                 $clients = Companies::select('id','created_at','updated_at','deleted_at',
                 'name','fantasyName','email','place','codigoPostal','codigoProvincia','address','telephone','cuit',
-                'web','iib','pib','epib','responsableInscripto','excento','responsableMonotributo','ivaInscripto','precioLista',
+                'web','iib','pib','epib','responsableInscripto','excento','responsableMonotributo','ivaInscripto',
                 'condicionDeVenta','limiteDeCredito','numeroDeInscripcionesIB','cuentasGenerales','percepcionDeGanancia', 'start_date', 'sale_point') 
                         ->where('id',$user->company_id) 
                         ->first(); 
@@ -178,7 +178,6 @@ class ClientsController extends Controller
             $userC->excento = $data['excento'];
             $userC->responsableMonotributo = $data['responsableMonotributo'];
             $userC->ivaInscripto = $data['ivaInscripto'];
-            $userC->precioLista = $data['precioLista'];
             $userC->condicionDeVenta = $data['condicionDeVenta'];
             $userC->limiteDeCredito = $data['limiteDeCredito'];
             $userC->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
@@ -236,7 +235,6 @@ class ClientsController extends Controller
                     $client->excento = $data['excento'];
                     $client->responsableMonotributo = $data['responsableMonotributo'];
                     $client->ivaInscripto = $data['ivaInscripto'];
-                    $client->precioLista = $data['precioLista'];
                     $client->condicionDeVenta = $data['condicionDeVenta'];
                     $client->limiteDeCredito = $data['limiteDeCredito'];
                     $client->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
@@ -287,7 +285,6 @@ class ClientsController extends Controller
                 $client->excento = $data['excento'];
                 $client->responsableMonotributo = $data['responsableMonotributo'];
                 $client->ivaInscripto = $data['ivaInscripto'];
-                $client->precioLista = $data['precioLista'];
                 $client->condicionDeVenta = $data['condicionDeVenta'];
                 $client->limiteDeCredito = $data['limiteDeCredito'];
                 $client->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];

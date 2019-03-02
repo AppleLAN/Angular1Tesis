@@ -61,7 +61,6 @@ class CompaniesController extends Controller
                 $companyInformation->excento = $data['excento'];
                 $companyInformation->responsableMonotributo = $data['responsableMonotributo'];
                 $companyInformation->ivaInscripto = $data['ivaInscripto'];
-                $companyInformation->precioLista = $data['precioLista'];
                 $companyInformation->condicionDeVenta = $data['condicionDeVenta'];
                 $companyInformation->limiteDeCredito = $data['limiteDeCredito'];
                 $companyInformation->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
@@ -107,7 +106,6 @@ class CompaniesController extends Controller
                 $companyInformation->excento = $data['excento'];
                 $companyInformation->responsableMonotributo = $data['responsableMonotributo'];
                 $companyInformation->ivaInscripto = $data['ivaInscripto'];
-                $companyInformation->precioLista = $data['precioLista'];
                 $companyInformation->condicionDeVenta = $data['condicionDeVenta'];
                 $companyInformation->limiteDeCredito = $data['limiteDeCredito'];
                 $companyInformation->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
