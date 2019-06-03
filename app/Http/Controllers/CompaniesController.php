@@ -40,11 +40,8 @@ class CompaniesController extends Controller
 
         if ($user && $this->IsGranted()) {
                 $data = $request->all();
-
                 $companyInformation = new Companies();
                 $companyInformation->name = $data['name'];
-                $companyInformation->sale_point = $data['sale_point'];
-                $companyInformation->start_date = $data['start_date'];
                 $companyInformation->fantasyName = $data['fantasyName'];
                 $companyInformation->email = $data['email'];
                 $companyInformation->place = $data['place'];
@@ -52,20 +49,14 @@ class CompaniesController extends Controller
                 $companyInformation->codigoProvincia = $data['codigoProvincia'];
                 $companyInformation->address = $data['address'];
                 $companyInformation->telephone = $data['telephone'];
+                $companyInformation->tipoDocumento = $data['tipoDocumento'];
+                $companyInformation->documento = $data['documento'];
                 $companyInformation->cuit = $data['cuit'];
                 $companyInformation->web = $data['web'];
-                $companyInformation->iib = $data['iib'];
-                $companyInformation->pib = $data['pib'];
-                $companyInformation->epib = $data['epib'];
                 $companyInformation->responsableInscripto = $data['responsableInscripto'];
                 $companyInformation->excento = $data['excento'];
                 $companyInformation->responsableMonotributo = $data['responsableMonotributo'];
-                $companyInformation->ivaInscripto = $data['ivaInscripto'];
-                $companyInformation->condicionDeVenta = $data['condicionDeVenta'];
-                $companyInformation->limiteDeCredito = $data['limiteDeCredito'];
-                $companyInformation->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
                 $companyInformation->cuentasGenerales = $data['cuentasGenerales'];
-                $companyInformation->percepcionDeGanancia = $data['percepcionDeGanancia'];
 
                 $companyInformation->save();
 
@@ -89,28 +80,20 @@ class CompaniesController extends Controller
 
                 $companyInformation->name = $data['name'];
                 $companyInformation->fantasyName = $data['fantasyName'];
-                $companyInformation->sale_point = $data['sale_point'];
-                $companyInformation->start_date = $data['start_date'];
                 $companyInformation->email = $data['email'];
                 $companyInformation->place = $data['place'];
                 $companyInformation->codigoPostal = $data['codigoPostal'];
                 $companyInformation->codigoProvincia = $data['codigoProvincia'];
                 $companyInformation->address = $data['address'];
                 $companyInformation->telephone = $data['telephone'];
+                $companyInformation->tipoDocumento = $data['tipoDocumento'];
+                $companyInformation->documento = $data['documento'];
                 $companyInformation->cuit = $data['cuit'];
                 $companyInformation->web = $data['web'];
-                $companyInformation->iib = $data['iib'];
-                $companyInformation->pib = $data['pib'];
-                $companyInformation->epib = $data['epib'];
                 $companyInformation->responsableInscripto = $data['responsableInscripto'];
                 $companyInformation->excento = $data['excento'];
                 $companyInformation->responsableMonotributo = $data['responsableMonotributo'];
-                $companyInformation->ivaInscripto = $data['ivaInscripto'];
-                $companyInformation->condicionDeVenta = $data['condicionDeVenta'];
-                $companyInformation->limiteDeCredito = $data['limiteDeCredito'];
-                $companyInformation->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
                 $companyInformation->cuentasGenerales = $data['cuentasGenerales'];
-                $companyInformation->percepcionDeGanancia = $data['percepcionDeGanancia'];
 
                 $companyInformation->save();
 

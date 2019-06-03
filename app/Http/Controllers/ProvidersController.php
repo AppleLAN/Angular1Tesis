@@ -41,8 +41,6 @@ class ProvidersController extends Controller
                     $provider = new Providers();
                     $provider->name = $data['name'];
                     $provider->company_id = $user->company_id;
-                    $provider->sale_point = $data['sale_point'];
-                    $provider->start_date = $data['start_date'];
                     $provider->fantasyName = $data['fantasyName'];
                     $provider->email = $data['email'];
                     $provider->place = $data['place'];
@@ -51,19 +49,22 @@ class ProvidersController extends Controller
                     $provider->address = $data['address'];
                     $provider->telephone = $data['telephone'];
                     $provider->cuit = $data['cuit'];
+                    $provider->tipoDocumento = $data['tipoDocumento'];
+                    $provider->documento = $data['documento'];
+                    $provider->ganancia = $data['ganancia'];
                     $provider->web = $data['web'];
-                    $provider->iib = $data['iib'];
-                    $provider->pib = $data['pib'];
-                    $provider->epib = $data['epib'];
                     $provider->responsableInscripto = $data['responsableInscripto'];
                     $provider->excento = $data['excento'];
                     $provider->responsableMonotributo = $data['responsableMonotributo'];
-                    $provider->ivaInscripto = $data['ivaInscripto'];
-                    $provider->condicionDeVenta = $data['condicionDeVenta'];
-                    $provider->limiteDeCredito = $data['limiteDeCredito'];
-                    $provider->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
                     $provider->cuentasGenerales = $data['cuentasGenerales'];
-                    $provider->percepcionDeGanancia = $data['percepcionDeGanancia'];         
+                    $provider->G = $data['G'];
+                    $provider->IIBB = $data['IIBB'];
+                    $provider->IVA = $data['IVA'];
+                    $provider->SUS = $data['SUS'];
+                    $provider->GPercentage = $data['GPercentage'];
+                    $provider->IIBBPercentage = $data['IIBBPercentage'];
+                    $provider->IVAPercentage = $data['IVAPercentage'];
+                    $provider->SUSPercentage = $data['SUSPercentage'];
 
                     $provider->save();
                 }  catch (\Exception $e) {
@@ -90,8 +91,6 @@ class ProvidersController extends Controller
                 $provider->name = $data['name'];
                 $provider->company_id = $user->company_id;                
                 $provider->fantasyName = $data['fantasyName'];
-                $provider->sale_point = $data['sale_point'];
-                $provider->start_date = $data['start_date'];
                 $provider->email = $data['email'];
                 $provider->place = $data['place'];
                 $provider->codigoPostal = $data['codigoPostal'];
@@ -99,20 +98,22 @@ class ProvidersController extends Controller
                 $provider->address = $data['address'];
                 $provider->telephone = $data['telephone'];
                 $provider->cuit = $data['cuit'];
+                $provider->tipoDocumento = $data['tipoDocumento'];
+                $provider->documento = $data['documento'];
+                $provider->ganancia = $data['ganancia'];
                 $provider->web = $data['web'];
-                $provider->codigoPostal = $data['codigoPostal'];
-                $provider->iib = $data['iib'];
-                $provider->pib = $data['pib'];
-                $provider->epib = $data['epib'];
                 $provider->responsableInscripto = $data['responsableInscripto'];
                 $provider->excento = $data['excento'];
                 $provider->responsableMonotributo = $data['responsableMonotributo'];
-                $provider->ivaInscripto = $data['ivaInscripto'];
-                $provider->condicionDeVenta = $data['condicionDeVenta'];
-                $provider->limiteDeCredito = $data['limiteDeCredito'];
-                $provider->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
                 $provider->cuentasGenerales = $data['cuentasGenerales'];
-                $provider->percepcionDeGanancia = $data['percepcionDeGanancia'];            
+                $provider->G = $data['G'];
+                $provider->IIBB = $data['IIBB'];
+                $provider->IVA = $data['IVA'];
+                $provider->SUS = $data['SUS'];
+                $provider->GPercentage = $data['GPercentage'];
+                $provider->IIBBPercentage = $data['IIBBPercentage'];
+                $provider->IVAPercentage = $data['IVAPercentage'];
+                $provider->SUSPercentage = $data['SUSPercentage'];     
 
                 $provider->save();
 

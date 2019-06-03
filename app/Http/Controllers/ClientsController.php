@@ -158,32 +158,25 @@ class ClientsController extends Controller
             } else {
                 $userC = Companies::where('id','=',$user->company_id)->first();
             }
-
+            
             $userC->name = $data['name'];
             $userC->fantasyName = $data['fantasyName'];
-            $userC->sale_point = $data['sale_point'];
-            $userC->start_date = $data['start_date'];
             $userC->email = $data['email'];
             $userC->place = $data['place'];
             $userC->codigoPostal = $data['codigoPostal'];
             $userC->codigoProvincia = $data['codigoProvincia'];
             $userC->address = $data['address'];
             $userC->telephone = $data['telephone'];
+            $userC->tipoDocumento = $data['tipoDocumento'];
+            $userC->documento = $data['documento'];
             $userC->cuit = $data['cuit'];
             $userC->web = $data['web'];
-            $userC->iib = $data['iib'];
-            $userC->pib = $data['pib'];
-            $userC->epib = $data['epib'];
             $userC->responsableInscripto = $data['responsableInscripto'];
             $userC->excento = $data['excento'];
             $userC->responsableMonotributo = $data['responsableMonotributo'];
-            $userC->ivaInscripto = $data['ivaInscripto'];
-            $userC->condicionDeVenta = $data['condicionDeVenta'];
-            $userC->limiteDeCredito = $data['limiteDeCredito'];
-            $userC->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
             $userC->cuentasGenerales = $data['cuentasGenerales'];
-            $userC->percepcionDeGanancia = $data['percepcionDeGanancia'];
-        
+
+          
             if($userC->save()) {
                 $userData = User::find($user->id);
                 $userData->company_id = $userC->id;
@@ -218,28 +211,29 @@ class ClientsController extends Controller
                     $client->name = $data['name'];
                     $client->company_id = $user->company_id;
                     $client->fantasyName = $data['fantasyName'];
-                    $client->sale_point = $data['sale_point'];
-                    $client->start_date = $data['start_date'];
                     $client->email = $data['email'];
                     $client->place = $data['place'];
                     $client->codigoPostal = $data['codigoPostal'];
                     $client->codigoProvincia = $data['codigoProvincia'];
                     $client->address = $data['address'];
                     $client->telephone = $data['telephone'];
+                    $client->tipoDocumento = $data['tipoDocumento'];
+                    $client->documento = $data['documento'];
                     $client->cuit = $data['cuit'];
                     $client->web = $data['web'];
-                    $client->iib = $data['iib'];
-                    $client->pib = $data['pib'];
-                    $client->epib = $data['epib'];
                     $client->responsableInscripto = $data['responsableInscripto'];
                     $client->excento = $data['excento'];
                     $client->responsableMonotributo = $data['responsableMonotributo'];
-                    $client->ivaInscripto = $data['ivaInscripto'];
                     $client->condicionDeVenta = $data['condicionDeVenta'];
-                    $client->limiteDeCredito = $data['limiteDeCredito'];
-                    $client->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
                     $client->cuentasGenerales = $data['cuentasGenerales'];
-                    $client->percepcionDeGanancia = $data['percepcionDeGanancia'];         
+                    $client->G = $data['G'];
+                    $client->IIBB = $data['IIBB'];
+                    $client->IVA = $data['IVA'];
+                    $client->SUS = $data['SUS'];
+                    $client->GPercentage = $data['GPercentage'];
+                    $client->IIBBPercentage = $data['IIBBPercentage'];
+                    $client->IVAPercentage = $data['IVAPercentage'];
+                    $client->SUSPercentage = $data['SUSPercentage'];       
 
                     $client->save();
                 }
@@ -268,28 +262,29 @@ class ClientsController extends Controller
                 $client->name = $data['name'];
                 $client->company_id = $user->company_id;
                 $client->fantasyName = $data['fantasyName'];
-                $client->sale_point = $data['sale_point'];
-                $client->start_date = $data['start_date'];
                 $client->email = $data['email'];
                 $client->place = $data['place'];
                 $client->codigoPostal = $data['codigoPostal'];
                 $client->codigoProvincia = $data['codigoProvincia'];
                 $client->address = $data['address'];
                 $client->telephone = $data['telephone'];
+                $client->tipoDocumento = $data['tipoDocumento'];
+                $client->documento = $data['documento'];
                 $client->cuit = $data['cuit'];
                 $client->web = $data['web'];
-                $client->iib = $data['iib'];
-                $client->pib = $data['pib'];
-                $client->epib = $data['epib'];
                 $client->responsableInscripto = $data['responsableInscripto'];
                 $client->excento = $data['excento'];
                 $client->responsableMonotributo = $data['responsableMonotributo'];
-                $client->ivaInscripto = $data['ivaInscripto'];
                 $client->condicionDeVenta = $data['condicionDeVenta'];
-                $client->limiteDeCredito = $data['limiteDeCredito'];
-                $client->numeroDeInscripcionesIB = $data['numeroDeInscripcionesIB'];
                 $client->cuentasGenerales = $data['cuentasGenerales'];
-                $client->percepcionDeGanancia = $data['percepcionDeGanancia'];         
+                $client->G = $data['G'];
+                $client->IIBB = $data['IIBB'];
+                $client->IVA = $data['IVA'];
+                $client->SUS = $data['SUS'];
+                $client->GPercentage = $data['GPercentage'];
+                $client->IIBBPercentage = $data['IIBBPercentage'];
+                $client->IVAPercentage = $data['IVAPercentage'];
+                $client->SUSPercentage = $data['SUSPercentage'];        
 
                 $client->save();
 
