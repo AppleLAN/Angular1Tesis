@@ -32,18 +32,11 @@ class ClientsController extends Controller
             $role = HelpersController::checkUserRole($user->id);
             if ($user && $role->role_id == UserRole::ADMIN) {
                 $isAdmin = true;
-                $clients = Companies::select('id','created_at','updated_at','deleted_at',
-                'name','fantasyName','email','place','codigoPostal','codigoProvincia','address','telephone','cuit',
-                'web','iib','pib','epib','responsableInscripto','excento','responsableMonotributo','ivaInscripto',
-                'condicionDeVenta','limiteDeCredito','numeroDeInscripcionesIB','cuentasGenerales','percepcionDeGanancia', 'start_date', 'sale_point') 
-                        ->where('id',$user->company_id) 
-                        ->first(); 
+                $clients = Companies::where('id',$user->company_id)->first(); 
                 $response['company'] = $clients;
             }
             
-            $users = User::select('username','company_id','name','lastname','email','birthday','address','sales','providers','stock','clients') 
-                         ->where('id',$user->id) 
-                         ->first(); 
+            $users = User::where('id',$user->id)->first(); 
             $users->isAdmin = $isAdmin;
             $response['profile'] = $users;
 
@@ -168,6 +161,7 @@ class ClientsController extends Controller
             $userC->address = $data['address'];
             $userC->telephone = $data['telephone'];
             $userC->tipoDocumento = $data['tipoDocumento'];
+            $userC->sale_point = $data['sale_point'];
             $userC->documento = $data['documento'];
             $userC->cuit = $data['cuit'];
             $userC->web = $data['web'];

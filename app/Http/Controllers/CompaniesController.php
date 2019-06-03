@@ -50,6 +50,7 @@ class CompaniesController extends Controller
                 $companyInformation->address = $data['address'];
                 $companyInformation->telephone = $data['telephone'];
                 $companyInformation->tipoDocumento = $data['tipoDocumento'];
+                $companyInformation->sale_point = $data['sale_point'];
                 $companyInformation->documento = $data['documento'];
                 $companyInformation->cuit = $data['cuit'];
                 $companyInformation->web = $data['web'];
@@ -87,6 +88,7 @@ class CompaniesController extends Controller
                 $companyInformation->address = $data['address'];
                 $companyInformation->telephone = $data['telephone'];
                 $companyInformation->tipoDocumento = $data['tipoDocumento'];
+                $companyInformation->sale_point = $data['sale_point'];
                 $companyInformation->documento = $data['documento'];
                 $companyInformation->cuit = $data['cuit'];
                 $companyInformation->web = $data['web'];
