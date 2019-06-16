@@ -218,7 +218,6 @@ class ClientsController extends Controller
                     $client->responsableInscripto = $data['responsableInscripto'];
                     $client->excento = $data['excento'];
                     $client->responsableMonotributo = $data['responsableMonotributo'];
-                    $client->condicionDeVenta = $data['condicionDeVenta'];
                     $client->cuentasGenerales = $data['cuentasGenerales'];
                     $client->G = $data['G'];
                     $client->IIBB = $data['IIBB'];
@@ -269,7 +268,6 @@ class ClientsController extends Controller
                 $client->responsableInscripto = $data['responsableInscripto'];
                 $client->excento = $data['excento'];
                 $client->responsableMonotributo = $data['responsableMonotributo'];
-                $client->condicionDeVenta = $data['condicionDeVenta'];
                 $client->cuentasGenerales = $data['cuentasGenerales'];
                 $client->G = $data['G'];
                 $client->IIBB = $data['IIBB'];

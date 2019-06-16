@@ -31,7 +31,6 @@ class CreateCompaniesTable extends Migration
             $table->boolean('responsableMonotributo');
             $table->boolean('responsableInscripto');
             $table->boolean('ivaInscripto');
-            $table->string('condicionDeVenta');
             $table->float('limiteDeCredito');
             $table->integer('numeroDeInscripcionesIB');
             $table->string('cuentasGenerales');
