@@ -222,11 +222,9 @@ class ClientsController extends Controller
                     $client->G = $data['G'];
                     $client->IIBB = $data['IIBB'];
                     $client->IVA = $data['IVA'];
-                    $client->SUS = $data['SUS'];
                     $client->GPercentage = $data['GPercentage'];
                     $client->IIBBPercentage = $data['IIBBPercentage'];
                     $client->IVAPercentage = $data['IVAPercentage'];
-                    $client->SUSPercentage = $data['SUSPercentage'];       
 
                     $client->save();
                 }
@@ -272,11 +270,9 @@ class ClientsController extends Controller
                 $client->G = $data['G'];
                 $client->IIBB = $data['IIBB'];
                 $client->IVA = $data['IVA'];
-                $client->SUS = $data['SUS'];
                 $client->GPercentage = $data['GPercentage'];
                 $client->IIBBPercentage = $data['IIBBPercentage'];
                 $client->IVAPercentage = $data['IVAPercentage'];
-                $client->SUSPercentage = $data['SUSPercentage'];        
 
                 $client->save();
 
