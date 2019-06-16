@@ -265,6 +265,10 @@ class SaleController extends Controller
 							$cae['condicion_client'] = 'Responsable Inscripto';
 						}
 						
+						$cae['fantasyName_client']=$client['fantasyName'];
+						$cae['cuit_client']=$client['cuit'];
+						$cae['place_client']=$client['place'];
+
 						$sale->cae_data = json_encode($cae);
 						$sale->save();			
 						return response()->json(['success' => $cae], 200);
